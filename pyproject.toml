@@ -6,14 +6,16 @@ readme = "README.md"
 requires-python = ">=3.12,<3.14"
 license = { text = "Proprietary" }
 
-# Data-preparation and testing dependencies ONLY.
+# CPU data-preparation, offline detection, plotting and testing dependencies.
 # PyTorch / CUDA are deliberately NOT declared here: the LLaDA and Dream inference
 # environments are provisioned separately (see docs/ENVIRONMENT.md), because they
 # need pinned torch builds and must not constrain this project's resolution.
 dependencies = [
+    "matplotlib>=3.11.2",
     "numpy>=2.0",
     "pandas>=2.2",
     "pyarrow>=17.0",
+    "scikit-learn>=1.9.1",
 ]
 
 [dependency-groups]
@@ -27,4 +29,4 @@ package = false
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-addopts = "-q"
+addopts = "-q --basetemp=.tmp/pytest"

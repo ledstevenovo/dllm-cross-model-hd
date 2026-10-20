@@ -1,0 +1,51 @@
+{
+  "model_id": "Dream-org/Dream-v0-Instruct-7B",
+  "checkpoint_revision": "05334cb9faaf763692dcf9d8737c642be2b2a6ae",
+  "tokenizer_revision": "05334cb9faaf763692dcf9d8737c642be2b2a6ae",
+  "config_source": "https://huggingface.co/api/resolve-cache/models/Dream-org/Dream-v0-Instruct-7B/05334cb9faaf763692dcf9d8737c642be2b2a6ae/config.json?%2FDream-org%2FDream-v0-Instruct-7B%2Fresolve%2F05334cb9faaf763692dcf9d8737c642be2b2a6ae%2Fconfig.json=&etag=%2223b4959a1efed046572621c2d183c3438cc0b6a4%22",
+  "config": {
+    "_name_or_path": "Dream-org/Dream-v0-Instruct-7B",
+    "architectures": [
+      "DreamModel"
+    ],
+    "attention_dropout": 0.0,
+    "auto_map": {
+      "AutoConfig": "configuration_dream.DreamConfig",
+      "AutoModel": "modeling_dream.DreamModel"
+    },
+    "bos_token_id": 151643,
+    "eos_token_id": 151643,
+    "hidden_act": "silu",
+    "hidden_size": 3584,
+    "initializer_range": 0.02,
+    "intermediate_size": 18944,
+    "mask_token_id": 151666,
+    "max_position_embeddings": 131072,
+    "max_window_layers": 28,
+    "model_type": "Dream",
+    "num_attention_heads": 28,
+    "num_hidden_layers": 28,
+    "num_key_value_heads": 4,
+    "pad_token_id": 151643,
+    "rms_norm_eps": 1e-06,
+    "rope_scaling": null,
+    "rope_theta": 1000000.0,
+    "sliding_window": null,
+    "tie_word_embeddings": false,
+    "torch_dtype": "bfloat16",
+    "transformers_version": "4.46.2",
+    "use_cache": true,
+    "use_mrope": false,
+    "use_sliding_window": false,
+    "vocab_size": 152064
+  },
+  "collection_proposal": {
+    "precision": "bfloat16",
+    "batch_size": 1,
+    "gen_length": 64,
+    "requested_steps": 64,
+    "seed": 20261020,
+    "block_size": 64
+  },
+  "status": "metadata verified; runtime and memory NOT tested; use each model chat template and record final tokenized prompt; verify Dream shift in actual inference"
+}

@@ -1,12 +1,15 @@
 {
   "manifest_version": "build-dataset-manifest-v1",
-  "run_id": "build_dataset_20261020T103213Z_f166b7a7",
-  "created_at_utc": "20261020T103213Z",
+  "run_id": "build_dataset_20261020T113242Z_16776627",
+  "created_at_utc": "20261020T113242Z",
   "schema_version": "qa-record-v1",
   "config_path": "configs/datasets/build.toml",
-  "config_fingerprint": "sha256:f166b7a7eab2a937700ec832c8dc1689120036c4448567fa38b090c14334faf5",
+  "config_fingerprint": "sha256:16776627529f09104a8eccf887b6acf4686b981767c994224a70c1a30e2a312e",
   "config": {
     "schema_version": "qa-record-v1",
+    "dedup": {
+      "jaccard_threshold": 0.85
+    },
     "sources": [
       {
         "dataset": "triviaqa",
@@ -75,7 +78,16 @@
     "prompt_style": "no-context, single-turn, answer-only"
   },
   "code": {
-    "git_commit": "42e6da18cdcb832f6c6b1655a0e4956d96f026b3",
+    "git_commit": "6905783a4282fe570c31e7c8e519efaea9dee976",
+    "code_sha256": {
+      "scripts/build_dataset.py": "803525326ac1ddd6ffe4615481440506a2b8badac8e06b7a89048c61a0e5d8b4",
+      "src/dedup.py": "598e32925280833228060576a7f3b1f6776331e35dde0826a8fbc1fa4e14b7e0",
+      "src/schema.py": "c1e93a9be3aff91bdd2d19e07618a0e8800666e2ec1b8e75d35bdcc6e7924f57",
+      "src/prompts.py": "770ff189bf103c8ff80bebb25254572f9f98921123a3d755c344e87962545bed",
+      "src/textnorm.py": "e9060a191d5f50c6ecc8993bef1dc9142237b4282b0636b60c57f2f4defa5401",
+      "src/splitting.py": "80b7e55c2205e397b0c2f82aec4baff610a98bd05865ffaf618f83b83d1d5f99",
+      "src/io_utils.py": "1fd7edef6e5785fd9ee1ede056a345a414325772814db8ed302df20d3dfc1dc2"
+    },
     "prompt_module_version": "v1",
     "prompt_fingerprint": "sha256:0de959aec7090589f83e17ef5ac034a76266f87f2452449bc94a8ff35753356b",
     "python": "3.13.14",
@@ -88,9 +100,11 @@
       "config": "distractor",
       "dataset": "hotpotqa",
       "path": "data/raw_download/hotpotqa/distractor_validation.parquet",
+      "repository": "hotpotqa/hotpot_qa",
+      "revision": "1908d6afbbead072334abe2965f91bd2709910ab",
       "sha256": "c20b638ca82b21d04fe12e14ff417ad05153d4d215a65de54497fca4e972f7c6",
       "source_split": "validation",
-      "url": "https://huggingface.co/datasets/hotpotqa/hotpot_qa/resolve/main/distractor/validation-00000-of-00001.parquet",
+      "url": "https://huggingface.co/datasets/hotpotqa/hotpot_qa/resolve/1908d6afbbead072334abe2965f91bd2709910ab/distractor/validation-00000-of-00001.parquet",
       "sha256_verified": true
     },
     {
@@ -98,9 +112,11 @@
       "config": "rc.nocontext",
       "dataset": "triviaqa",
       "path": "data/raw_download/triviaqa/rc.nocontext_validation.parquet",
+      "repository": "mandarjoshi/trivia_qa",
+      "revision": "0f7faf33a3908546c6fd5b73a660e0f8ff173c2f",
       "sha256": "48a5005c0eb4f8a4ae5b9868644297fd5bf1e694aeb3dc9c8ab958cac0d5b201",
       "source_split": "validation",
-      "url": "https://huggingface.co/datasets/mandarjoshi/trivia_qa/resolve/main/rc.nocontext/validation-00000-of-00001.parquet",
+      "url": "https://huggingface.co/datasets/mandarjoshi/trivia_qa/resolve/0f7faf33a3908546c6fd5b73a660e0f8ff173c2f/rc.nocontext/validation-00000-of-00001.parquet",
       "sha256_verified": true
     }
   ],
@@ -110,9 +126,11 @@
       "config": "rc.nocontext",
       "dataset": "triviaqa",
       "path": "data/raw_download/triviaqa/rc.nocontext_test.parquet",
+      "repository": "mandarjoshi/trivia_qa",
+      "revision": "0f7faf33a3908546c6fd5b73a660e0f8ff173c2f",
       "sha256": "35718c1b37e786c823a5b1e810bf97cd085a1536396143a153b4cb30ba41e4c5",
       "source_split": "test",
-      "url": "https://huggingface.co/datasets/mandarjoshi/trivia_qa/resolve/main/rc.nocontext/test-00000-of-00001.parquet"
+      "url": "https://huggingface.co/datasets/mandarjoshi/trivia_qa/resolve/0f7faf33a3908546c6fd5b73a660e0f8ff173c2f/rc.nocontext/test-00000-of-00001.parquet"
     }
   },
   "cleaning": {
@@ -120,10 +138,11 @@
     "collisions:identifiers_with_multiple_questions": 1,
     "dedup:duplicate_rows_collapsed": 7953,
     "dedup:duplicate_rows_with_conflicting_answers": 1,
+    "dedup:near_duplicate_pairs": 12,
     "hotpotqa:dropped_gold_in_prompt": 726,
     "hotpotqa:rows_kept": 6679,
     "hotpotqa:rows_read": 7405,
-    "pool:clusters": 16605,
+    "pool:clusters": 16594,
     "pool:raw_rows_kept": 24559,
     "pool:records": 16606,
     "triviaqa:alias_phrase_in_prompt_kept": 974,
@@ -131,6 +150,68 @@
     "triviaqa:rows_kept": 17880,
     "triviaqa:rows_read": 17944
   },
+  "near_duplicate_pairs": [
+    {
+      "a": "triviaqa__bt_4229",
+      "b": "triviaqa__qz_6819",
+      "jaccard": 1.0
+    },
+    {
+      "a": "triviaqa__bt_4324",
+      "b": "triviaqa__qb_4561",
+      "jaccard": 0.8571428571428571
+    },
+    {
+      "a": "triviaqa__odql_11061",
+      "b": "triviaqa__sfq_17562",
+      "jaccard": 0.8571428571428571
+    },
+    {
+      "a": "triviaqa__qf_1893",
+      "b": "triviaqa__sfq_2925",
+      "jaccard": 1.0
+    },
+    {
+      "a": "triviaqa__bb_1626",
+      "b": "triviaqa__wh_2061",
+      "jaccard": 0.8571428571428571
+    },
+    {
+      "a": "triviaqa__sfq_21670",
+      "b": "triviaqa__qf_2136",
+      "jaccard": 0.875
+    },
+    {
+      "a": "triviaqa__tc_3129",
+      "b": "triviaqa__dpql_1994",
+      "jaccard": 0.8888888888888888
+    },
+    {
+      "a": "triviaqa__sfq_15066",
+      "b": "triviaqa__sfq_6929",
+      "jaccard": 0.8888888888888888
+    },
+    {
+      "a": "triviaqa__odql_11795",
+      "b": "triviaqa__wh_847",
+      "jaccard": 0.8888888888888888
+    },
+    {
+      "a": "triviaqa__qb_3876",
+      "b": "triviaqa__bt_2674",
+      "jaccard": 0.9
+    },
+    {
+      "a": "triviaqa__sfq_18370",
+      "b": "triviaqa__sfq_16410",
+      "jaccard": 0.9
+    },
+    {
+      "a": "triviaqa__bb_956",
+      "b": "triviaqa__bb_956__alt1",
+      "jaccard": 0.8888888888888888
+    }
+  ],
   "excluded_copyable_questions": {
     "rule": "A question is excluded when its canonical gold answer value appears in the rendered prompt as a normalised token sequence with word boundaries. Such a question can be answered by copying the prompt.",
     "config_key": "cleaning.drop_gold_in_prompt",
@@ -421,22 +502,22 @@
   },
   "split_counts": {
     "train": {
-      "records": 9922,
-      "clusters": 9922,
+      "records": 9919,
+      "clusters": 9913,
       "by_dataset": {
         "hotpotqa": 4019,
-        "triviaqa": 5903
+        "triviaqa": 5900
       },
       "by_stratum": {
         "hotpotqa_bridge": 3522,
         "hotpotqa_comparison": 497,
-        "triviaqa": 5903
+        "triviaqa": 5900
       },
       "by_answer_type": {
         "FreeForm": 167,
         "Numerical": 220,
         "Range": 11,
-        "WikipediaEntity": 5505,
+        "WikipediaEntity": 5502,
         "bridge": 3522,
         "comparison": 497
       }
@@ -463,22 +544,22 @@
       }
     },
     "test": {
-      "records": 4183,
-      "clusters": 4182,
+      "records": 4186,
+      "clusters": 4180,
       "by_dataset": {
         "hotpotqa": 1654,
-        "triviaqa": 2529
+        "triviaqa": 2532
       },
       "by_stratum": {
         "hotpotqa_bridge": 1441,
         "hotpotqa_comparison": 213,
-        "triviaqa": 2529
+        "triviaqa": 2532
       },
       "by_answer_type": {
         "FreeForm": 63,
         "Numerical": 99,
         "Range": 4,
-        "WikipediaEntity": 2363,
+        "WikipediaEntity": 2366,
         "bridge": 1441,
         "comparison": 213
       }
@@ -810,37 +891,37 @@
     {
       "path": "data/raw_qa/hotpotqa/train.jsonl",
       "records": 4019,
-      "sha256": "a8baff1c238913cd6e4c683c8ac94882d6b1d6af093968feede35e447460b760"
+      "sha256": "532564dca1ad4eba289605a17dbbfff3e6aa69af37b47e757f9296e64ee0ff6e"
     },
     {
       "path": "data/raw_qa/hotpotqa/validation.jsonl",
       "records": 998,
-      "sha256": "97319066008dc5e1f9585ecf4de02882e43025cda5df263e8b3b1484ac618963"
+      "sha256": "abbfc6a455f22103f754dc926461a197a066c4d07dd7fb0659488cfc5bda073c"
     },
     {
       "path": "data/raw_qa/hotpotqa/test.jsonl",
       "records": 1654,
-      "sha256": "dd95cad2a303115b129d13ee35a4e3ddab7270f2cb697e4d99609bafb69fcfc9"
+      "sha256": "ed56132d4d8becef30a851c341fcc5c45f4da08273c971a8a9780db1b53f0cd8"
     },
     {
       "path": "data/raw_qa/triviaqa/train.jsonl",
-      "records": 5903,
-      "sha256": "c62c552a85ebf51115cdd2c9689ed2b3bd076defd4fe1ed691495f747a282f60"
+      "records": 5900,
+      "sha256": "ffa3c5811987e691032c2afbc6bed68409840397575741b0c6ee7c45d154fb95"
     },
     {
       "path": "data/raw_qa/triviaqa/validation.jsonl",
       "records": 1483,
-      "sha256": "8eba475958a541a25f41654ba666003ee414145f11aaefe1ee4ca56edf6fe59d"
+      "sha256": "d34c7df2261be9b49c076b1ed83793728dd137930e4106540af7cfb8b9bd5080"
     },
     {
       "path": "data/raw_qa/triviaqa/test.jsonl",
-      "records": 2529,
-      "sha256": "1ad7b64b8c7138efaad0ae999886107afd798ec10088499f570949ef47fd7dc5"
+      "records": 2532,
+      "sha256": "f70b770c1915ce7078a5d81bbda6bbc114bdfada3e29f2299a36d37a6cdf3773"
     },
     {
       "path": "data/raw_qa/subsets/smoke20.jsonl",
       "records": 20,
-      "sha256": "32cc3d05383d3b07e01bce11d00ef4bf45096b9e61887d4ad0a5f58d622608b6"
+      "sha256": "f86604c97d2163b78febc5c42a25afa53d0f1d4f55bc51b4602525e28c8dbebf"
     },
     {
       "path": "data/raw_qa/subsets/smoke20.ids.txt",
@@ -850,7 +931,7 @@
     {
       "path": "data/raw_qa/subsets/small200.jsonl",
       "records": 200,
-      "sha256": "aacb965be3d440bbd50ce980b39c6436ce53dd1c432b964397400058c699962a"
+      "sha256": "e57e6189cb01fb823d12d33d5a44263a2bf71dccd153ef7b8edce243299832d5"
     },
     {
       "path": "data/raw_qa/subsets/small200.ids.txt",
@@ -863,7 +944,7 @@
     "trivia_qa rc.nocontext/test is deliberately unused: its answer aliases are empty and value is '<unk>'.",
     "smoke20 is carved out before the split and carries split='smoke'; it must never be reported as a metric.",
     "small200 is a deterministic, stratified subset of the test split.",
-    "The split is assigned per cluster_id, so identifier collisions and future near-duplicate clusters cannot straddle splits.",
+    "The split is assigned per cluster_id, so identifier collisions and lexical near-duplicate clusters cannot straddle splits.",
     "Questions whose canonical gold answer appears in the prompt are dropped by default (cleaning.drop_gold_in_prompt): they can be answered by copying. Counts are in cleaning.*:dropped_gold_in_prompt and a sample is in excluded_copyable_questions.",
     "Alias phrases appearing in a question are kept and only counted; see excluded_copyable_questions.alias_policy."
   ]

@@ -1,0 +1,21 @@
+{
+  "passed": true,
+  "records_checked": 16606,
+  "errors": [],
+  "canonical_gold_conflicts": [
+    {
+      "sample_id": "triviaqa__qz_4576",
+      "raw_gold_values": [
+        "Tony",
+        "Tony (Manero)."
+      ],
+      "retained_gold": "Tony (Manero)."
+    }
+  ],
+  "source_revisions": {
+    "hotpotqa_distractor_validation": "1908d6afbbead072334abe2965f91bd2709910ab",
+    "triviaqa_rc_nocontext_validation": "0f7faf33a3908546c6fd5b73a660e0f8ff173c2f",
+    "triviaqa_rc_nocontext_test": "0f7faf33a3908546c6fd5b73a660e0f8ff173c2f"
+  },
+  "scope": "Raw bytes, every retained question, canonical gold, raw ID and pinned provenance; no model-pretraining contamination claim."
+}

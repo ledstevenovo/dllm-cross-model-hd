@@ -50,3 +50,7 @@ Thumbs.db
 *.swp
 .idea/
 .vscode/
+
+# Local test scratch and generated labels
+pytest-of-*/
+data/labels/

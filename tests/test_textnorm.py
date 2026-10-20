@@ -1,10 +1,4 @@
-"""The normaliser is the shared basis of question dedup and answer matching.
-
-Staying faithful to the published SQuAD / HotpotQA ``normalize_answer`` is what
-makes our label agreement comparable with the TriviaQA and HotpotQA literature,
-so these tests pin the published behaviour *and* our one documented deviation
-(NFKC folding, no accent folding).
-"""
+"""Project normalization regression cases; not official benchmark equivalence."""
 
 from __future__ import annotations
 
@@ -106,4 +100,4 @@ def test_first_line_skips_leading_blank_lines():
 
 def test_normalized_variants_deduplicates_and_sorts():
     assert normalized_variants(["Paris", "paris ", "The Paris", ""]) == ["paris"]
-    assert normalized_variants(["b", "a"]) == ["a", "b"]
+    assert normalized_variants(["zebra", "bear"]) == ["bear", "zebra"]

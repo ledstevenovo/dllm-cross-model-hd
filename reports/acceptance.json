@@ -1,0 +1,174 @@
+{
+  "started_utc": "2026-10-20T11:32:32.181093+00:00",
+  "scope": "CPU-only engineering acceptance. Synthetic results never prove empirical research hypotheses.",
+  "checks": [
+    {
+      "command": [
+        "D:\\paper\\dllm-cross-model-hd\\.venv\\Scripts\\python.exe",
+        "scripts/download_raw.py"
+      ],
+      "returncode": 0,
+      "elapsed_seconds": 0.4236788999987766,
+      "stdout": "[verified] hotpotqa_distractor_validation\n[verified] triviaqa_rc_nocontext_validation\n[verified] triviaqa_rc_nocontext_test\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "D:\\paper\\dllm-cross-model-hd\\.venv\\Scripts\\python.exe",
+        "scripts/build_dataset.py"
+      ],
+      "returncode": 0,
+      "elapsed_seconds": 10.812047599989455,
+      "stdout": "run_id             : build_dataset_20261020T113242Z_16776627\nprompt fingerprint : sha256:0de959aec7090589f83e17ef5ac034a76266f87f2452449bc94a8ff35753356b\nconfig fingerprint : sha256:16776627529f09104a8eccf887b6acf4686b981767c994224a70c1a30e2a312e\n\nsplit         clusters  records  triviaqa  hotpotqa\ntrain             9913     9919      5900      4019\nvalidation        2481     2481      1483       998\ntest              4180     4186      2532      1654\nsmoke               20       20        12         8\n\nsmoke20      clusters=20    records=20    {'hotpotqa_bridge': 7, 'hotpotqa_comparison': 1, 'triviaqa': 12}\nsmall200     clusters=200   records=200   {'hotpotqa_bridge': 69, 'hotpotqa_comparison': 10, 'triviaqa': 121}\n\ncleaning / dedup counters:\n  collisions:extra_variants                                  1\n  collisions:identifiers_with_multiple_questions             1\n  dedup:duplicate_rows_collapsed                          7953\n  dedup:duplicate_rows_with_conflicting_answers              1\n  dedup:near_duplicate_pairs                                12\n  hotpotqa:dropped_gold_in_prompt                          726\n  hotpotqa:rows_kept                                      6679\n  hotpotqa:rows_read                                      7405\n  pool:clusters                                          16594\n  pool:raw_rows_kept                                     24559\n  pool:records                                           16606\n  triviaqa:alias_phrase_in_prompt_kept                     974\n  triviaqa:dropped_gold_in_prompt                           64\n  triviaqa:rows_kept                                     17880\n  triviaqa:rows_read                                     17944\n\nleak checks passed : True\nmanifest           : data/manifests/build_dataset_20261020T113242Z_16776627.json\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "D:\\paper\\dllm-cross-model-hd\\.venv\\Scripts\\python.exe",
+        "scripts/build_pilot.py"
+      ],
+      "returncode": 0,
+      "elapsed_seconds": 0.6953876999905333,
+      "stdout": "{'train': 120, 'validation': 30, 'test': 50}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "D:\\paper\\dllm-cross-model-hd\\.venv\\Scripts\\python.exe",
+        "scripts/verify_rebuild.py"
+      ],
+      "returncode": 0,
+      "elapsed_seconds": 10.896441799995955,
+      "stdout": "run_id             : build_dataset_20261020T113254Z_16776627\nprompt fingerprint : sha256:0de959aec7090589f83e17ef5ac034a76266f87f2452449bc94a8ff35753356b\nconfig fingerprint : sha256:16776627529f09104a8eccf887b6acf4686b981767c994224a70c1a30e2a312e\n\nsplit         clusters  records  triviaqa  hotpotqa\ntrain             9913     9919      5900      4019\nvalidation        2481     2481      1483       998\ntest              4180     4186      2532      1654\nsmoke               20       20        12         8\n\nsmoke20      clusters=20    records=20    {'hotpotqa_bridge': 7, 'hotpotqa_comparison': 1, 'triviaqa': 12}\nsmall200     clusters=200   records=200   {'hotpotqa_bridge': 69, 'hotpotqa_comparison': 10, 'triviaqa': 121}\n\ncleaning / dedup counters:\n  collisions:extra_variants                                  1\n  collisions:identifiers_with_multiple_questions             1\n  dedup:duplicate_rows_collapsed                          7953\n  dedup:duplicate_rows_with_conflicting_answers              1\n  dedup:near_duplicate_pairs                                12\n  hotpotqa:dropped_gold_in_prompt                          726\n  hotpotqa:rows_kept                                      6679\n  hotpotqa:rows_read                                      7405\n  pool:clusters                                          16594\n  pool:raw_rows_kept                                     24559\n  pool:records                                           16606\n  triviaqa:alias_phrase_in_prompt_kept                     974\n  triviaqa:dropped_gold_in_prompt                           64\n  triviaqa:rows_kept                                     17880\n  triviaqa:rows_read                                     17944\n\nleak checks passed : True\nmanifest           : data/manifests/build_dataset_20261020T113254Z_16776627.json\nFresh rebuild identical: True\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "D:\\paper\\dllm-cross-model-hd\\.venv\\Scripts\\python.exe",
+        "scripts/audit_dataset.py",
+        "--output",
+        "reports/dataset_audit.json"
+      ],
+      "returncode": 0,
+      "elapsed_seconds": 1.1339143000077456,
+      "stdout": "{\n  \"passed\": true,\n  \"records\": 16606,\n  \"split_counts\": {\n    \"train\": 9919,\n    \"validation\": 2481,\n    \"test\": 4186,\n    \"smoke\": 20\n  },\n  \"errors\": [],\n  \"scope\": \"Byte hashes, IDs, exact normalized questions, cluster isolation, prompts, provenance and subset membership. Lexical near-duplicates separately audited; arbitrary semantic paraphrases not guaranteed.\"\n}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "D:\\paper\\dllm-cross-model-hd\\.venv\\Scripts\\python.exe",
+        "scripts/audit_raw.py"
+      ],
+      "returncode": 0,
+      "elapsed_seconds": 1.629641100007575,
+      "stdout": "Raw audit: True records: 16606 canonical answer conflicts: 1\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "D:\\paper\\dllm-cross-model-hd\\.venv\\Scripts\\python.exe",
+        "scripts/audit_near_duplicates.py"
+      ],
+      "returncode": 0,
+      "elapsed_seconds": 3.9775542999850586,
+      "stdout": "near pairs: 12 violations: 0\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "D:\\paper\\dllm-cross-model-hd\\.venv\\Scripts\\python.exe",
+        "-m",
+        "pytest"
+      ],
+      "returncode": 0,
+      "elapsed_seconds": 3.6975908000022173,
+      "stdout": "........................................................................ [ 96%]\n...                                                                      [100%]\n75 passed in 2.92s\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "D:\\paper\\dllm-cross-model-hd\\.venv\\Scripts\\python.exe",
+        "scripts/offline.py",
+        "demo",
+        "--output",
+        "results/synthetic_demo",
+        "--bootstrap",
+        "100"
+      ],
+      "returncode": 0,
+      "elapsed_seconds": 50.18523840000853,
+      "stdout": "Synthetic pipeline verification ONLY rows: 240 output: results\\synthetic_demo\\evaluation\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "D:\\paper\\dllm-cross-model-hd\\.venv\\Scripts\\python.exe",
+        "scripts/audit_offline_artifacts.py"
+      ],
+      "returncode": 0,
+      "elapsed_seconds": 2.3153858999721706,
+      "stdout": "{'passed': True, 'errors': [], 'trained_detectors': 40, 'saved_predictions': 4000, 'matrix_rows': 240, 'scope': 'Source-only IDs/scaler, frozen saved-model predictions, independent rank AUROC and same-target gap; SYNTHETIC only.'}\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "D:\\paper\\dllm-cross-model-hd\\.venv\\Scripts\\python.exe",
+        "scripts/offline.py",
+        "evaluate",
+        "--features",
+        "results/synthetic_demo/features.parquet",
+        "--output",
+        "results/synthetic_cross_dataset",
+        "--axis",
+        "dataset",
+        "--feature-sets",
+        "entropy_raw",
+        "--bootstrap",
+        "30"
+      ],
+      "returncode": 0,
+      "elapsed_seconds": 6.1275091000134125,
+      "stdout": "Synthetic pipeline verification ONLY rows: 16 output: results\\synthetic_cross_dataset\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "D:\\paper\\dllm-cross-model-hd\\.venv\\Scripts\\python.exe",
+        "scripts/offline.py",
+        "evaluate",
+        "--features",
+        "results/synthetic_demo/features.parquet",
+        "--output",
+        "results/synthetic_no_scale",
+        "--feature-sets",
+        "entropy_raw",
+        "--no-scale",
+        "--seed",
+        "7",
+        "--bootstrap",
+        "30"
+      ],
+      "returncode": 0,
+      "elapsed_seconds": 6.414837000018451,
+      "stdout": "Synthetic pipeline verification ONLY rows: 24 output: results\\synthetic_no_scale\n",
+      "stderr": ""
+    }
+  ],
+  "completed": true,
+  "passed": true,
+  "checks_passed_so_far": true,
+  "synthetic_outputs": {
+    "transfer_result_rows": 240,
+    "feature_sets": 10,
+    "detector_kinds": 2,
+    "directions": 4
+  },
+  "finished_utc": "2026-10-20T11:34:10.913830+00:00",
+  "artifacts": {
+    "reports\\dataset_audit.json": "8f17ee6b97b5b33e7286cfa9c7678b22f10e1eeafd379d950fb4d527be205175",
+    "reports\\raw_audit.json": "461bb8453420155884ffeef37f55819c6c919aa932db598dafbc1fec985f7f60",
+    "reports\\near_duplicate_audit.json": "777d56c8aa62d2d70c5c5cf98678136a9a198eda71f70066342649e095c78a1d",
+    "reports\\reproducibility.json": "a3550b2c73ddc9b9d2196b3827e8748b26d3ae64dad4c4a11ef4ee7b24888e96",
+    "results\\synthetic_demo\\evaluation\\manifest.json": "1d2f78bbf45d6dc85b01a1513ad6de9531a70bb4d274f312af95b94f0bb53ef5"
+  }
+}

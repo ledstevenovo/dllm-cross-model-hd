@@ -1,0 +1,8 @@
+{
+  "passed": true,
+  "errors": [],
+  "trained_detectors": 40,
+  "saved_predictions": 4000,
+  "matrix_rows": 240,
+  "scope": "Source-only IDs/scaler, frozen saved-model predictions, independent rank AUROC and same-target gap; SYNTHETIC only."
+}

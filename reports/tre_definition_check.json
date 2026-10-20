@@ -1,0 +1,13 @@
+{
+  "source": "D:\\paper\\dLLM_papers\\PDFs\\2607.22661_TRE.pdf",
+  "sha256": "a682389e88d1f78d940ca945dabbfd311fb4fb020d1dce994babcd4a739cdfe6",
+  "verified_sections": [
+    "4.1 equation 3",
+    "4.2 equation 4",
+    "Appendix B equations 58-59"
+  ],
+  "formula": "sum_{t=1}^T (t/T) sum_{i newly revealed at t} H[t,i]",
+  "entropy_log_base": "natural",
+  "token_aggregation": "sum, not per-step mean",
+  "verification": "local PDF text checked; hand-calculated score regression; no real-model reproduction or AUROC equivalence claim"
+}

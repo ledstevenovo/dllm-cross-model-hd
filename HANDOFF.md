@@ -1,3 +1,5 @@
+> 历史交接快照：下文属于 DeepSeek 暂停时状态，部分划分、标签规则和环境描述已被后续修复替代。当前状态请读 README.md、STATUS.md 与 reports/takeover_progress.md。
+
 # 交接说明 — dLLM 跨模型幻觉检测 · 数据准备阶段
 
 > 面向接手者（人或 Codex）。读完 §0–§4 即可安全继续；§5 是剩余工作。

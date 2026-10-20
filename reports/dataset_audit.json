@@ -1,0 +1,12 @@
+{
+  "passed": true,
+  "records": 16606,
+  "split_counts": {
+    "train": 9919,
+    "validation": 2481,
+    "test": 4186,
+    "smoke": 20
+  },
+  "errors": [],
+  "scope": "Byte hashes, IDs, exact normalized questions, cluster isolation, prompts, provenance and subset membership. Lexical near-duplicates separately audited; arbitrary semantic paraphrases not guaranteed."
+}

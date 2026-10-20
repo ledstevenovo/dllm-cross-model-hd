@@ -1,0 +1,67 @@
+{
+  "passed": true,
+  "scratch": "D:\\paper\\dllm-cross-model-hd\\.tmp\\rebuild_20261020T193244",
+  "artifacts": [
+    {
+      "path": "data/raw_qa/hotpotqa/train.jsonl",
+      "expected_sha256": "532564dca1ad4eba289605a17dbbfff3e6aa69af37b47e757f9296e64ee0ff6e",
+      "actual_sha256": "532564dca1ad4eba289605a17dbbfff3e6aa69af37b47e757f9296e64ee0ff6e",
+      "equal": true
+    },
+    {
+      "path": "data/raw_qa/hotpotqa/validation.jsonl",
+      "expected_sha256": "abbfc6a455f22103f754dc926461a197a066c4d07dd7fb0659488cfc5bda073c",
+      "actual_sha256": "abbfc6a455f22103f754dc926461a197a066c4d07dd7fb0659488cfc5bda073c",
+      "equal": true
+    },
+    {
+      "path": "data/raw_qa/hotpotqa/test.jsonl",
+      "expected_sha256": "ed56132d4d8becef30a851c341fcc5c45f4da08273c971a8a9780db1b53f0cd8",
+      "actual_sha256": "ed56132d4d8becef30a851c341fcc5c45f4da08273c971a8a9780db1b53f0cd8",
+      "equal": true
+    },
+    {
+      "path": "data/raw_qa/triviaqa/train.jsonl",
+      "expected_sha256": "ffa3c5811987e691032c2afbc6bed68409840397575741b0c6ee7c45d154fb95",
+      "actual_sha256": "ffa3c5811987e691032c2afbc6bed68409840397575741b0c6ee7c45d154fb95",
+      "equal": true
+    },
+    {
+      "path": "data/raw_qa/triviaqa/validation.jsonl",
+      "expected_sha256": "d34c7df2261be9b49c076b1ed83793728dd137930e4106540af7cfb8b9bd5080",
+      "actual_sha256": "d34c7df2261be9b49c076b1ed83793728dd137930e4106540af7cfb8b9bd5080",
+      "equal": true
+    },
+    {
+      "path": "data/raw_qa/triviaqa/test.jsonl",
+      "expected_sha256": "f70b770c1915ce7078a5d81bbda6bbc114bdfada3e29f2299a36d37a6cdf3773",
+      "actual_sha256": "f70b770c1915ce7078a5d81bbda6bbc114bdfada3e29f2299a36d37a6cdf3773",
+      "equal": true
+    },
+    {
+      "path": "data/raw_qa/subsets/smoke20.jsonl",
+      "expected_sha256": "f86604c97d2163b78febc5c42a25afa53d0f1d4f55bc51b4602525e28c8dbebf",
+      "actual_sha256": "f86604c97d2163b78febc5c42a25afa53d0f1d4f55bc51b4602525e28c8dbebf",
+      "equal": true
+    },
+    {
+      "path": "data/raw_qa/subsets/smoke20.ids.txt",
+      "expected_sha256": "010cd3fe382023e42206b42bd87958aa424d35efd7503d7dc3ebc4f595dc51cd",
+      "actual_sha256": "010cd3fe382023e42206b42bd87958aa424d35efd7503d7dc3ebc4f595dc51cd",
+      "equal": true
+    },
+    {
+      "path": "data/raw_qa/subsets/small200.jsonl",
+      "expected_sha256": "e57e6189cb01fb823d12d33d5a44263a2bf71dccd153ef7b8edce243299832d5",
+      "actual_sha256": "e57e6189cb01fb823d12d33d5a44263a2bf71dccd153ef7b8edce243299832d5",
+      "equal": true
+    },
+    {
+      "path": "data/raw_qa/subsets/small200.ids.txt",
+      "expected_sha256": "6e063c2caf01dcfd99935fe9af0030db96a7ca62fe968bd00aa9a6a5972b45e9",
+      "actual_sha256": "6e063c2caf01dcfd99935fe9af0030db96a7ca62fe968bd00aa9a6a5972b45e9",
+      "equal": true
+    }
+  ],
+  "scope": "Fresh parquet-to-JSONL rebuild in a separate directory; timestamps and git context excluded from byte identity."
+}

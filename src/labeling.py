@@ -1,28 +1,9 @@
-"""Answer matching and the five-way output label protocol.
+"""Conservative answer-match proposals, not factual adjudication.
 
-The protocol implements section 4.3 of the experiment plan.  The single most
-important rule is that **invalid output is not automatically hallucination**: a
-refusal, a truncation and a format failure are recorded as their own classes
-and are never folded into the factual-error class.  Pooling them would make the
-detector learn "the model was cut off" instead of "the model was wrong", which
-is precisely the confound this study exists to avoid.
-
-Label precedence (first rule that fires wins)
----------------------------------------------
-1. ``format_failure``         -- the generation is not usable text at all.
-2. ``correct``                -- the extracted candidate matches gold or an alias.
-3. ``refusal_empty``          -- blank output, or an explicit refusal phrase.
-4. ``format_failure``         -- unusable *after* extraction (no answer content,
-                                 or the question was simply echoed back).
-5. ``incomplete_truncated``   -- hit the length budget without matching.
-6. ``incorrect``              -- a real, parseable, wrong answer.  **This is the
-                                 only factual-error positive class.**
-
-Matching is deliberately simple and published-metric-faithful: normalised exact
-equality against the gold value or any alias, numeric equality, and yes/no
-equivalence for HotpotQA.  Containment matching is deliberately *not* used --
-"Paris" must not match "Paris, Texas" -- and the limitation is documented in
-``docs/LABEL_PROTOCOL.md`` rather than patched with an ad-hoc heuristic.
+Five factual/output categories plus needs_review. Only independently reviewed
+incorrect is a hallucination positive. Exact short-answer matches are proposals;
+unmatched prose, multiline explanations and matching truncated outputs require
+review. See docs/LABEL_PROTOCOL.md for the primary metric inclusion rule.
 """
 
 from __future__ import annotations
@@ -60,17 +41,19 @@ LABELS: tuple[str, ...] = (
     "refusal_empty",
     "incomplete_truncated",
     "format_failure",
+    "needs_review",
 )
 
 #: Only a parseable wrong answer counts as a factual error.
 HALLUCINATION_POSITIVE_LABEL = "incorrect"
 
 #: The abstaining classes, kept separate from the factual-error class.
-ABSTAIN_LABELS: tuple[str, ...] = ("refusal_empty", "incomplete_truncated", "format_failure")
+ABSTAIN_LABELS: tuple[str, ...] = ("refusal_empty", "incomplete_truncated", "format_failure", "needs_review")
 
 LABEL_MEANINGS: dict[str, str] = {
+    "needs_review": "Unmatched or ambiguous output; requires independent factual review.",
     "correct": "The extracted answer matches the gold value or one of its aliases.",
-    "incorrect": "A parseable, non-matching answer. The only factual-error positive class.",
+    "incorrect": "An independently adjudicated factual error. The only positive class.",
     "refusal_empty": "Blank output or an explicit refusal to answer.",
     "incomplete_truncated": "Generation hit the length budget without producing a matching answer.",
     "format_failure": "Output was unusable as an answer (no answer content, or the question echoed).",
@@ -87,11 +70,11 @@ EVAL_REGIMES: dict[str, dict[str, object]] = {
     },
     "binary_abstain_as_negative": {
         "positive": ["incorrect"],
-        "negative": ["correct", *ABSTAIN_LABELS],
-        "dropped": [],
+        "negative": ["correct", "refusal_empty", "incomplete_truncated", "format_failure"],
+        "dropped": ["needs_review"],
         "note": "Conventional accuracy view; an abstention counts as 'not a hallucination'.",
     },
-    "five_way": {
+    "all_statuses": {
         "classes": list(LABELS),
         "dropped": [],
         "note": "Full protocol; needed to show the detector is not just detecting truncation.",
@@ -179,10 +162,9 @@ def match_answer(
     that fired, so ``label_source`` can record *why* a label was assigned and
     the analysis stage can audit matches without re-running the matcher.
 
-    Rule order is fixed: normalised exact equality first (against every
-    acceptable string), then numeric equality, then yes/no equivalence.  Exact
-    equality is checked across all aliases before any fallback rule, so the
-    strongest available evidence always decides.
+    Numeric values are compared before punctuation normalization so signs and
+    decimal points cannot disappear. Other candidates use exact normalized
+    equality, then yes/no equivalence. These remain label proposals.
     """
     candidate_norm = normalize_answer(candidate)
     if not candidate_norm:
@@ -195,10 +177,15 @@ def match_answer(
     ]
 
     for value in acceptable:
+        cn, gn = extract_number(candidate), extract_number(value)
+        if cn is not None or gn is not None:
+            if cn is not None and gn is not None and cn == gn:
+                return True, str(value), "numeric_equality"
+            continue
         if candidate_norm == normalize_answer(value):
             return True, str(value), "exact_normalized"
 
-    candidate_number = extract_number(candidate_norm)
+    candidate_number = extract_number(candidate)
     if candidate_number is not None:
         for value in acceptable:
             gold_number = extract_number(value)
@@ -227,20 +214,13 @@ def classify_generation(
     question: Optional[str] = None,
     hit_max_length: bool = False,
 ) -> LabelResult:
-    """Label one generation under the five-way protocol.
-
-    ``hit_max_length`` is supplied by the inference stage (it knows whether the
-    generation stopped on EOS or on the length budget) and is stored as the
-    auxiliary ``truncated`` flag *as well as* driving rule 5, so a truncated
-    generation that still produced the right answer is counted as correct while
-    remaining flagged.
-    """
+    """Propose an output status; truncated matches remain needs_review."""
     notes: list[str] = []
 
     if not isinstance(text, str) or not text.strip():
         return LabelResult(
-            label="format_failure",
-            label_source="format_failure:not_text_or_blank_input",
+            label="refusal_empty" if isinstance(text, str) else "format_failure",
+            label_source="refusal_empty:blank" if isinstance(text, str) else "format_failure:not_text",
             candidate="",
             candidate_normalized="",
             truncated=hit_max_length,
@@ -258,9 +238,9 @@ def classify_generation(
     refusal = bool(_REFUSAL_RE.search(text_norm))
 
     matched, matched_answer, rule = match_answer(candidate, gold_answer, gold_aliases)
+    if matched and (hit_max_length or len(text.strip().splitlines()) > 1 or refusal):
+        return LabelResult("needs_review", "needs_review:matched_but_ambiguous", candidate, candidate_norm, matched_answer, hit_max_length, refusal)
     if matched:
-        if hit_max_length:
-            notes.append("matched although the generation also hit the length budget")
         return LabelResult(
             label="correct",
             label_source=f"correct:{rule}",
@@ -321,8 +301,8 @@ def classify_generation(
         )
 
     return LabelResult(
-        label="incorrect",
-        label_source="incorrect:no_matching_rule",
+        label="needs_review",
+        label_source="needs_review:no_matching_rule",
         candidate=candidate,
         candidate_normalized=candidate_norm,
         truncated=False,

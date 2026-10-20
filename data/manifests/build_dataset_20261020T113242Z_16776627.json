@@ -1,0 +1,951 @@
+{
+  "manifest_version": "build-dataset-manifest-v1",
+  "run_id": "build_dataset_20261020T113242Z_16776627",
+  "created_at_utc": "20261020T113242Z",
+  "schema_version": "qa-record-v1",
+  "config_path": "configs/datasets/build.toml",
+  "config_fingerprint": "sha256:16776627529f09104a8eccf887b6acf4686b981767c994224a70c1a30e2a312e",
+  "config": {
+    "schema_version": "qa-record-v1",
+    "dedup": {
+      "jaccard_threshold": 0.85
+    },
+    "sources": [
+      {
+        "dataset": "triviaqa",
+        "raw_key": "triviaqa_rc_nocontext_validation",
+        "hf_config": "rc.nocontext",
+        "hf_split": "validation",
+        "question_field": "question",
+        "id_field": "question_id",
+        "answer_value": "answer.value",
+        "answer_aliases": "answer.aliases",
+        "answer_norm_aliases": "answer.normalized_aliases",
+        "answer_type_field": "answer.type",
+        "answer_type_default": "unknown",
+        "stratum": "triviaqa"
+      },
+      {
+        "dataset": "hotpotqa",
+        "raw_key": "hotpotqa_distractor_validation",
+        "hf_config": "distractor",
+        "hf_split": "validation",
+        "question_field": "question",
+        "id_field": "id",
+        "answer_value": "answer",
+        "answer_aliases": "",
+        "answer_norm_aliases": "",
+        "answer_type_field": "type",
+        "answer_type_default": "unknown",
+        "stratum": "hotpotqa",
+        "stratum_field": "type"
+      }
+    ],
+    "determinism": {
+      "base_seed": 20261020,
+      "split_salt": "split-v1",
+      "subset_salt": "subset-v1",
+      "smoke_salt": "smoke-v1"
+    },
+    "splits": {
+      "order": [
+        "train",
+        "validation",
+        "test"
+      ],
+      "train": 0.6,
+      "validation": 0.15,
+      "test": 0.25
+    },
+    "subsets": {
+      "smoke_name": "smoke20",
+      "smoke_total": 20,
+      "small_name": "small200",
+      "small_total": 200
+    },
+    "cleaning": {
+      "min_question_chars": 1,
+      "min_gold_chars": 1,
+      "max_gold_chars": 1000,
+      "drop_gold_in_prompt": true
+    }
+  },
+  "prompt": {
+    "prompt_template_version": "v1",
+    "prompt_template": "Answer the question with a short factual answer.\n\nQuestion: {question}\nAnswer:",
+    "prompt_fingerprint": "sha256:0de959aec7090589f83e17ef5ac034a76266f87f2452449bc94a8ff35753356b",
+    "prompt_placeholder": "{question}",
+    "prompt_style": "no-context, single-turn, answer-only"
+  },
+  "code": {
+    "git_commit": "6905783a4282fe570c31e7c8e519efaea9dee976",
+    "code_sha256": {
+      "scripts/build_dataset.py": "803525326ac1ddd6ffe4615481440506a2b8badac8e06b7a89048c61a0e5d8b4",
+      "src/dedup.py": "598e32925280833228060576a7f3b1f6776331e35dde0826a8fbc1fa4e14b7e0",
+      "src/schema.py": "c1e93a9be3aff91bdd2d19e07618a0e8800666e2ec1b8e75d35bdcc6e7924f57",
+      "src/prompts.py": "770ff189bf103c8ff80bebb25254572f9f98921123a3d755c344e87962545bed",
+      "src/textnorm.py": "e9060a191d5f50c6ecc8993bef1dc9142237b4282b0636b60c57f2f4defa5401",
+      "src/splitting.py": "80b7e55c2205e397b0c2f82aec4baff610a98bd05865ffaf618f83b83d1d5f99",
+      "src/io_utils.py": "1fd7edef6e5785fd9ee1ede056a345a414325772814db8ed302df20d3dfc1dc2"
+    },
+    "prompt_module_version": "v1",
+    "prompt_fingerprint": "sha256:0de959aec7090589f83e17ef5ac034a76266f87f2452449bc94a8ff35753356b",
+    "python": "3.13.14",
+    "pandas": "3.0.6",
+    "numpy": "2.5.4"
+  },
+  "inputs": [
+    {
+      "bytes": 27452575,
+      "config": "distractor",
+      "dataset": "hotpotqa",
+      "path": "data/raw_download/hotpotqa/distractor_validation.parquet",
+      "repository": "hotpotqa/hotpot_qa",
+      "revision": "1908d6afbbead072334abe2965f91bd2709910ab",
+      "sha256": "c20b638ca82b21d04fe12e14ff417ad05153d4d215a65de54497fca4e972f7c6",
+      "source_split": "validation",
+      "url": "https://huggingface.co/datasets/hotpotqa/hotpot_qa/resolve/1908d6afbbead072334abe2965f91bd2709910ab/distractor/validation-00000-of-00001.parquet",
+      "sha256_verified": true
+    },
+    {
+      "bytes": 7335321,
+      "config": "rc.nocontext",
+      "dataset": "triviaqa",
+      "path": "data/raw_download/triviaqa/rc.nocontext_validation.parquet",
+      "repository": "mandarjoshi/trivia_qa",
+      "revision": "0f7faf33a3908546c6fd5b73a660e0f8ff173c2f",
+      "sha256": "48a5005c0eb4f8a4ae5b9868644297fd5bf1e694aeb3dc9c8ab958cac0d5b201",
+      "source_split": "validation",
+      "url": "https://huggingface.co/datasets/mandarjoshi/trivia_qa/resolve/0f7faf33a3908546c6fd5b73a660e0f8ff173c2f/rc.nocontext/validation-00000-of-00001.parquet",
+      "sha256_verified": true
+    }
+  ],
+  "available_unused_inputs": {
+    "triviaqa_rc_nocontext_test": {
+      "bytes": 1199699,
+      "config": "rc.nocontext",
+      "dataset": "triviaqa",
+      "path": "data/raw_download/triviaqa/rc.nocontext_test.parquet",
+      "repository": "mandarjoshi/trivia_qa",
+      "revision": "0f7faf33a3908546c6fd5b73a660e0f8ff173c2f",
+      "sha256": "35718c1b37e786c823a5b1e810bf97cd085a1536396143a153b4cb30ba41e4c5",
+      "source_split": "test",
+      "url": "https://huggingface.co/datasets/mandarjoshi/trivia_qa/resolve/0f7faf33a3908546c6fd5b73a660e0f8ff173c2f/rc.nocontext/test-00000-of-00001.parquet"
+    }
+  },
+  "cleaning": {
+    "collisions:extra_variants": 1,
+    "collisions:identifiers_with_multiple_questions": 1,
+    "dedup:duplicate_rows_collapsed": 7953,
+    "dedup:duplicate_rows_with_conflicting_answers": 1,
+    "dedup:near_duplicate_pairs": 12,
+    "hotpotqa:dropped_gold_in_prompt": 726,
+    "hotpotqa:rows_kept": 6679,
+    "hotpotqa:rows_read": 7405,
+    "pool:clusters": 16594,
+    "pool:raw_rows_kept": 24559,
+    "pool:records": 16606,
+    "triviaqa:alias_phrase_in_prompt_kept": 974,
+    "triviaqa:dropped_gold_in_prompt": 64,
+    "triviaqa:rows_kept": 17880,
+    "triviaqa:rows_read": 17944
+  },
+  "near_duplicate_pairs": [
+    {
+      "a": "triviaqa__bt_4229",
+      "b": "triviaqa__qz_6819",
+      "jaccard": 1.0
+    },
+    {
+      "a": "triviaqa__bt_4324",
+      "b": "triviaqa__qb_4561",
+      "jaccard": 0.8571428571428571
+    },
+    {
+      "a": "triviaqa__odql_11061",
+      "b": "triviaqa__sfq_17562",
+      "jaccard": 0.8571428571428571
+    },
+    {
+      "a": "triviaqa__qf_1893",
+      "b": "triviaqa__sfq_2925",
+      "jaccard": 1.0
+    },
+    {
+      "a": "triviaqa__bb_1626",
+      "b": "triviaqa__wh_2061",
+      "jaccard": 0.8571428571428571
+    },
+    {
+      "a": "triviaqa__sfq_21670",
+      "b": "triviaqa__qf_2136",
+      "jaccard": 0.875
+    },
+    {
+      "a": "triviaqa__tc_3129",
+      "b": "triviaqa__dpql_1994",
+      "jaccard": 0.8888888888888888
+    },
+    {
+      "a": "triviaqa__sfq_15066",
+      "b": "triviaqa__sfq_6929",
+      "jaccard": 0.8888888888888888
+    },
+    {
+      "a": "triviaqa__odql_11795",
+      "b": "triviaqa__wh_847",
+      "jaccard": 0.8888888888888888
+    },
+    {
+      "a": "triviaqa__qb_3876",
+      "b": "triviaqa__bt_2674",
+      "jaccard": 0.9
+    },
+    {
+      "a": "triviaqa__sfq_18370",
+      "b": "triviaqa__sfq_16410",
+      "jaccard": 0.9
+    },
+    {
+      "a": "triviaqa__bb_956",
+      "b": "triviaqa__bb_956__alt1",
+      "jaccard": 0.8888888888888888
+    }
+  ],
+  "excluded_copyable_questions": {
+    "rule": "A question is excluded when its canonical gold answer value appears in the rendered prompt as a normalised token sequence with word boundaries. Such a question can be answered by copying the prompt.",
+    "config_key": "cleaning.drop_gold_in_prompt",
+    "active": true,
+    "alias_policy": "An alias phrase appearing in the question is NOT an exclusion reason and is only counted (cleaning.*:alias_phrase_in_prompt_kept). TriviaQA questions routinely reuse an alias phrase as their own wording, where the canonical answer differs and cannot be copied.",
+    "samples": [
+      {
+        "dataset": "triviaqa",
+        "raw_id": "tc_1007",
+        "answer_type": "WikipediaEntity",
+        "gold_answer": "Kiefer Sutherland",
+        "question": "Who was born first, Kiefer Sutherland or Christian Slater?"
+      },
+      {
+        "dataset": "triviaqa",
+        "raw_id": "tc_1421",
+        "answer_type": "WikipediaEntity",
+        "gold_answer": "Harrison Ford",
+        "question": "What is Harrison Ford's real name?"
+      },
+      {
+        "dataset": "triviaqa",
+        "raw_id": "qz_76",
+        "answer_type": "WikipediaEntity",
+        "gold_answer": "White",
+        "question": "What colour is the number 10 on the door of 10 Downing Street? White, Yellow or Brown?"
+      },
+      {
+        "dataset": "triviaqa",
+        "raw_id": "qz_438",
+        "answer_type": "WikipediaEntity",
+        "gold_answer": "Switzerland",
+        "question": "From which country do French fries originate? France, Belgium or Switzerland?"
+      },
+      {
+        "dataset": "triviaqa",
+        "raw_id": "qz_547",
+        "answer_type": "WikipediaEntity",
+        "gold_answer": "Typewriter",
+        "question": "What is the longest word can be typed using only the top row of letters on a typewriter?"
+      },
+      {
+        "dataset": "triviaqa",
+        "raw_id": "qz_1128",
+        "answer_type": "WikipediaEntity",
+        "gold_answer": "Poland",
+        "question": "In which country was Marie Curie born? Poland, Austria or Switzerland?"
+      },
+      {
+        "dataset": "triviaqa",
+        "raw_id": "qz_2718",
+        "answer_type": "FreeForm",
+        "gold_answer": "Fiery Face",
+        "question": "Was James II known as: James The Bald, Fiery Face, or The Red King?"
+      },
+      {
+        "dataset": "triviaqa",
+        "raw_id": "qz_3154",
+        "answer_type": "WikipediaEntity",
+        "gold_answer": "Battle",
+        "question": "Which town in East Sussex now stands on the site of the battle of Hastings?"
+      },
+      {
+        "dataset": "triviaqa",
+        "raw_id": "qz_3392",
+        "answer_type": "WikipediaEntity",
+        "gold_answer": "True",
+        "question": "True or False: Sharks do not blink?"
+      },
+      {
+        "dataset": "triviaqa",
+        "raw_id": "qz_3903",
+        "answer_type": "WikipediaEntity",
+        "gold_answer": "SW19",
+        "question": "In which postcode area are the Wimbledon Championships held? SW15, SW17 or SW19?"
+      },
+      {
+        "dataset": "triviaqa",
+        "raw_id": "qz_4093",
+        "answer_type": "Numerical",
+        "gold_answer": "1963",
+        "question": "In what year was the first episode of Doctor Who broadcast? 1959, 1963 or 1967?"
+      },
+      {
+        "dataset": "triviaqa",
+        "raw_id": "qb_5582",
+        "answer_type": "WikipediaEntity",
+        "gold_answer": "Margaret",
+        "question": "What was the name of the first wife of former British Prime Minister Margaret Thatcher’s husband Denis?"
+      },
+      {
+        "dataset": "triviaqa",
+        "raw_id": "bb_285",
+        "answer_type": "Numerical",
+        "gold_answer": "451",
+        "question": "Said to refer erroneously to the temperature at which book paper catches fire, the title of Ray Bradbury's 1953 novel about a futuristic society in which reading books is illegal, is called 'Fahrenheit...' what? 972; 451; 100; or 25?"
+      },
+      {
+        "dataset": "triviaqa",
+        "raw_id": "bb_418",
+        "answer_type": "Numerical",
+        "gold_answer": "240",
+        "question": "How many pennies were in a British pre-decimal pound? 120; 200; 204; or 240?"
+      },
+      {
+        "dataset": "triviaqa",
+        "raw_id": "bb_1061",
+        "answer_type": "WikipediaEntity",
+        "gold_answer": "Left",
+        "question": "What section of a Qwerty keyboard can type most English words, left or right?"
+      },
+      {
+        "dataset": "triviaqa",
+        "raw_id": "bb_1767",
+        "answer_type": "WikipediaEntity",
+        "gold_answer": "Offering",
+        "question": "What is an oblation in relation to a god? Offering; Curse; Damnation; or Church?"
+      },
+      {
+        "dataset": "triviaqa",
+        "raw_id": "bb_2015",
+        "answer_type": "WikipediaEntity",
+        "gold_answer": "Dip",
+        "question": "An economic recession that repeats soon, prior to recovery, is called a 'Double (what?) Recession'? Dip; Blip; Trouble; Bubble or Whammy?"
+      },
+      {
+        "dataset": "triviaqa",
+        "raw_id": "bb_2929",
+        "answer_type": "WikipediaEntity",
+        "gold_answer": "Boat",
+        "question": "A 'wherry' is a Drink; Cheese; Wind; or Boat?"
+      },
+      {
+        "dataset": "triviaqa",
+        "raw_id": "bb_3778",
+        "answer_type": "WikipediaEntity",
+        "gold_answer": "A minor",
+        "question": "In music theory what is the relative minor chord of C major?"
+      },
+      {
+        "dataset": "triviaqa",
+        "raw_id": "bb_5274",
+        "answer_type": "WikipediaEntity",
+        "gold_answer": "Cyclone",
+        "question": "In October 2014 'Hudhud' was a catastrophic (what?) affecting parts of India and Nepal? Earthquake; Cyclone; Influenza; or Computer virus?"
+      },
+      {
+        "dataset": "triviaqa",
+        "raw_id": "qw_468",
+        "answer_type": "WikipediaEntity",
+        "gold_answer": "Required",
+        "question": "\"Which is the participle in the sentence \"\"he brought the required documents\"\"?\""
+      },
+      {
+        "dataset": "triviaqa",
+        "raw_id": "qw_769",
+        "answer_type": "WikipediaEntity",
+        "gold_answer": "British",
+        "question": "If you were from the Cayman Islands, which is part of the British West Indies, what sort of passport would you have?"
+      },
+      {
+        "dataset": "triviaqa",
+        "raw_id": "qw_1393",
+        "answer_type": "WikipediaEntity",
+        "gold_answer": "Richard Burton",
+        "question": "What is the next in this series: Conrad Hilton, Michael Wilding, Michael Todd, Eddie Fisher, Richard Burton?"
+      },
+      {
+        "dataset": "triviaqa",
+        "raw_id": "qw_9015",
+        "answer_type": "WikipediaEntity",
+        "gold_answer": "Charlie",
+        "question": "\"Charlie Sheen starred as which character in the TV series \"\"Two and a Half Men\"\"?\""
+      },
+      {
+        "dataset": "triviaqa",
+        "raw_id": "qw_9154",
+        "answer_type": "WikipediaEntity",
+        "gold_answer": "Adventure",
+        "question": "Which game that contained many D&D; features and references, including a computer controlled dungeon master, created in 1975 by Will Crowther on a DEC PDP-10 computer, the first widely used adventure game, was significantly expanded in 1976 by Don Woods, that inspired a group of students at MIT to write a game called Zork in the summer of 1977 for the PDP-10 minicomputer which became quite popular on the ARPANET?"
+      },
+      {
+        "dataset": "triviaqa",
+        "raw_id": "jp_742",
+        "answer_type": "WikipediaEntity",
+        "gold_answer": "Roosevelt",
+        "question": "Trick question: what was Eleanor Roosevelt's maiden name?"
+      },
+      {
+        "dataset": "triviaqa",
+        "raw_id": "jp_2410",
+        "answer_type": "Numerical",
+        "gold_answer": "1812",
+        "question": "In what year did the War of 1812 start?"
+      },
+      {
+        "dataset": "triviaqa",
+        "raw_id": "sfq_9040",
+        "answer_type": "WikipediaEntity",
+        "gold_answer": "WHAT",
+        "question": "In the computing acronym WYSIWYG (wiziwig) what word is represented by both letter Ws?"
+      },
+      {
+        "dataset": "triviaqa",
+        "raw_id": "odql_847",
+        "answer_type": "WikipediaEntity",
+        "gold_answer": "'THE FIRM'",
+        "question": "Which 1993 film starring Tom Cruise, was about a young lawyer who eventually realised that the wealth of the Memphis law firm he worked for emanated from the Mafia?"
+      },
+      {
+        "dataset": "triviaqa",
+        "raw_id": "bt_1014",
+        "answer_type": "WikipediaEntity",
+        "gold_answer": "True",
+        "question": "True or false a bird had more neck bones than a giraffe"
+      },
+      {
+        "dataset": "triviaqa",
+        "raw_id": "qf_1667",
+        "answer_type": "WikipediaEntity",
+        "gold_answer": "The Sahara Desert",
+        "question": "Which is the largest in area - The Sahara Desert or Australia?"
+      },
+      {
+        "dataset": "triviaqa",
+        "raw_id": "qf_2374",
+        "answer_type": "WikipediaEntity",
+        "gold_answer": "False",
+        "question": "\"In the film 'Casablanca', Humphrey Bogart said \"\"Play it again, Sam\"\". True or False?\""
+      },
+      {
+        "dataset": "triviaqa",
+        "raw_id": "qf_3452",
+        "answer_type": "WikipediaEntity",
+        "gold_answer": "A - Albatross",
+        "question": "In the early 2000's The Birds Eye brand had a make-over, losing it's famous logo in favour of the now familiar red eye logo. What was the old logo, was it A- Albatross, B - Whale or C - Shark?"
+      },
+      {
+        "dataset": "triviaqa",
+        "raw_id": "qf_3671",
+        "answer_type": "WikipediaEntity",
+        "gold_answer": "19th century",
+        "question": "When was basketball invented: 17th, 18th or 19th century?"
+      },
+      {
+        "dataset": "triviaqa",
+        "raw_id": "tc_1007",
+        "answer_type": "WikipediaEntity",
+        "gold_answer": "Kiefer Sutherland",
+        "question": "Who was born first, Kiefer Sutherland or Christian Slater?"
+      },
+      {
+        "dataset": "triviaqa",
+        "raw_id": "tc_1421",
+        "answer_type": "WikipediaEntity",
+        "gold_answer": "Harrison Ford",
+        "question": "What is Harrison Ford's real name?"
+      },
+      {
+        "dataset": "triviaqa",
+        "raw_id": "qz_76",
+        "answer_type": "WikipediaEntity",
+        "gold_answer": "White",
+        "question": "What colour is the number 10 on the door of 10 Downing Street? White, Yellow or Brown?"
+      },
+      {
+        "dataset": "triviaqa",
+        "raw_id": "qz_438",
+        "answer_type": "WikipediaEntity",
+        "gold_answer": "Switzerland",
+        "question": "From which country do French fries originate? France, Belgium or Switzerland?"
+      },
+      {
+        "dataset": "triviaqa",
+        "raw_id": "qz_547",
+        "answer_type": "WikipediaEntity",
+        "gold_answer": "Typewriter",
+        "question": "What is the longest word can be typed using only the top row of letters on a typewriter?"
+      },
+      {
+        "dataset": "triviaqa",
+        "raw_id": "qz_1128",
+        "answer_type": "WikipediaEntity",
+        "gold_answer": "Poland",
+        "question": "In which country was Marie Curie born? Poland, Austria or Switzerland?"
+      }
+    ]
+  },
+  "split_counts": {
+    "train": {
+      "records": 9919,
+      "clusters": 9913,
+      "by_dataset": {
+        "hotpotqa": 4019,
+        "triviaqa": 5900
+      },
+      "by_stratum": {
+        "hotpotqa_bridge": 3522,
+        "hotpotqa_comparison": 497,
+        "triviaqa": 5900
+      },
+      "by_answer_type": {
+        "FreeForm": 167,
+        "Numerical": 220,
+        "Range": 11,
+        "WikipediaEntity": 5502,
+        "bridge": 3522,
+        "comparison": 497
+      }
+    },
+    "validation": {
+      "records": 2481,
+      "clusters": 2481,
+      "by_dataset": {
+        "hotpotqa": 998,
+        "triviaqa": 1483
+      },
+      "by_stratum": {
+        "hotpotqa_bridge": 845,
+        "hotpotqa_comparison": 153,
+        "triviaqa": 1483
+      },
+      "by_answer_type": {
+        "FreeForm": 38,
+        "Numerical": 56,
+        "Range": 3,
+        "WikipediaEntity": 1386,
+        "bridge": 845,
+        "comparison": 153
+      }
+    },
+    "test": {
+      "records": 4186,
+      "clusters": 4180,
+      "by_dataset": {
+        "hotpotqa": 1654,
+        "triviaqa": 2532
+      },
+      "by_stratum": {
+        "hotpotqa_bridge": 1441,
+        "hotpotqa_comparison": 213,
+        "triviaqa": 2532
+      },
+      "by_answer_type": {
+        "FreeForm": 63,
+        "Numerical": 99,
+        "Range": 4,
+        "WikipediaEntity": 2366,
+        "bridge": 1441,
+        "comparison": 213
+      }
+    },
+    "smoke": {
+      "records": 20,
+      "clusters": 20,
+      "by_dataset": {
+        "hotpotqa": 8,
+        "triviaqa": 12
+      },
+      "by_stratum": {
+        "hotpotqa_bridge": 7,
+        "hotpotqa_comparison": 1,
+        "triviaqa": 12
+      },
+      "by_answer_type": {
+        "Numerical": 1,
+        "WikipediaEntity": 11,
+        "bridge": 7,
+        "comparison": 1
+      }
+    }
+  },
+  "subsets": {
+    "smoke20": {
+      "clusters": 20,
+      "records": 20,
+      "expected_clusters": 20,
+      "split": "smoke",
+      "jsonl": "data/raw_qa/subsets/smoke20.jsonl",
+      "ids_file": "data/raw_qa/subsets/smoke20.ids.txt",
+      "by_dataset": {
+        "hotpotqa": 8,
+        "triviaqa": 12
+      },
+      "by_stratum": {
+        "hotpotqa_bridge": 7,
+        "hotpotqa_comparison": 1,
+        "triviaqa": 12
+      },
+      "by_answer_type": {
+        "Numerical": 1,
+        "WikipediaEntity": 11,
+        "bridge": 7,
+        "comparison": 1
+      }
+    },
+    "small200": {
+      "clusters": 200,
+      "records": 200,
+      "expected_clusters": 200,
+      "split": "test",
+      "jsonl": "data/raw_qa/subsets/small200.jsonl",
+      "ids_file": "data/raw_qa/subsets/small200.ids.txt",
+      "by_dataset": {
+        "hotpotqa": 79,
+        "triviaqa": 121
+      },
+      "by_stratum": {
+        "hotpotqa_bridge": 69,
+        "hotpotqa_comparison": 10,
+        "triviaqa": 121
+      },
+      "by_answer_type": {
+        "FreeForm": 1,
+        "Numerical": 3,
+        "WikipediaEntity": 117,
+        "bridge": 69,
+        "comparison": 10
+      }
+    }
+  },
+  "stratification": {
+    "smoke_selection_by_stratum": {
+      "hotpotqa__5a74d4f355429974ef308c79": 1,
+      "hotpotqa__5a7f354b5542992e7d278c8c": 1,
+      "hotpotqa__5a8612d45542996432c5719b": 1,
+      "hotpotqa__5ab851e35542990e739ec8c3": 1,
+      "hotpotqa__5ac1b1345542994ab5c67dd0": 1,
+      "hotpotqa__5ac401bb55429919431738f4": 1,
+      "hotpotqa__5adf92f15542995534e8c7f3": 1,
+      "hotpotqa__5ae377c45542990afbd1e16b": 1,
+      "triviaqa__bb_6378": 1,
+      "triviaqa__dpql_3461": 1,
+      "triviaqa__dpql_5071": 1,
+      "triviaqa__odql_2328": 1,
+      "triviaqa__qb_1147": 1,
+      "triviaqa__qf_270": 1,
+      "triviaqa__qw_1940": 1,
+      "triviaqa__sfq_15587": 1,
+      "triviaqa__sfq_18400": 1,
+      "triviaqa__sfq_4029": 1,
+      "triviaqa__tc_2256": 1,
+      "triviaqa__wh_4139": 1
+    },
+    "small200_selection_by_stratum": {
+      "hotpotqa__5a7148685542994082a3e761": 1,
+      "hotpotqa__5a7326cd5542991f29ee2d11": 1,
+      "hotpotqa__5a733b835542991f9a20c6b2": 1,
+      "hotpotqa__5a75d8dc5542992db94736f0": 1,
+      "hotpotqa__5a75e29f5542992d0ec0600c": 1,
+      "hotpotqa__5a7624b85542992db947372c": 1,
+      "hotpotqa__5a76a2b55542993569682c6c": 1,
+      "hotpotqa__5a778f515542995d831811cd": 1,
+      "hotpotqa__5a7796e05542992a6e59df0f": 1,
+      "hotpotqa__5a7912f655429974737f796c": 1,
+      "hotpotqa__5a7b77d95542997c3ec971a5": 1,
+      "hotpotqa__5a7ca55b55429907fabeefe0": 1,
+      "hotpotqa__5a7d2aa05542995f4f40221f": 1,
+      "hotpotqa__5a7ef49a5542994959419a91": 1,
+      "hotpotqa__5a8010685542992bc0c4a69a": 1,
+      "hotpotqa__5a809b575542996402f6a59c": 1,
+      "hotpotqa__5a80b9ae5542992bc0c4a7eb": 1,
+      "hotpotqa__5a8268aa55429940e5e1a8aa": 1,
+      "hotpotqa__5a843de75542992ef85e23b4": 1,
+      "hotpotqa__5a8457835542990548d0b28a": 1,
+      "hotpotqa__5a84a4e35542992a431d1a81": 1,
+      "hotpotqa__5a84d71c5542997b5ce3ff75": 1,
+      "hotpotqa__5a85b2895542994c784ddb49": 1,
+      "hotpotqa__5a866c04554299211dda2b25": 1,
+      "hotpotqa__5a86f94a5542991e7718169e": 1,
+      "hotpotqa__5a876a4a5542993e715abf30": 1,
+      "hotpotqa__5a88082055429938390d3ed2": 1,
+      "hotpotqa__5a8af3b155429950cd6afc2c": 1,
+      "hotpotqa__5a8b448255429971feec468c": 1,
+      "hotpotqa__5a8b595855429949d91db563": 1,
+      "hotpotqa__5a8bd2965542997f31a41dd1": 1,
+      "hotpotqa__5a8d7b1755429941ae14dfc6": 1,
+      "hotpotqa__5a8f876e5542997ba9cb32a1": 1,
+      "hotpotqa__5a8fc0065542997ba9cb3318": 1,
+      "hotpotqa__5ab1e97f554299340b525427": 1,
+      "hotpotqa__5ab27389554299722f9b4d2f": 1,
+      "hotpotqa__5ab576c4554299637185c5a4": 1,
+      "hotpotqa__5ab67f4c55429953192ad2d9": 1,
+      "hotpotqa__5ab82dbb5542990e739ec857": 1,
+      "hotpotqa__5ab8372255429919ba4e226b": 1,
+      "hotpotqa__5ab8420555429919ba4e2290": 1,
+      "hotpotqa__5ab84bf555429916710eb01f": 1,
+      "hotpotqa__5ab8effd5542991b5579f062": 1,
+      "hotpotqa__5aba11d25542994dbf0198a6": 1,
+      "hotpotqa__5aba454855429901930fa794": 1,
+      "hotpotqa__5abbcba05542992ccd8e7fa3": 1,
+      "hotpotqa__5abbdaac5542992ccd8e7fc0": 1,
+      "hotpotqa__5abd36165542993062266bfb": 1,
+      "hotpotqa__5abdd30c5542991f66106052": 1,
+      "hotpotqa__5ac0060f554299012d1db578": 1,
+      "hotpotqa__5ac279345542990b17b153b0": 1,
+      "hotpotqa__5ac41b9e5542995c82c4acc4": 1,
+      "hotpotqa__5adbfffb5542994650320c39": 1,
+      "hotpotqa__5adcca7f5542994ed6169c06": 1,
+      "hotpotqa__5adccdab5542994d58a2f6db": 1,
+      "hotpotqa__5ade157e55429939a52fe802": 1,
+      "hotpotqa__5ade38d8554299728e26c680": 1,
+      "hotpotqa__5adfa1f9554299025d62a308": 1,
+      "hotpotqa__5adfa451554299025d62a319": 1,
+      "hotpotqa__5adfd2f255429925eb1afaa5": 1,
+      "hotpotqa__5ae077805542993d6555eb6e": 1,
+      "hotpotqa__5ae0a48155429945ae9593df": 1,
+      "hotpotqa__5ae0aefe554299603e418437": 1,
+      "hotpotqa__5ae0c1be5542993d6555ec42": 1,
+      "hotpotqa__5ae1388e5542997b2ef7d13a": 1,
+      "hotpotqa__5ae1ce895542997f29b3c11e": 1,
+      "hotpotqa__5ae1f3df554299234fd04364": 1,
+      "hotpotqa__5ae27f555542992decbdcd30": 1,
+      "hotpotqa__5ae2c6bf554299492dc91c6c": 1,
+      "hotpotqa__5ae2e06d55429928c4239521": 1,
+      "hotpotqa__5ae326d85542991a06ce9938": 1,
+      "hotpotqa__5ae3789b5542992e3233c412": 1,
+      "hotpotqa__5ae37e6e5542992f92d822e0": 1,
+      "hotpotqa__5ae382ee5542992e3233c430": 1,
+      "hotpotqa__5ae4957155429970de88d9bc": 1,
+      "hotpotqa__5ae4a1875542995ad6573dd2": 1,
+      "hotpotqa__5ae622495542995703ce8b20": 1,
+      "hotpotqa__5ae72b96554299572ea5474e": 1,
+      "hotpotqa__5ae7b6055542993210983f00": 1,
+      "triviaqa__bb_1614": 1,
+      "triviaqa__bb_2576": 1,
+      "triviaqa__bb_2661": 1,
+      "triviaqa__bb_3465": 1,
+      "triviaqa__bb_3981": 1,
+      "triviaqa__bb_4735": 1,
+      "triviaqa__bb_6852": 1,
+      "triviaqa__bb_6881": 1,
+      "triviaqa__bb_7898": 1,
+      "triviaqa__bt_1574": 1,
+      "triviaqa__bt_1854": 1,
+      "triviaqa__bt_3620": 1,
+      "triviaqa__dpql_1801": 1,
+      "triviaqa__dpql_1872": 1,
+      "triviaqa__dpql_1965": 1,
+      "triviaqa__dpql_3433": 1,
+      "triviaqa__dpql_503": 1,
+      "triviaqa__dpql_6089": 1,
+      "triviaqa__dpql_6336": 1,
+      "triviaqa__jp_175": 1,
+      "triviaqa__jp_2612": 1,
+      "triviaqa__jp_2992": 1,
+      "triviaqa__jp_4052": 1,
+      "triviaqa__jp_671": 1,
+      "triviaqa__odql_10917": 1,
+      "triviaqa__odql_2430": 1,
+      "triviaqa__odql_249": 1,
+      "triviaqa__odql_3793": 1,
+      "triviaqa__odql_4538": 1,
+      "triviaqa__odql_4564": 1,
+      "triviaqa__odql_4978": 1,
+      "triviaqa__odql_559": 1,
+      "triviaqa__odql_6772": 1,
+      "triviaqa__odql_6813": 1,
+      "triviaqa__odql_7272": 1,
+      "triviaqa__odql_8576": 1,
+      "triviaqa__odql_8850": 1,
+      "triviaqa__qb_1235": 1,
+      "triviaqa__qb_2038": 1,
+      "triviaqa__qb_2687": 1,
+      "triviaqa__qb_7186": 1,
+      "triviaqa__qb_7552": 1,
+      "triviaqa__qb_8050": 1,
+      "triviaqa__qb_8111": 1,
+      "triviaqa__qb_8699": 1,
+      "triviaqa__qb_8955": 1,
+      "triviaqa__qb_9140": 1,
+      "triviaqa__qb_916": 1,
+      "triviaqa__qb_9651": 1,
+      "triviaqa__qf_1367": 1,
+      "triviaqa__qf_3213": 1,
+      "triviaqa__qf_931": 1,
+      "triviaqa__qg_3053": 1,
+      "triviaqa__qg_3418": 1,
+      "triviaqa__qw_10186": 1,
+      "triviaqa__qw_10521": 1,
+      "triviaqa__qw_11093": 1,
+      "triviaqa__qw_11125": 1,
+      "triviaqa__qw_1116": 1,
+      "triviaqa__qw_12670": 1,
+      "triviaqa__qw_15968": 1,
+      "triviaqa__qw_1906": 1,
+      "triviaqa__qw_351": 1,
+      "triviaqa__qw_5298": 1,
+      "triviaqa__qw_6650": 1,
+      "triviaqa__qw_6952": 1,
+      "triviaqa__qw_8126": 1,
+      "triviaqa__qz_5341": 1,
+      "triviaqa__qz_5489": 1,
+      "triviaqa__qz_6079": 1,
+      "triviaqa__sfq_11279": 1,
+      "triviaqa__sfq_11635": 1,
+      "triviaqa__sfq_11794": 1,
+      "triviaqa__sfq_11985": 1,
+      "triviaqa__sfq_13254": 1,
+      "triviaqa__sfq_14039": 1,
+      "triviaqa__sfq_14306": 1,
+      "triviaqa__sfq_15376": 1,
+      "triviaqa__sfq_17082": 1,
+      "triviaqa__sfq_17764": 1,
+      "triviaqa__sfq_19123": 1,
+      "triviaqa__sfq_19313": 1,
+      "triviaqa__sfq_19493": 1,
+      "triviaqa__sfq_20443": 1,
+      "triviaqa__sfq_21666": 1,
+      "triviaqa__sfq_21879": 1,
+      "triviaqa__sfq_21948": 1,
+      "triviaqa__sfq_22539": 1,
+      "triviaqa__sfq_22946": 1,
+      "triviaqa__sfq_25194": 1,
+      "triviaqa__sfq_25397": 1,
+      "triviaqa__sfq_2721": 1,
+      "triviaqa__sfq_2769": 1,
+      "triviaqa__sfq_472": 1,
+      "triviaqa__sfq_5249": 1,
+      "triviaqa__sfq_6801": 1,
+      "triviaqa__sfq_7091": 1,
+      "triviaqa__sfq_739": 1,
+      "triviaqa__sfq_7438": 1,
+      "triviaqa__sfq_7458": 1,
+      "triviaqa__sfq_7552": 1,
+      "triviaqa__sfq_7904": 1,
+      "triviaqa__sfq_8071": 1,
+      "triviaqa__sfq_893": 1,
+      "triviaqa__sfq_9325": 1,
+      "triviaqa__sfq_9746": 1,
+      "triviaqa__sfq_9852": 1,
+      "triviaqa__tb_2018": 1,
+      "triviaqa__tb_361": 1,
+      "triviaqa__tc_1004": 1,
+      "triviaqa__tc_1333": 1,
+      "triviaqa__tc_1542": 1,
+      "triviaqa__tc_1888": 1,
+      "triviaqa__tc_3156": 1,
+      "triviaqa__tc_453": 1,
+      "triviaqa__wh_1555": 1,
+      "triviaqa__wh_1913": 1,
+      "triviaqa__wh_3016": 1,
+      "triviaqa__wh_3298": 1,
+      "triviaqa__wh_815": 1,
+      "triviaqa__wh_871": 1
+    }
+  },
+  "leak_checks": {
+    "cluster_split_violations_total": 0,
+    "cluster_split_violations": [],
+    "identical_question_cross_split_total": 0,
+    "identical_question_cross_split": [],
+    "identical_question_same_split_total": 0,
+    "duplicate_sample_ids_total": 0,
+    "duplicate_sample_ids": [],
+    "smoke_overlapping_research_pool_total": 0,
+    "smoke_records_with_wrong_split_total": 0,
+    "small200_clusters_not_in_test_total": 0,
+    "passed": true
+  },
+  "schema_validation": {
+    "checked": 16606,
+    "problems": 0,
+    "duplicate_sample_ids": 0
+  },
+  "answer_length_distribution": {
+    "count": 16606,
+    "mean": 12.48,
+    "p50": 11,
+    "p90": 22,
+    "p99": 48,
+    "max": 282,
+    "over_40_chars": 263,
+    "over_64_chars": 67
+  },
+  "outputs": [
+    {
+      "path": "data/raw_qa/hotpotqa/train.jsonl",
+      "records": 4019,
+      "sha256": "532564dca1ad4eba289605a17dbbfff3e6aa69af37b47e757f9296e64ee0ff6e"
+    },
+    {
+      "path": "data/raw_qa/hotpotqa/validation.jsonl",
+      "records": 998,
+      "sha256": "abbfc6a455f22103f754dc926461a197a066c4d07dd7fb0659488cfc5bda073c"
+    },
+    {
+      "path": "data/raw_qa/hotpotqa/test.jsonl",
+      "records": 1654,
+      "sha256": "ed56132d4d8becef30a851c341fcc5c45f4da08273c971a8a9780db1b53f0cd8"
+    },
+    {
+      "path": "data/raw_qa/triviaqa/train.jsonl",
+      "records": 5900,
+      "sha256": "ffa3c5811987e691032c2afbc6bed68409840397575741b0c6ee7c45d154fb95"
+    },
+    {
+      "path": "data/raw_qa/triviaqa/validation.jsonl",
+      "records": 1483,
+      "sha256": "d34c7df2261be9b49c076b1ed83793728dd137930e4106540af7cfb8b9bd5080"
+    },
+    {
+      "path": "data/raw_qa/triviaqa/test.jsonl",
+      "records": 2532,
+      "sha256": "f70b770c1915ce7078a5d81bbda6bbc114bdfada3e29f2299a36d37a6cdf3773"
+    },
+    {
+      "path": "data/raw_qa/subsets/smoke20.jsonl",
+      "records": 20,
+      "sha256": "f86604c97d2163b78febc5c42a25afa53d0f1d4f55bc51b4602525e28c8dbebf"
+    },
+    {
+      "path": "data/raw_qa/subsets/smoke20.ids.txt",
+      "records": 20,
+      "sha256": "010cd3fe382023e42206b42bd87958aa424d35efd7503d7dc3ebc4f595dc51cd"
+    },
+    {
+      "path": "data/raw_qa/subsets/small200.jsonl",
+      "records": 200,
+      "sha256": "e57e6189cb01fb823d12d33d5a44263a2bf71dccd153ef7b8edce243299832d5"
+    },
+    {
+      "path": "data/raw_qa/subsets/small200.ids.txt",
+      "records": 200,
+      "sha256": "6e063c2caf01dcfd99935fe9af0030db96a7ca62fe968bd00aa9a6a5972b45e9"
+    }
+  ],
+  "notes": [
+    "Only held-out upstream splits are used; neither QA dataset's training corpus is touched.",
+    "trivia_qa rc.nocontext/test is deliberately unused: its answer aliases are empty and value is '<unk>'.",
+    "smoke20 is carved out before the split and carries split='smoke'; it must never be reported as a metric.",
+    "small200 is a deterministic, stratified subset of the test split.",
+    "The split is assigned per cluster_id, so identifier collisions and lexical near-duplicate clusters cannot straddle splits.",
+    "Questions whose canonical gold answer appears in the prompt are dropped by default (cleaning.drop_gold_in_prompt): they can be answered by copying. Counts are in cleaning.*:dropped_gold_in_prompt and a sample is in excluded_copyable_questions.",
+    "Alias phrases appearing in a question are kept and only counted; see excluded_copyable_questions.alias_policy."
+  ]
+}

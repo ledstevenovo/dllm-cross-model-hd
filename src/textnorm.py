@@ -1,22 +1,9 @@
-"""Text normalisation shared by question deduplication and answer matching.
+"""Versioned project normalization for frozen questions and answer proposals.
 
-The answer-matching normaliser is deliberately the **SQuAD / HotpotQA official**
-``normalize_answer`` (lowercase, strip punctuation, drop the articles
-``a``/``an``/``the``, collapse whitespace).  Staying faithful to the published
-metric makes our label agreement comparable with the TriviaQA and HotpotQA
-literature instead of inventing a private notion of "same answer".
-
-Documented deviation from the published function: we apply Unicode NFKC
-normalisation first, so full-width and compatibility characters
-(``"Ａ"`` -> ``"A"``, ligatures, non-breaking spaces) fold before matching.
-This is required because the raw corpora contain such characters and NFKC is
-the only step that is *safe* here -- it never merges two strings that are
-semantically different, unlike accent folding, which we deliberately do **not**
-do (``cafe`` must not match ``café``).
-
-Question normalisation reuses the same function on purpose: deduplication should
-not consider two questions different just because one says "the" and the other
-does not.
+Uses NFKC, lowercase, ASCII punctuation replaced by spaces, article removal
+and whitespace collapse. Punctuation replacement differs from official SQuAD
+punctuation deletion; no equivalence to published benchmark EM is claimed.
+Accent marks are preserved. Numbers are matched before this normalization.
 """
 
 from __future__ import annotations
@@ -24,6 +11,7 @@ from __future__ import annotations
 import re
 import string
 import unicodedata
+from decimal import Decimal
 from typing import Iterable, Iterator, Optional
 
 __all__ = [
@@ -68,7 +56,7 @@ def collapse_whitespace(value: str) -> str:
 
 
 def remove_punctuation(value: str) -> str:
-    """Replace ASCII punctuation with spaces (SQuAD ``remove_punc``).
+    """Replace ASCII punctuation with spaces (project convention).
 
     Punctuation is replaced, not deleted, so ``"a-b"`` becomes ``"a b"`` and can
     never be glued into the different token ``"ab"``.  Unicode punctuation is
@@ -128,7 +116,7 @@ def normalized_variants(values: Iterable[object]) -> list[str]:
     return sorted(seen)
 
 
-def extract_number(value: object) -> Optional[float]:
+def extract_number(value: object) -> Optional[Decimal]:
     """Parse a plain number, or return ``None`` if the string is not one.
 
     Handles an optional sign, thousands separators (``"1,000"``) and decimals.
@@ -139,7 +127,7 @@ def extract_number(value: object) -> Optional[float]:
     if not text or not _NUMBER_RE.match(text):
         return None
     try:
-        return float(text.replace(",", ""))
+        return Decimal(text.replace(",", ""))
     except ValueError:  # pragma: no cover - guarded by the regex above
         return None
 

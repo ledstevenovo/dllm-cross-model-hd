@@ -1,0 +1,94 @@
+{
+  "passed": true,
+  "threshold": 0.85,
+  "records": 16606,
+  "pair_count": 12,
+  "pairs": [
+    {
+      "a": "triviaqa__bb_1626",
+      "b": "triviaqa__wh_2061",
+      "jaccard": 0.8571428571428571,
+      "same_split": true,
+      "same_cluster": true
+    },
+    {
+      "a": "triviaqa__bb_956",
+      "b": "triviaqa__bb_956__alt1",
+      "jaccard": 0.8888888888888888,
+      "same_split": true,
+      "same_cluster": true
+    },
+    {
+      "a": "triviaqa__bt_4229",
+      "b": "triviaqa__qz_6819",
+      "jaccard": 1.0,
+      "same_split": true,
+      "same_cluster": true
+    },
+    {
+      "a": "triviaqa__bt_4324",
+      "b": "triviaqa__qb_4561",
+      "jaccard": 0.8571428571428571,
+      "same_split": true,
+      "same_cluster": true
+    },
+    {
+      "a": "triviaqa__odql_11061",
+      "b": "triviaqa__sfq_17562",
+      "jaccard": 0.8571428571428571,
+      "same_split": true,
+      "same_cluster": true
+    },
+    {
+      "a": "triviaqa__odql_11795",
+      "b": "triviaqa__wh_847",
+      "jaccard": 0.8888888888888888,
+      "same_split": true,
+      "same_cluster": true
+    },
+    {
+      "a": "triviaqa__qb_3876",
+      "b": "triviaqa__bt_2674",
+      "jaccard": 0.9,
+      "same_split": true,
+      "same_cluster": true
+    },
+    {
+      "a": "triviaqa__qf_1893",
+      "b": "triviaqa__sfq_2925",
+      "jaccard": 1.0,
+      "same_split": true,
+      "same_cluster": true
+    },
+    {
+      "a": "triviaqa__sfq_15066",
+      "b": "triviaqa__sfq_6929",
+      "jaccard": 0.8888888888888888,
+      "same_split": true,
+      "same_cluster": true
+    },
+    {
+      "a": "triviaqa__sfq_18370",
+      "b": "triviaqa__sfq_16410",
+      "jaccard": 0.9,
+      "same_split": true,
+      "same_cluster": true
+    },
+    {
+      "a": "triviaqa__sfq_21670",
+      "b": "triviaqa__qf_2136",
+      "jaccard": 0.875,
+      "same_split": true,
+      "same_cluster": true
+    },
+    {
+      "a": "triviaqa__tc_3129",
+      "b": "triviaqa__dpql_1994",
+      "jaccard": 0.8888888888888888,
+      "same_split": true,
+      "same_cluster": true
+    }
+  ],
+  "violations": [],
+  "limitation": "Lexical token-set overlap, not complete semantic paraphrase detection."
+}

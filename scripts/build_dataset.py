@@ -70,6 +70,7 @@ from src.schema import (  # noqa: E402
     validate_records,
 )
 from src.splitting import assign_splits, select_stratified  # noqa: E402
+from src.dedup import cluster_mapping  # noqa: E402
 from src.textnorm import (  # noqa: E402
     collapse_whitespace,
     normalize_question,
@@ -229,6 +230,8 @@ def verify_inputs(
     if not os.path.exists(index_path):
         raise SystemExit(f"missing raw index {RAW_INDEX}; run scripts/download_raw.py first")
     index_files = read_json(index_path).get("files", {})
+    lock_path = os.path.join(repo_root, 'configs/datasets/sources.lock.json')
+    locked = {item['key']: item for item in read_json(lock_path)['files']}
 
     consumed: dict[str, Any] = {}
     for source in config["sources"]:
@@ -236,6 +239,9 @@ def verify_inputs(
         if key not in index_files:
             raise SystemExit(f"raw_key {key!r} is not present in {RAW_INDEX}")
         entry = dict(index_files[key])
+        for field in ('sha256','revision','repository','url'):
+            if entry.get(field) != locked[key][field]:
+                raise SystemExit(f'raw index differs from source lock: {key}/{field}')
         absolute = os.path.join(repo_root, entry["path"])
         if not os.path.exists(absolute):
             raise SystemExit(f"missing raw file {entry['path']}; run scripts/download_raw.py")
@@ -337,6 +343,8 @@ def read_source(
                 row_index=row_index,
                 source={
                     "raw_key": source["raw_key"],
+                    "repository": entry.get("repository"),
+                    "revision": entry.get("revision"),
                     "hf_dataset": entry.get("dataset"),
                     "hf_config": source.get("hf_config"),
                     "hf_split": source.get("hf_split"),
@@ -626,6 +634,11 @@ def main(argv: Sequence[str] | None = None) -> int:
     stats["pool:raw_rows_kept"] = len(rows)
 
     built = cluster_rows(rows, stats)
+    mapping, near_duplicate_pairs = cluster_mapping(
+        [item.record for item in built], config.get('dedup', {}).get('jaccard_threshold', 0.85))
+    built = [replace(item, record=replace(item.record, cluster_id=mapping[item.record.cluster_id]))
+             for item in built]
+    stats['dedup:near_duplicate_pairs'] = len(near_duplicate_pairs)
     stats["pool:records"] = len(built)
     stats["pool:clusters"] = len({item.record.cluster_id for item in built})
 
@@ -751,6 +764,8 @@ def main(argv: Sequence[str] | None = None) -> int:
         "prompt": prompt_describe(),
         "code": {
             "git_commit": git_commit(repo_root),
+            "code_sha256": {name: sha256_file(os.path.join(REPO_ROOT, name)) for name in
+                            ['scripts/build_dataset.py','src/dedup.py','src/schema.py','src/prompts.py','src/textnorm.py','src/splitting.py','src/io_utils.py']},
             "prompt_module_version": PROMPT_TEMPLATE_VERSION,
             "prompt_fingerprint": prompt_fingerprint(),
             "python": sys.version.split()[0],
@@ -765,6 +780,7 @@ def main(argv: Sequence[str] | None = None) -> int:
             key: value for key, value in sorted(index_files.items()) if key not in consumed
         },
         "cleaning": dict(sorted(stats.items())),
+        "near_duplicate_pairs": near_duplicate_pairs,
         "excluded_copyable_questions": {
             "rule": (
                 "A question is excluded when its canonical gold answer value appears in the "
@@ -804,7 +820,7 @@ def main(argv: Sequence[str] | None = None) -> int:
             "trivia_qa rc.nocontext/test is deliberately unused: its answer aliases are empty and value is '<unk>'.",
             "smoke20 is carved out before the split and carries split='smoke'; it must never be reported as a metric.",
             "small200 is a deterministic, stratified subset of the test split.",
-            "The split is assigned per cluster_id, so identifier collisions and future near-duplicate clusters cannot straddle splits.",
+            "The split is assigned per cluster_id, so identifier collisions and lexical near-duplicate clusters cannot straddle splits.",
             "Questions whose canonical gold answer appears in the prompt are dropped by default (cleaning.drop_gold_in_prompt): they can be answered by copying. Counts are in cleaning.*:dropped_gold_in_prompt and a sample is in excluded_copyable_questions.",
             "Alias phrases appearing in a question are kept and only counted; see excluded_copyable_questions.alias_policy.",
         ],

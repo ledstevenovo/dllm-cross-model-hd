@@ -15,8 +15,8 @@ Three properties matter here, and each rules out the obvious shortcut:
    near-duplicate of a training question can never appear in test.
 
 3. **Stratified subsets are drawn from one fixed hash order**, not from a
-   shuffled list.  ``smoke20`` and ``small200`` therefore stay stable when new
-   questions are added to the pool, which is what makes a 20-question pilot
+   shuffled list.  the order of existing members stays stable, but top-k membership can
+   change when new questions are added to the pool, which is what makes a 20-question pilot
    comparable with the 200-question run and with the full-scale run.
 """
 
@@ -74,6 +74,8 @@ def assign_splits(
     Fractions are required to sum to 1 (within floating-point tolerance) so a
     typo in the config cannot silently leave questions unassigned.
     """
+    if not ratios or any(not math.isfinite(f) or f < 0 for _, f in ratios):
+        raise ValueError("ratios must be finite and nonnegative")
     total = sum(fraction for _, fraction in ratios)
     if not math.isclose(total, 1.0, rel_tol=0.0, abs_tol=1e-9):
         raise ValueError(f"split ratios must sum to 1.0, got {total!r}")
@@ -107,6 +109,8 @@ def allocate_counts(sizes: Mapping[str, int], total: int) -> dict[str, int]:
     tie-break) guarantees the allocation sums to exactly ``total``, so
     ``small200`` really contains 200 questions and not 198 or 203.
     """
+    if any(size < 0 for size in sizes.values()):
+        raise ValueError("stratum sizes must be nonnegative")
     population = sum(sizes.values())
     if total < 0:
         raise ValueError("total must be non-negative")
@@ -138,12 +142,12 @@ def select_stratified(
     """Pick ``total`` cluster ids proportionally across strata, deterministically.
 
     Members of each stratum are ordered by :func:`hash_rank` and the first
-    ``k`` are taken.  Because the order is a hash of the id alone, the selected
-    set for a given ``total`` never changes when the surrounding pool changes.
+    ``k`` are taken.  The order is deterministic for a fixed pool. New lower-ranked IDs or changed
+    stratum allocations can change the selected set when the pool grows.
     """
     counts = allocate_counts({name: len(ids) for name, ids in strata.items()}, total)
     chosen: dict[str, list[str]] = {}
     for name, ids in strata.items():
-        ordered = sorted(ids, key=lambda cluster_id: hash_rank(seed, salt, cluster_id))
+        ordered = sorted(ids, key=lambda cluster_id: (hash_rank(seed, salt, cluster_id),cluster_id))
         chosen[name] = ordered[: counts[name]]
     return chosen

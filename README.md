@@ -1,0 +1,56 @@
+# dLLM 跨模型幻觉检测：离线实验工具
+
+本项目已具备数据准备、统一轨迹格式、TRE/统计特征、LR/小型 MLP、双向迁移与消融评测的 CPU 流程。**尚未运行真实 LLaDA/Dream，也没有真实幻觉检测结论。**
+
+## 环境
+
+Python 3.12/3.13；使用 uv + 项目内 `.venv`。无需 Conda，无 torch/CUDA 依赖。
+
+```powershell
+uv sync --locked
+uv run pytest
+uv run python scripts/audit_dataset.py --output reports/dataset_audit.json
+uv run python scripts/audit_near_duplicates.py
+```
+
+当前机器已安装并锁定 CPU 依赖。Windows Store Python 在受限沙箱内无法启动现有 venv；本次通过已批准的外部执行验证，不代表所有机器都需要提权。详见 docs/ENVIRONMENT.md。
+
+## 数据
+
+```powershell
+uv run python scripts/download_raw.py
+uv run python scripts/build_dataset.py
+uv run python scripts/build_pilot.py
+uv run python scripts/verify_rebuild.py
+```
+
+数据来源 revision 和 SHA256 固定在 configs/datasets/sources.lock.json。处理数据及清单保留在 data/raw_qa 和 data/manifests。近重复聚簇已更新原始划分；使用最新 manifest，勿混用 DeepSeek 旧版 split。
+
+- smoke20：工程专用，独立于研究数据。
+- small200：保留的纯 test 子集，不能用来调参或训练。
+- pilot200：120 train / 30 validation / 50 test，两模型共用这一组问题；小样本不保证两种标签都充足。
+
+字段和限制见 docs/DATASET.md；标签规则和人工审核要求见 docs/LABEL_PROTOCOL.md。
+
+## 不需要 GPU 的完整演练
+
+```powershell
+uv run python scripts/offline.py demo --output results/synthetic_demo --bootstrap 100
+```
+
+生成 400 条**模拟**轨迹，经过 NPZ 保存读取、特征 parquet、10 组特征 × LR/MLP、双向迁移矩阵、TRE 基线、置信区间和绘图。所有模拟产物均在 results/ 下，不混入真实数据。生成器人为植入的信号仅用来验证代码。
+
+## 有真实轨迹之后
+
+```powershell
+uv run python scripts/offline.py label --generations data/generations/run.jsonl --output data/labels/proposals.jsonl
+# 人工审核生成回答，保存 label_source 和 human_reviewed，再做以下步骤
+uv run python scripts/offline.py extract --traces data/trajectories/run --labels data/labels/reviewed.jsonl --output data/features/run.parquet
+uv run python scripts/offline.py evaluate --features data/features/run.parquet --output results/main --feature-sets entropy_raw relative_normalized --bootstrap 1000
+```
+
+`evaluate --help` 查看特征集、LR/MLP、随机种子、无 scaler 对照和独立跨数据集轴（--axis dataset）。更改长度/步数/block/精度时分别生成输入表与结果目录；正式输入默认要求 BF16，量化调试须显式 --allow-nonbf16 并单独报告。源 train 拟合 scaler 和检测器，源 validation 选超参与 F1 阈值；目标 test 只用于最终评分。所有正确/错误标签都要求审核，自动匹配提案不会进入主指标。
+
+输出包括 transfer_matrix.csv、tre_baselines.csv、ablation.csv、coverage.json、predictions.csv、training_audit.json、detectors.joblib、两张图和 manifest.json。清单含代码哈希、输入哈希、精度、随机种子和依赖。joblib 是本地训练产物，仅加载自己可信的文件。
+
+轨迹字段与公式依据见 docs/TRACE_AND_EVALUATION.md。4090D 阶段仍需真实模型对齐验证、BF16 pilot、标签审核与正式采集。
