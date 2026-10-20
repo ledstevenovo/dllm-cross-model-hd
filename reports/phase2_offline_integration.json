@@ -1,0 +1,27 @@
+{
+  "passed": true,
+  "synthetic": true,
+  "rows": 40,
+  "checks": [
+    {
+      "family": "llada",
+      "step": "label",
+      "returncode": 0
+    },
+    {
+      "family": "llada",
+      "step": "extract",
+      "returncode": 0
+    },
+    {
+      "family": "dream",
+      "step": "label",
+      "returncode": 0
+    },
+    {
+      "family": "dream",
+      "step": "extract",
+      "returncode": 0
+    }
+  ]
+}

@@ -5,8 +5,10 @@ B eqs. (58)/(59): sum_t (t/T) sum_{newly revealed i} H[t,i]. Natural log.
 The full-position score and effective-answer variant are separate columns.
 """
 import json
+import os
 from pathlib import Path
 import numpy as np
+from .io_utils import sync_directory
 
 REQUIRED = ('sample_id','question_id','dataset','split','model_id','checkpoint_revision','tokenizer_revision','code_commit','environment','prompt','seed','gen_length','steps','block_size','temperature','sampling_method','precision','generated_text','termination','effective_length','vocab_size')
 
@@ -67,7 +69,10 @@ def save_trace(path, meta, arrays):
     partial=path.with_suffix(path.suffix+'.partial')
     with partial.open('wb') as f:
         np.savez_compressed(f, metadata=np.array(json.dumps({**meta,'trace_schema':'trace-v1'})), **arrays)
+        f.flush()
+        os.fsync(f.fileno())
     partial.replace(path)
+    sync_directory(path.parent)
 
 
 def load_trace(path):

@@ -1,0 +1,6 @@
+# Separate collector CPU test environment only; no checkpoint downloads.
+# For real GPU inference use your CUDA-enabled torch wheel, not this CPU test pin.
+torch==2.13.0
+transformers==4.46.2
+numpy==2.5.4
+pytest==9.1.1

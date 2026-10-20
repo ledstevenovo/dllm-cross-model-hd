@@ -1,0 +1,13 @@
+{
+  "passed": true,
+  "source_tree": "fb78fba562446576866c6d3c1a459bdcb434fb96",
+  "command": [
+    "D:\\paper\\dllm-cross-model-hd\\.venv-collector-test\\Scripts\\python.exe",
+    "-m",
+    "pytest"
+  ],
+  "scope": "Fresh git archive of staged tracked content, including fixture SHA checks and all CPU tests; no real models/GPU.",
+  "stdout": "........................................................................ [ 72%]\n............................                                             [100%]\n100 passed in 10.98s\n",
+  "stderr": "",
+  "checkout": "D:\\paper\\dllm-cross-model-hd\\.tmp\\phase2_export_20261021T021853\\checkout"
+}

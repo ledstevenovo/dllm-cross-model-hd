@@ -1,0 +1,22 @@
+{
+  "collector_version": "collector-v1",
+  "dream_generation_utils": {
+    "model_id": "Dream-org/Dream-v0-Instruct-7B",
+    "revision": "05334cb9faaf763692dcf9d8737c642be2b2a6ae",
+    "sha256": "7f8ad01484898946b3c9c9d5ebc85e5ac726061d0fa7b4a522c4b8110c13a921",
+    "shift_before_hook": true,
+    "reference_lines": {
+      "shift": 412,
+      "logits_hook": 415,
+      "tokens_hook": 453
+    }
+  },
+  "llada_reference": {
+    "repository": "ZeroLoss-Lab/Lost-in-Diffusion",
+    "commit": "ed158d4",
+    "path": "LLaDA/generate.py",
+    "sha256": "aafeca55f761a8ed2a4dbf896b6b4b8e7a886c7f98db4b07d25ee22ac91a1e0c",
+    "license": "MIT",
+    "line_endings": "LF canonical Git source"
+  }
+}

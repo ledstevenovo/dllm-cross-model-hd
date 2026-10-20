@@ -29,7 +29,7 @@ vGPU-32GB不是具体GPU型号。先记录GPU名称、compute capability、实�
 
 模型revision固定在configs/models中。推理环境与CPU环境分离，使用模型官方兼容的Python/torch/transformers。不能仅用现有CPU环境直接加载模型。
 
-真实模型采集器尚未实现，不能调用不存在的collect脚本。需要补齐LLaDA/Dream适配器并验证Dream shift、pre-reveal熵和MASK/reveal时点。细节见TRACE_AND_EVALUATION.md和T4_15GB_执行计划.md；T4计划的量化策略只作低显存备选。
+真实模型采集器现已实现并通过CPU替身路径测试；使用scripts/collect_llada.py和collect_dream.py，命令见PHASE2_COLLECTORS.md。真实模型仍需验证Dream shift、pre-reveal熵和MASK/reveal时点。细节见TRACE_AND_EVALUATION.md和T4_15GB_执行计划.md；T4计划的量化策略只作低显存备选。
 
 原始权重和轨迹放持久云盘，按revision缓存；完成后回传并核验文件再释放实例。正式结果与模拟结果/量化结果分目录，记录实际commit和配置。
 

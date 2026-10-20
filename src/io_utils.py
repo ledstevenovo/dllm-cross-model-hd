@@ -18,7 +18,22 @@ __all__ = [
     "sha256_file",
     "write_json",
     "write_jsonl",
+    "sync_directory",
 ]
+
+
+def sync_directory(path):
+    """Persist directory-entry replacements on POSIX; Windows has no portable API.
+
+    Do not hide POSIX fsync failures: acknowledging a durable commit would be
+    incorrect on a filesystem that refused the sync.
+    """
+    if os.name != 'nt':
+        fd = os.open(path, os.O_RDONLY | getattr(os, 'O_DIRECTORY', 0))
+        try:
+            os.fsync(fd)
+        finally:
+            os.close(fd)
 
 
 def ensure_dir(path: str) -> str:

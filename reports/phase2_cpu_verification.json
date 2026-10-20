@@ -1,0 +1,131 @@
+{
+  "passed": true,
+  "synthetic": true,
+  "scope": "CPU fixture models execute real collection paths; pinned native Dream sampler; NOT real model/GPU acceptance.",
+  "models": [
+    {
+      "family": "llada",
+      "traces": 20,
+      "steps": 64,
+      "length": 64,
+      "manifest_sha256": "cf8248c15113161462b2e4336bfc04902ce2010d34599d10ca29b36641989c86"
+    },
+    {
+      "family": "dream",
+      "traces": 20,
+      "steps": 64,
+      "length": 64,
+      "manifest_sha256": "df7da8284960a1fa89358db7a3fc01a9a533407e294eb9a39d94d833661e94ec"
+    }
+  ],
+  "checks": [
+    {
+      "command": [
+        "D:\\paper\\dllm-cross-model-hd\\.venv-collector-test\\Scripts\\python.exe",
+        "D:\\paper\\dllm-cross-model-hd\\scripts\\collect_llada.py",
+        "--fixture",
+        "--questions",
+        "D:\\paper\\dllm-cross-model-hd\\data\\raw_qa\\subsets\\smoke20.jsonl",
+        "--output",
+        "D:\\paper\\dllm-cross-model-hd\\results\\collectors_cpu_reviewed\\llada",
+        "--verify-observer"
+      ],
+      "exit_code": 0,
+      "stdout": "[llada] 1/20 hotpotqa__5a74d4f355429974ef308c79__seed20261020 0.063s\n[llada] 2/20 hotpotqa__5a7f354b5542992e7d278c8c__seed20261020 0.058s\n[llada] 3/20 hotpotqa__5a8612d45542996432c5719b__seed20261020 0.058s\n[llada] 4/20 hotpotqa__5ab851e35542990e739ec8c3__seed20261020 0.065s\n[llada] 5/20 hotpotqa__5ac1b1345542994ab5c67dd0__seed20261020 0.068s\n[llada] 6/20 hotpotqa__5ac401bb55429919431738f4__seed20261020 0.064s\n[llada] 7/20 hotpotqa__5adf92f15542995534e8c7f3__seed20261020 0.071s\n[llada] 8/20 hotpotqa__5ae377c45542990afbd1e16b__seed20261020 0.055s\n[llada] 9/20 triviaqa__bb_6378__seed20261020 0.059s\n[llada] 10/20 triviaqa__dpql_3461__seed20261020 0.071s\n[llada] 11/20 triviaqa__dpql_5071__seed20261020 0.060s\n[llada] 12/20 triviaqa__odql_2328__seed20261020 0.059s\n[llada] 13/20 triviaqa__qb_1147__seed20261020 0.059s\n[llada] 14/20 triviaqa__qf_270__seed20261020 0.063s\n[llada] 15/20 triviaqa__qw_1940__seed20261020 0.111s\n[llada] 16/20 triviaqa__sfq_15587__seed20261020 0.063s\n[llada] 17/20 triviaqa__sfq_18400__seed20261020 0.061s\n[llada] 18/20 triviaqa__sfq_4029__seed20261020 0.068s\n[llada] 19/20 triviaqa__tc_2256__seed20261020 0.071s\n[llada] 20/20 triviaqa__wh_4139__seed20261020 0.057s\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "D:\\paper\\dllm-cross-model-hd\\.venv-collector-test\\Scripts\\python.exe",
+        "D:\\paper\\dllm-cross-model-hd\\scripts\\collect_llada.py",
+        "--fixture",
+        "--questions",
+        "D:\\paper\\dllm-cross-model-hd\\data\\raw_qa\\subsets\\smoke20.jsonl",
+        "--output",
+        "D:\\paper\\dllm-cross-model-hd\\results\\collectors_cpu_reviewed\\llada",
+        "--verify-observer",
+        "--resume"
+      ],
+      "exit_code": 0,
+      "stdout": "All samples already validated; no model loaded.\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "D:\\paper\\dllm-cross-model-hd\\.venv-collector-test\\Scripts\\python.exe",
+        "D:\\paper\\dllm-cross-model-hd\\scripts\\collect_dream.py",
+        "--fixture",
+        "--questions",
+        "D:\\paper\\dllm-cross-model-hd\\data\\raw_qa\\subsets\\smoke20.jsonl",
+        "--output",
+        "D:\\paper\\dllm-cross-model-hd\\results\\collectors_cpu_reviewed\\dream",
+        "--verify-observer"
+      ],
+      "exit_code": 0,
+      "stdout": "[dream] 1/20 hotpotqa__5a74d4f355429974ef308c79__seed20261020 0.085s\n[dream] 2/20 hotpotqa__5a7f354b5542992e7d278c8c__seed20261020 0.078s\n[dream] 3/20 hotpotqa__5a8612d45542996432c5719b__seed20261020 0.119s\n[dream] 4/20 hotpotqa__5ab851e35542990e739ec8c3__seed20261020 0.113s\n[dream] 5/20 hotpotqa__5ac1b1345542994ab5c67dd0__seed20261020 0.113s\n[dream] 6/20 hotpotqa__5ac401bb55429919431738f4__seed20261020 0.127s\n[dream] 7/20 hotpotqa__5adf92f15542995534e8c7f3__seed20261020 0.088s\n[dream] 8/20 hotpotqa__5ae377c45542990afbd1e16b__seed20261020 0.121s\n[dream] 9/20 triviaqa__bb_6378__seed20261020 0.076s\n[dream] 10/20 triviaqa__dpql_3461__seed20261020 0.078s\n[dream] 11/20 triviaqa__dpql_5071__seed20261020 0.081s\n[dream] 12/20 triviaqa__odql_2328__seed20261020 0.085s\n[dream] 13/20 triviaqa__qb_1147__seed20261020 0.068s\n[dream] 14/20 triviaqa__qf_270__seed20261020 0.078s\n[dream] 15/20 triviaqa__qw_1940__seed20261020 0.072s\n[dream] 16/20 triviaqa__sfq_15587__seed20261020 0.082s\n[dream] 17/20 triviaqa__sfq_18400__seed20261020 0.078s\n[dream] 18/20 triviaqa__sfq_4029__seed20261020 0.101s\n[dream] 19/20 triviaqa__tc_2256__seed20261020 0.074s\n[dream] 20/20 triviaqa__wh_4139__seed20261020 0.085s\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "D:\\paper\\dllm-cross-model-hd\\.venv-collector-test\\Scripts\\python.exe",
+        "D:\\paper\\dllm-cross-model-hd\\scripts\\collect_dream.py",
+        "--fixture",
+        "--questions",
+        "D:\\paper\\dllm-cross-model-hd\\data\\raw_qa\\subsets\\smoke20.jsonl",
+        "--output",
+        "D:\\paper\\dllm-cross-model-hd\\results\\collectors_cpu_reviewed\\dream",
+        "--verify-observer",
+        "--resume"
+      ],
+      "exit_code": 0,
+      "stdout": "All samples already validated; no model loaded.\n",
+      "stderr": ""
+    }
+  ],
+  "elapsed_seconds": 20.830171999987215,
+  "environment": {
+    "torch": "2.13.0+cpu",
+    "transformers": "4.46.2",
+    "numpy": "2.5.4",
+    "pytest": "9.1.1"
+  },
+  "source_hashes": {
+    "src\\__init__.py": "dc4842f3df0c590b34e2ff18c1a4eef2ac688cfac229c65f46d9cbcfc18471cf",
+    "src\\collection_cli.py": "09b77318772b375c3f931b50b768a56f8ec0812215294b952cda35dc4458300b",
+    "src\\collection_store.py": "d8636197959fd7c5f6f80fa66e50cb55666525212761e2715c3086767a9431e0",
+    "src\\collectors.py": "0d91d0dcf5a3d01aa5a35116ee057b3dcdbc5175ab1502622ea774eb8e064316",
+    "src\\dedup.py": "598e32925280833228060576a7f3b1f6776331e35dde0826a8fbc1fa4e14b7e0",
+    "src\\detectors.py": "cbc2de9fc71f2f729c5f52e14690aa1c59cb9392e59742f2815c8f95846e8227",
+    "src\\evaluation.py": "b65c4c5c1c94bb9d3fc53551e711d89f520d995f1fa501d901043e7e0ca1dc41",
+    "src\\io_utils.py": "9c3abd60a7f7e4f1c0563040c2684b8b6135c76bb49f2375ea6093a034b65c1d",
+    "src\\labeling.py": "87cc3b322488eb5a7550d39299536e4729706a27f1c5bec00d5c8b88478ebdd2",
+    "src\\prompts.py": "770ff189bf103c8ff80bebb25254572f9f98921123a3d755c344e87962545bed",
+    "src\\schema.py": "c1e93a9be3aff91bdd2d19e07618a0e8800666e2ec1b8e75d35bdcc6e7924f57",
+    "src\\splitting.py": "80b7e55c2205e397b0c2f82aec4baff610a98bd05865ffaf618f83b83d1d5f99",
+    "src\\textnorm.py": "e9060a191d5f50c6ecc8993bef1dc9142237b4282b0636b60c57f2f4defa5401",
+    "src\\trace_schema.py": "a3bfadd20a9f8ed7484c7525be9c6ac0569e823f9048844c14e168e3827e0413",
+    "scripts\\acceptance.py": "963d7e81eebb253eb7bbf26f057fb76b1cc728f732a8be59c103555348380bae",
+    "scripts\\audit_dataset.py": "7194869f7ce9a3cdc12a93835942d15cfcd0ef74aeaa04b1a87e4d19fb70fdd8",
+    "scripts\\audit_near_duplicates.py": "0a798c47ddca1b2248867335e3489099631b448c80bd4038d485773d02937e09",
+    "scripts\\audit_offline_artifacts.py": "6716ed34a085db93ba588542b21d6cffbcca93a52e846e6b4d9d3ca1c9ff3e54",
+    "scripts\\audit_raw.py": "56a10c64c5542f94cb0f7d8ee9868010e1241dbe94471b029b3acacf6c71188f",
+    "scripts\\build_dataset.py": "803525326ac1ddd6ffe4615481440506a2b8badac8e06b7a89048c61a0e5d8b4",
+    "scripts\\build_pilot.py": "d74e8b691ac0aecf3f623e150af950bbc422929b57c759854ab3ebac97b69467",
+    "scripts\\collect_dream.py": "772bb71aa3bb77346a21aa4f96c201adbc488aaaa6710f56b2bdbcd5c9e61e3b",
+    "scripts\\collect_llada.py": "fcb326df769438c3df29c64b2157303a93bceda54410551644419cfb1644c3c5",
+    "scripts\\download_raw.py": "c10ebfcf6cadec1fe301b7bbc4445aecb9a494f8f96ebafba8f0ed7a6005cd4f",
+    "scripts\\inspect_raw.py": "11e6149acd3aa44600a2270a471c3c1a3a7430ddb6ac600abfbe3fa4458efe3d",
+    "scripts\\offline.py": "ccb4d2641108d45c2099869e7d5d2cccdfb0f7e61595adf65ec177a079ba39ef",
+    "scripts\\verify_collectors_cpu.py": "4ff77a989a389c1efec53821ecce3cd8a191e612b4aa633dde399bfcee2e8e6e",
+    "scripts\\verify_rebuild.py": "7088d24441178be136ef93b60bd12c7dd2d97d6b9dfb8167611f82ae3f04182e",
+    "tests\\fixtures\\__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "tests\\fixtures\\collector_models.py": "3ef047f3c6cf7abb9704886555698ea3a03b621810d3e256ff6895a1f5407074",
+    "tests\\fixtures\\dream_generation_utils.py": "7f8ad01484898946b3c9c9d5ebc85e5ac726061d0fa7b4a522c4b8110c13a921",
+    "tests\\fixtures\\llada_generate_reference.py": "aafeca55f761a8ed2a4dbf896b6b4b8e7a886c7f98db4b07d25ee22ac91a1e0c",
+    "configs\\collection_sources.json": "e4f7215a6ac750d08704f2f5f92807936fa703a353c8562f3f5bb548eb835d86",
+    "configs\\datasets\\build.toml": "d5a85ccf8b2d08fef0b66e9de2e0cd7b75fdb338d503a3a65a9971e9ad39fbf7",
+    "configs\\datasets\\sources.lock.json": "051cab877b505af0d94b37c2cfeab891acf8293bddcfeafe187d711520d7d8eb",
+    "configs\\models\\dream.json": "3607836a1241ba4ae08075b89c623551a68436d0e35571c87b0377d6cfedd587",
+    "configs\\models\\llada.json": "6265f3a169e13c5e89307c5c196fa9e780c53dd6bfffc8ba6fa029f2a48e4139"
+  }
+}

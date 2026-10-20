@@ -58,3 +58,15 @@ uv run python scripts/offline.py evaluate --features data/features/run.parquet -
 ## 当前32GB环境完整方案
 
 见 [vGPU 32GB完整实验方案](docs/VGPU_32GB_完整实验方案.md)，已按【无卡】准备/分析和【有卡】真实采集分步安排。截图镜像兼容性与BF16能力仍需上机核验。
+
+
+## 第2阶段：真实模型采集器（已实现，本地验收）
+
+入口：scripts/collect_llada.py / scripts/collect_dream.py。位置对齐、FP32统计、manifest、原子落盘与恢复已有CPU测试。真实7B/8B BF16与GPU单题/20题仍待上机验收。见 [采集器使用说明](docs/PHASE2_COLLECTORS.md)。
+
+```bash
+# 在独立的torch/transformers CPU测试环境运行，不下载模型权重
+python scripts/verify_collectors_cpu.py --output results/collectors_cpu_new
+```
+
+普通CPU项目环境未安装torch时，采集器测试会明确skip；必须另运行说明中的独立采集器测试环境，不能用skip冒充通过。

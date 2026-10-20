@@ -1,0 +1,7 @@
+# Third-party notices
+
+`tests/fixtures/dream_generation_utils.py` is an unmodified copy of Dream-org/Dream-v0-Instruct-7B at revision `05334cb9faaf763692dcf9d8737c642be2b2a6ae`, downloaded from https://huggingface.co/Dream-org/Dream-v0-Instruct-7B/blob/05334cb9faaf763692dcf9d8737c642be2b2a6ae/generation_utils.py . Copyright 2024 The Dream team, HKUNLP Group and HuggingFace Inc.; Apache-2.0. Original header retained, full license at tests/fixtures/LICENSE.apache-2.0. SHA256 is pinned in configs/collection_sources.json. It is used only by CPU fixture tests; real runs use the checkpoint's own native code and verify its source hash.
+
+`tests/fixtures/llada_generate_reference.py` is the reference sampler from `ZeroLoss-Lab/Lost-in-Diffusion` commit `ed158d4`, `LLaDA/generate.py`, already present in the user's reference checkout. MIT copyright 2025 NieShenRuc; full license at tests/fixtures/LICENSE.llada. SHA256 is pinned in configs/collection_sources.json. Tests disable printing delays only at runtime; the source is preserved with canonical Git LF line endings. The LLaDA loop in src/collectors.py adapts that uniform allocation/low-confidence greedy algorithm for pre-reveal observation without the reference's diagnostic printing and sleeps. This notice and the MIT license cover the adapted loop as well.
+
+Model weights and datasets retain their original terms. No model weights are bundled here.
