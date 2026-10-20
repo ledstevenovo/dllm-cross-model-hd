@@ -54,3 +54,7 @@ uv run python scripts/offline.py evaluate --features data/features/run.parquet -
 输出包括 transfer_matrix.csv、tre_baselines.csv、ablation.csv、coverage.json、predictions.csv、training_audit.json、detectors.joblib、两张图和 manifest.json。清单含代码哈希、输入哈希、精度、随机种子和依赖。joblib 是本地训练产物，仅加载自己可信的文件。
 
 轨迹字段与公式依据见 docs/TRACE_AND_EVALUATION.md。4090D 阶段仍需真实模型对齐验证、BF16 pilot、标签审核与正式采集。
+
+## 当前32GB环境完整方案
+
+见 [vGPU 32GB完整实验方案](docs/VGPU_32GB_完整实验方案.md)，已按【无卡】准备/分析和【有卡】真实采集分步安排。截图镜像兼容性与BF16能力仍需上机核验。
