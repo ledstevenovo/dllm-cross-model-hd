@@ -114,3 +114,19 @@ small_total = 200
 min_question_chars = 1
 min_gold_chars     = 1
 max_gold_chars     = 1000
+
+# -- copyable-question policy -------------------------------------------------
+# A question whose *canonical gold answer value* already appears in the rendered
+# prompt can be answered by copying, which would inflate the correct-rate and
+# put easy negatives into the detector's training set.  Those questions are
+# excluded (790 of 25,349 rows: 64 TriviaQA, 726 HotpotQA -- almost all
+# multiple-choice and two-option comparison items).
+#
+# An *alias* phrase appearing in the question is NOT an exclusion reason: e.g.
+# "Which volcano in Tanzania is the highest mountain in Africa?" has gold
+# "Kilimanjaro" and alias "Highest mountain in Africa", and the canonical answer
+# cannot be copied from the prompt.  Those items are kept and only counted.
+#
+# Set to false to keep copyable questions (they are then tagged by the
+# excluded_copyable_questions manifest section rather than removed).
+drop_gold_in_prompt = true

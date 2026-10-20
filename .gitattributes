@@ -1,0 +1,12 @@
+# Every file whose byte content is hashed into data/manifests/*.json must be
+# byte-stable: if Git rewrote line endings on checkout, a fresh clone would fail
+# the input/output verification in scripts/build_dataset.py.  Keep -text last so
+# the specific rules win over the general one below.
+* text=auto eol=lf
+
+*.jsonl -text
+*.ids.txt -text
+*.json -text
+*.parquet -text
+*.npz -text
+*.png binary

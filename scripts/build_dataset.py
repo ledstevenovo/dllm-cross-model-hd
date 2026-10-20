@@ -58,8 +58,10 @@ from src.io_utils import (  # noqa: E402
 )
 from src.prompts import (  # noqa: E402
     PROMPT_TEMPLATE_VERSION,
+    answer_in_prompt,
     describe as prompt_describe,
     prompt_fingerprint,
+    render_prompt,
 )
 from src.schema import (  # noqa: E402
     RESEARCH_SPLITS,
@@ -253,11 +255,19 @@ def read_source(
     entry: Mapping[str, Any],
     cleaning: Mapping[str, Any],
     stats: Counter,
+    dropped: list[dict[str, Any]],
 ) -> list[RawQA]:
-    """Extract cleaned :class:`RawQA` rows from one raw parquet file."""
+    """Extract cleaned :class:`RawQA` rows from one raw parquet file.
+
+    ``dropped`` collects a bounded sample of the discarded copyable questions so
+    the manifest can show *which* items the gold-in-prompt rule removed, rather
+    than only how many.  Silently discarding a tenth of a dataset would be
+    indefensible; a reviewer must be able to read the discarded items.
+    """
     frame = pd.read_parquet(entry["absolute_path"])
     stats[f"{source['dataset']}:rows_read"] += len(frame)
 
+    drop_copyable = bool(cleaning.get("drop_gold_in_prompt", True))
     rows: list[RawQA] = []
     for row_index, row in enumerate(frame.to_dict(orient="records")):
         raw_id = str(dig(row, source["id_field"], row_index)).strip()
@@ -283,6 +293,30 @@ def read_source(
         if not (int(cleaning["min_gold_chars"]) <= len(gold_value) <= int(cleaning["max_gold_chars"])):
             stats[f"{source['dataset']}:dropped_unusable_gold"] += 1
             continue
+
+        prompt = render_prompt(question)
+        # A question that states its own canonical answer can be answered by
+        # copying, which would inflate the correct-rate and weaken the label
+        # signal behind the detector, so it is excluded by default.  The switch
+        # exists so the decision is revisable from the config alone.
+        if drop_copyable and answer_in_prompt(prompt, gold_value):
+            stats[f"{source['dataset']}:dropped_gold_in_prompt"] += 1
+            if len(dropped) < 40:
+                dropped.append(
+                    {
+                        "dataset": source["dataset"],
+                        "raw_id": raw_id,
+                        "answer_type": answer_type,
+                        "gold_answer": gold_value,
+                        "question": question,
+                    }
+                )
+            continue
+        # An alias phrase in the question is *not* a drop reason: it is usually
+        # the question's own wording (see prompts.assert_gold_not_in_prompt).
+        # It is counted so the distinction stays visible in the manifest.
+        if any(answer_in_prompt(prompt, alias) for alias in aliases):
+            stats[f"{source['dataset']}:alias_phrase_in_prompt_kept"] += 1
 
         stratum = str(source["stratum"])
         stratum_field = source.get("stratum_field")
@@ -564,6 +598,11 @@ def main(argv: Sequence[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("--config", default=DEFAULT_CONFIG)
     parser.add_argument("--repo-root", default=REPO_ROOT)
+    parser.add_argument(
+        "--dry-run",
+        action="store_true",
+        help="run the whole pipeline and all checks but write no files",
+    )
     args = parser.parse_args(argv)
 
     repo_root = os.path.abspath(args.repo_root)
@@ -577,9 +616,12 @@ def main(argv: Sequence[str] | None = None) -> int:
 
     # ---- extract -----------------------------------------------------------
     answer_value_fields: dict[str, str] = {}
+    dropped_examples: list[dict[str, Any]] = []
     rows: list[RawQA] = []
     for source in config["sources"]:
-        rows.extend(read_source(source, consumed[source["raw_key"]], cleaning, stats))
+        rows.extend(
+            read_source(source, consumed[source["raw_key"]], cleaning, stats, dropped_examples)
+        )
         answer_value_fields[source["dataset"]] = source["answer_value"]
     stats["pool:raw_rows_kept"] = len(rows)
 
@@ -630,6 +672,14 @@ def main(argv: Sequence[str] | None = None) -> int:
     checks = leak_checks(finalised, smoke_clusters, small_clusters)
     if not checks["passed"]:
         raise SystemExit(f"leak checks failed: {json.dumps(checks, ensure_ascii=False)[:2000]}")
+
+    if args.dry_run:
+        print(f"DRY RUN OK: {len(finalised)} records, no files written")
+        print(f"  validation : {validation}")
+        print(f"  leak checks: {checks['passed']}")
+        for key in sorted(stats):
+            print(f"  {key} = {stats[key]}")
+        return 0
 
     # ---- write ------------------------------------------------------------
     created_at = dt.datetime.now(dt.timezone.utc).strftime("%Y%m%dT%H%M%SZ")
@@ -715,6 +765,22 @@ def main(argv: Sequence[str] | None = None) -> int:
             key: value for key, value in sorted(index_files.items()) if key not in consumed
         },
         "cleaning": dict(sorted(stats.items())),
+        "excluded_copyable_questions": {
+            "rule": (
+                "A question is excluded when its canonical gold answer value appears in the "
+                "rendered prompt as a normalised token sequence with word boundaries. Such a "
+                "question can be answered by copying the prompt."
+            ),
+            "config_key": "cleaning.drop_gold_in_prompt",
+            "active": bool(cleaning.get("drop_gold_in_prompt", True)),
+            "alias_policy": (
+                "An alias phrase appearing in the question is NOT an exclusion reason and is "
+                "only counted (cleaning.*:alias_phrase_in_prompt_kept). TriviaQA questions "
+                "routinely reuse an alias phrase as their own wording, where the canonical "
+                "answer differs and cannot be copied."
+            ),
+            "samples": dropped_examples,
+        },
         "split_counts": split_counts,
         "subsets": subset_paths,
         "stratification": {
@@ -739,6 +805,8 @@ def main(argv: Sequence[str] | None = None) -> int:
             "smoke20 is carved out before the split and carries split='smoke'; it must never be reported as a metric.",
             "small200 is a deterministic, stratified subset of the test split.",
             "The split is assigned per cluster_id, so identifier collisions and future near-duplicate clusters cannot straddle splits.",
+            "Questions whose canonical gold answer appears in the prompt are dropped by default (cleaning.drop_gold_in_prompt): they can be answered by copying. Counts are in cleaning.*:dropped_gold_in_prompt and a sample is in excluded_copyable_questions.",
+            "Alias phrases appearing in a question are kept and only counted; see excluded_copyable_questions.alias_policy.",
         ],
     }
 

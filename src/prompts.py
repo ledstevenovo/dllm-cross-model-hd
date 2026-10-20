@@ -10,10 +10,11 @@ Design rules (these are research constraints, not style preferences):
    HotpotQA with its distractor paragraphs withheld, so both datasets ask the
    same kind of question: pure parametric recall.  This keeps the hallucination
    definition comparable across datasets.
-3. **The gold answer never appears in the prompt.**  :func:`assert_gold_not_in_prompt`
-   is the runtime guard; the build script calls it for every record, so a future
-   template edit that leaks an answer fails loudly instead of silently
-   inflating the correct-rate.
+3. **The gold answer value never appears in the prompt.**  :func:`answer_in_prompt`
+   and :func:`assert_gold_not_in_prompt` are the runtime guards; the build script
+   drops any question whose canonical answer is copyable from the prompt, so the
+   correct-rate is never inflated by copying.  Alias phrases are deliberately
+   *not* treated as leaks (see :func:`assert_gold_not_in_prompt`).
 4. **Frozen and fingerprinted.**  Any edit to :data:`PROMPT_TEMPLATE` changes
    :func:`prompt_fingerprint`, which is stamped into every record and into the
    run manifest.  Two datasets built with different fingerprints are not
@@ -37,6 +38,7 @@ __all__ = [
     "PROMPT_PLACEHOLDER",
     "PROMPT_TEMPLATE",
     "PROMPT_TEMPLATE_VERSION",
+    "answer_in_prompt",
     "assert_gold_not_in_prompt",
     "describe",
     "prompt_fingerprint",
@@ -94,22 +96,53 @@ def render_prompt(question: str) -> str:
     return PROMPT_TEMPLATE.format(question=question.strip())
 
 
-def assert_gold_not_in_prompt(prompt: str, gold_answers: list[str]) -> None:
-    """Raise if any acceptable gold answer is visible in the rendered prompt.
+def answer_in_prompt(prompt: str, answer: str, *, min_chars: int = 3) -> bool:
+    """Return whether ``answer`` is visible in ``prompt`` as a token sequence.
 
-    Matching is normalised *and* substring-based, because a leaked answer is
-    still leaked if it appears inside a longer word (``"Kinect"`` inside
-    ``"KinectShare"``).  Only non-trivial answers (>= 3 characters after
-    normalisation) are checked, otherwise a gold answer like ``"a"`` would match
-    every prompt.
+    Matching is normalised and **token-sequence** based, not substring based.
+    Two consequences, both deliberate:
+
+    * A leaked answer is still caught when the question merely wraps it in
+      punctuation or articles (``"the battle of Hastings"`` vs ``"Battle"``),
+      because normalisation strips those before the comparison.
+    * A false positive is avoided when the answer is a fragment of a longer word
+      (``"Bull"`` must not match ``"Bulldog"``), which a naive substring test
+      would report and which would then silently discard good questions.
+
+    Answers shorter than ``min_chars`` after normalisation are ignored: a gold
+    answer like ``"a"`` or ``"no"`` would otherwise match almost every prompt.
     """
-    haystack = normalize_answer(prompt)
-    for gold in gold_answers:
-        needle = normalize_answer(gold)
-        if len(needle) >= 3 and needle in haystack:
-            raise AssertionError(
-                f"gold answer {gold!r} (normalised {needle!r}) leaks into the prompt"
-            )
+    needle = normalize_answer(answer)
+    if len(needle) < min_chars:
+        return False
+    needle_tokens = needle.split()
+    haystack_tokens = normalize_answer(prompt).split()
+    width = len(needle_tokens)
+    if width == 0 or width > len(haystack_tokens):
+        return False
+    for start in range(len(haystack_tokens) - width + 1):
+        if haystack_tokens[start : start + width] == needle_tokens:
+            return True
+    return False
+
+
+def assert_gold_not_in_prompt(prompt: str, gold_answer: str) -> None:
+    """Raise if the canonical gold answer is visible in the rendered prompt.
+
+    Only the **canonical answer value** is checked, not the alias list.  The
+    distinction is load-bearing: TriviaQA questions routinely reuse an alias
+    phrase as their own wording -- ``"Which volcano in Tanzania is the highest
+    mountain in Africa?"`` has gold ``"Kilimanjaro"`` and alias ``"Highest
+    mountain in Africa"`` -- and in those items the model cannot copy the answer
+    it is asked for, so discarding them would destroy good questions.  When the
+    *value* itself appears, by contrast, the model can answer by copying, which
+    is exactly what this guard exists to prevent.
+    """
+    if answer_in_prompt(prompt, gold_answer):
+        raise AssertionError(
+            f"gold answer {gold_answer!r} (normalised {normalize_answer(gold_answer)!r}) "
+            "appears in the prompt"
+        )
 
 
 def describe() -> dict[str, object]:

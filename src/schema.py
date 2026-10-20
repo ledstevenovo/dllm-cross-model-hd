@@ -178,7 +178,10 @@ class QARecord:
             if self.prompt_fingerprint != prompt_fingerprint():
                 issues.append("prompt_fingerprint does not match the frozen prompt")
             try:
-                assert_gold_not_in_prompt(self.prompt, list(self.gold_answers()))
+                # Only the canonical value is guarded; an alias appearing in the
+                # question is normally just the question's own wording and does
+                # not make the item copyable.  See prompts.assert_gold_not_in_prompt.
+                assert_gold_not_in_prompt(self.prompt, self.gold_answer)
             except AssertionError as exc:
                 issues.append(str(exc))
         if not self.source:
