@@ -1,0 +1,30 @@
+[project]
+name = "dllm-cross-model-hd"
+version = "0.1.0"
+description = "Cross-model hallucination detection in diffusion language models: data preparation, denoising-trace collection and offline detection."
+readme = "README.md"
+requires-python = ">=3.12,<3.14"
+license = { text = "Proprietary" }
+
+# Data-preparation and testing dependencies ONLY.
+# PyTorch / CUDA are deliberately NOT declared here: the LLaDA and Dream inference
+# environments are provisioned separately (see docs/ENVIRONMENT.md), because they
+# need pinned torch builds and must not constrain this project's resolution.
+dependencies = [
+    "numpy>=2.0",
+    "pandas>=2.2",
+    "pyarrow>=17.0",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.0",
+]
+
+[tool.uv]
+# This project ships scripts, not an importable distribution: no build backend needed.
+package = false
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"

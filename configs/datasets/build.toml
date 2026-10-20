@@ -1,0 +1,116 @@
+# =============================================================================
+# Pool construction config for the cross-model hallucination study.
+#
+# Inputs : data/raw_download/raw_index.json  (sha256-verified raw parquet)
+# Output : data/raw_qa/{dataset}/{split}.jsonl, data/raw_qa/subsets/*,
+#          data/manifests/build_dataset_*.json
+#
+# Changing anything in this file changes the recorded config_fingerprint, so a
+# dataset built with different settings is always distinguishable.
+# =============================================================================
+schema_version = "qa-record-v1"
+
+# -----------------------------------------------------------------------------
+# Sources actually consumed by the pool.
+#
+# Only *held-out* splits are used.  The TriviaQA/HotpotQA training corpora are
+# never touched, so neither the detector's train split nor its test split can
+# inherit questions the underlying QA datasets were themselves built on.
+#
+# NOTE: trivia_qa rc.nocontext/test is deliberately NOT listed.  Every row in it
+# carries answer.aliases == [] and answer.value == "<unk>", which makes alias
+# matching impossible and would silently corrupt the labels.  It is recorded in
+# the manifest under available_unused_inputs instead.
+# -----------------------------------------------------------------------------
+[[sources]]
+dataset           = "triviaqa"
+raw_key           = "triviaqa_rc_nocontext_validation"
+hf_config         = "rc.nocontext"
+hf_split          = "validation"
+question_field    = "question"
+id_field          = "question_id"
+answer_value      = "answer.value"
+answer_aliases    = "answer.aliases"
+answer_norm_aliases = "answer.normalized_aliases"
+answer_type_field = "answer.type"
+answer_type_default = "unknown"
+stratum           = "triviaqa"
+
+[[sources]]
+dataset           = "hotpotqa"
+raw_key           = "hotpotqa_distractor_validation"
+hf_config         = "distractor"
+hf_split          = "validation"
+question_field    = "question"
+id_field          = "id"
+answer_value      = "answer"
+answer_aliases    = ""            # HotpotQA publishes a single answer, no aliases
+answer_norm_aliases = ""
+answer_type_field = "type"
+answer_type_default = "unknown"
+stratum           = "hotpotqa"    # refined by stratum_field
+stratum_field     = "type"
+
+# -----------------------------------------------------------------------------
+# Determinism.  These salts are part of the experiment's identity: changing a
+# salt re-draws every split and subset while leaving the pool unchanged, which
+# is exactly what you want when testing the splitting code and exactly what you
+# must never do mid-study.
+# -----------------------------------------------------------------------------
+[determinism]
+base_seed   = 20261020
+split_salt  = "split-v1"
+subset_salt = "subset-v1"
+smoke_salt  = "smoke-v1"
+
+# -----------------------------------------------------------------------------
+# Global question split, applied to the *cluster*, not to individual rows.
+# Order defines the cumulative hash thresholds, so it is fixed.
+#
+# 60/15/25: train and validation fit the source-model detector, and the test
+# split is the zero-shot transfer target.  Test gets the largest single share
+# because transfer is the quantity under study, and because the 200-question
+# pilot is a subset of it and must stay representative after sub-sampling.
+# -----------------------------------------------------------------------------
+[splits]
+order      = ["train", "validation", "test"]
+train      = 0.60
+validation = 0.15
+test       = 0.25
+
+# -----------------------------------------------------------------------------
+# Subsets.
+#
+# smoke20  : engineering-only.  Carved OUT of the research pool before the split
+#            so T4/quantisation debugging can never contaminate a reported
+#            metric.  0.1% of the pool -- a negligible price for a hard
+#            guarantee.
+# small200 : the first transfer experiment.  Drawn deterministically from the
+#            test split, stratified, so the 200-question result and the
+#            full-scale result differ only in sample size.
+# -----------------------------------------------------------------------------
+[subsets]
+smoke_name  = "smoke20"
+smoke_total = 20
+small_name  = "small200"
+small_total = 200
+
+# -----------------------------------------------------------------------------
+# Cleaning is deliberately conservative.
+#
+# The pool must stay auditable: any content-based threshold silently changes the
+# population the frozen split was drawn from, and a split that nobody can
+# reproduce is worthless.  These limits therefore only remove records that are
+# unusable for *any* experiment.  Answer-length restriction (the plan wants short
+# answers) belongs to the analysis stage, which receives the full length
+# distribution in the manifest and can apply its own threshold explicitly.
+# -----------------------------------------------------------------------------
+[cleaning]
+# Only records unusable for ANY experiment are dropped; the pool is otherwise
+# kept intact so the frozen split stays reproducible.  An empty question or an
+# empty gold answer is a real defect.  Note the real cleaning is structural, not
+# threshold-based: whitespace normalisation, duplicate-row collapse
+# (17,944 -> 9,960 TriviaQA validation rows) and identifier-collision clustering.
+min_question_chars = 1
+min_gold_chars     = 1
+max_gold_chars     = 1000
