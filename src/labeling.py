@@ -32,11 +32,13 @@ from dataclasses import dataclass, field
 from typing import Iterable, Optional, Sequence
 
 from .textnorm import (
+    collapse_whitespace,
     extract_number,
     first_line,
     is_yes_no,
     normalize_answer,
     normalize_text,
+    remove_punctuation,
     strip_wrapping_quotes,
 )
 
@@ -247,7 +249,12 @@ def classify_generation(
 
     candidate = extract_candidate(text)
     candidate_norm = normalize_answer(candidate)
-    text_norm = normalize_text(text)
+    # The refusal patterns are written against punctuation-free text, where
+    # "don't" has become "don t" and "can't" has become "can t".  Feeding them
+    # plain normalize_text() -- which keeps punctuation -- silently missed the
+    # single most common refusal phrasing and booked "I don't know." as a
+    # factual error, i.e. into the positive class this module exists to protect.
+    text_norm = collapse_whitespace(remove_punctuation(normalize_text(text)))
     refusal = bool(_REFUSAL_RE.search(text_norm))
 
     matched, matched_answer, rule = match_answer(candidate, gold_answer, gold_aliases)
