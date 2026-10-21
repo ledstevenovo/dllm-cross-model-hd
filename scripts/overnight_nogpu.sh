@@ -267,7 +267,7 @@ step 11_report 2 3 "$LOG/11_report.log" bash -c "
 # ---- 12 提交推送（单独重试，失败不影响实验） -------------------------------
 if ! step 12_commit 2 3 "$LOG/12_commit.log" bash -c "
   set -e
-  git add reports/ scripts/ docs/ data/labels/*.reviewed.jsonl
+  git add reports/ scripts/ docs/
   if git diff --cached --quiet; then echo 'nothing to commit'; exit 0; fi
   git commit -q -m 'Overnight no-GPU pass: transfer matrix, TRE analyses, stability study, DynHD delivery'
   git push git@github.com:ledstevenovo/dllm-cross-model-hd.git main:main
