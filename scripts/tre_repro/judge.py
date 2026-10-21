@@ -11,6 +11,13 @@ Every judgment is bound to the judged text through ``generated_text_sha256`` tak
 trace metadata; the frozen prompt hash is verified before any call. Credentials come from the
 ``MOMA_API_KEY`` environment variable and are never written to any file.
 
+Resume safety: stored rows are re-verified on startup (sample presence, answer hash, frozen
+prompt hash, model/endpoint); rows that fail are moved to ``paper_judgments.jsonl.stale.jsonl``
+and those samples are judged again instead of being reused.
+
+Retries: ``--retries N`` means N retries after the first call (N+1 calls max), waiting
+2 s, 4 s, 8 s, ... between them.
+
 Usage (smoke first, then the formal run):
   export MOMA_API_KEY=...
   .venv/bin/python scripts/tre_repro/judge.py --dry-run \
@@ -160,16 +167,18 @@ def parse_verdict(result: dict) -> tuple[str | None, str, dict]:
 
 def judge_once(request: dict, api_key: str, timeout: int, retries: int, raw_log, sample_id: str,
                pass_name: str) -> tuple[str | None, str, list[dict]]:
+    """One judgment pass: up to ``retries`` retries after the first call, waits 2/4/8 s."""
     attempts = []
-    for attempt in range(1, retries + 1):
+    for retry in range(retries + 1):
+        attempt_no = retry + 1
         result = call_judge(request, api_key, timeout)
         verdict, reason, meta = parse_verdict(result)
-        attempts.append({"pass": pass_name, "attempt": attempt, "http_status": result.get("http_status"),
+        attempts.append({"pass": pass_name, "attempt": attempt_no, "http_status": result.get("http_status"),
                          "latency_s": result.get("latency_s"), "verdict": verdict,
                          "parse_error": None if verdict else reason, **meta})
         with LOCK:
             raw_log.write(json.dumps({
-                "sample_id": sample_id, "pass": pass_name, "attempt": attempt,
+                "sample_id": sample_id, "pass": pass_name, "attempt": attempt_no,
                 "ts": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
                 "request": request,  # no headers, no credentials
                 "response_body": result.get("body", "")[:8000],
@@ -178,8 +187,8 @@ def judge_once(request: dict, api_key: str, timeout: int, retries: int, raw_log,
             raw_log.flush()
         if verdict is not None:
             return verdict, reason, attempts
-        if attempt < retries:
-            time.sleep(2 ** attempt)  # 2/4/8 s
+        if retry < retries:
+            time.sleep(2 ** attempt_no)  # after attempt 1 -> 2 s, 2 -> 4 s, 3 -> 8 s
     return None, attempts[-1]["parse_error"] if attempts else "no attempt", attempts
 
 
@@ -192,7 +201,8 @@ def judge_sample(sample_id: str, sample: dict, reference_entry: dict, prompt_tex
     first, first_reason, first_attempts = judge_once(request, api_key, timeout, retries, raw_log,
                                                      sample_id, "first")
     row = {
-        "sample_id": sample_id, "question_id": question,
+        "sample_id": sample_id, "question_id": sample["question_id"],
+        "question": reference_entry["question"],
         "generated_text_sha256": sample["generated_text_sha256"],
         "generated_text": answer,
         "model": MODEL, "endpoint": ENDPOINT, "judge_prompt_sha256": sha256_text(prompt_text),
@@ -221,6 +231,38 @@ def judge_sample(sample_id: str, sample: dict, reference_entry: dict, prompt_tex
     return row
 
 
+def validate_existing(rows: list[dict], samples: dict[str, dict], prompt_hash: str) -> tuple[list[dict], list[dict]]:
+    """Re-verify stored judgments against the current run before allowing reuse.
+
+    A row is stale when it cannot be bound to this run and prompt: missing/duplicate sample_id,
+    sample not present, answer hash mismatch, judge prompt hash mismatch, or model/endpoint
+    change. Stale rows are never reused.
+    """
+    valid, stale, seen = [], [], set()
+    for row in rows:
+        sample_id = row.get("sample_id")
+        if not sample_id:
+            reason = "missing sample_id"
+        elif sample_id in seen:
+            reason = "duplicate sample_id"
+        elif sample_id not in samples:
+            reason = "sample_id not in current run"
+        elif row.get("generated_text_sha256") != samples[sample_id]["generated_text_sha256"]:
+            reason = "answer hash does not match the current trace"
+        elif row.get("judge_prompt_sha256") != prompt_hash:
+            reason = "judge prompt hash does not match the frozen prompt"
+        elif row.get("model") != MODEL or row.get("endpoint") != ENDPOINT:
+            reason = "model or endpoint changed"
+        else:
+            reason = None
+        if reason:
+            stale.append({**row, "stale_reason": reason})
+        else:
+            valid.append(row)
+            seen.add(sample_id)
+    return valid, stale
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="TRE J2 judge client (frozen prompt v3)")
     parser.add_argument("--run", required=True, help="trajectory run directory")
@@ -231,7 +273,8 @@ def main() -> int:
     parser.add_argument("--concurrency", type=int, default=4)
     parser.add_argument("--timeout", type=int, default=120)
     parser.add_argument("--max-tokens", type=int, default=2048)
-    parser.add_argument("--retries", type=int, default=3)
+    parser.add_argument("--retries", type=int, default=3,
+                        help="retries after the first call per pass (default 3 -> up to 4 calls, backoff 2/4/8 s)")
     parser.add_argument("--limit", type=int)
     parser.add_argument("--sample-ids", help="file with one sample_id per line")
     parser.add_argument("--dry-run", action="store_true", help="print one request without calling the API")
@@ -266,6 +309,23 @@ def main() -> int:
     raw_output = Path(args.raw_output) if args.raw_output else label_dir / "judge_raw.jsonl"
     output.parent.mkdir(parents=True, exist_ok=True)
 
+    # Resume safety: every stored judgment must re-verify against the current run and prompt
+    # before it can be reused. Stale rows are quarantined and re-judged.
+    existing_rows = read_jsonl(output)
+    valid_rows, stale_rows = validate_existing(existing_rows, samples, prompt_hash)
+    existing = {row["sample_id"]: row for row in valid_rows}
+    if existing_rows:
+        print(f"existing judgments={len(existing_rows)} reusable={len(valid_rows)} stale={len(stale_rows)}")
+    if stale_rows and not args.dry_run:
+        stale_path = output.with_suffix(output.suffix + ".stale.jsonl")
+        with open(stale_path, "a", encoding="utf-8") as fh:
+            for row in stale_rows:
+                fh.write(json.dumps(row, ensure_ascii=False) + "\n")
+        tmp = output.with_suffix(output.suffix + ".tmp")
+        tmp.write_text("".join(json.dumps(row, ensure_ascii=False) + "\n" for row in valid_rows), encoding="utf-8")
+        os.replace(tmp, output)
+        print(f"quarantined {len(stale_rows)} stale judgments -> {stale_path}; those samples are re-judged")
+
     if args.dry_run:
         sample_id = next(iter(sorted(samples)))
         sample = samples[sample_id]
@@ -280,7 +340,6 @@ def main() -> int:
     if not api_key:
         raise SystemExit("MOMA_API_KEY is not set; export it in the shell before judging")
 
-    existing = {row["sample_id"]: row for row in read_jsonl(output)}
     pending = [sid for sid in sorted(samples) if sid not in existing]
     if args.limit:
         pending = pending[: args.limit]
