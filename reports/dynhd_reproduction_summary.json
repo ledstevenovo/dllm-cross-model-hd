@@ -1,0 +1,265 @@
+{
+  "date": "2026-10-21T18:13:55Z",
+  "scope": "DynHD method-level reproduction on the 32GB host (pilot200, reduced scale, our labels; not a per-table replica of the paper)",
+  "environment": {
+    "upstream_tests": "Ran 7 tests in 7.445s - OK",
+    "snapshot": {
+      "path": "references/repos/DynHD",
+      "revision": "6c099adb23fa2b7040a5efb39b95b19255ef738c",
+      "files_checked": 36,
+      "sha256_mismatches": 0,
+      "missing": 0
+    }
+  },
+  "cpu_acceptance_assertions": {
+    "passed": 22,
+    "total": 22
+  },
+  "single_question_alignment": {
+    "llada": {
+      "hook_exact_matches": 5,
+      "hook_steps": 5,
+      "non_interference": true
+    },
+    "dream": {
+      "hook_exact_matches": 5,
+      "hook_steps": 5,
+      "non_interference": true
+    }
+  },
+  "collection": {
+    "llada": {
+      "saved_samples": 200,
+      "gaps": 0,
+      "coverage": "complete",
+      "elapsed_seconds": {
+        "mean": 2.2791,
+        "median": 2.2271,
+        "p95": 2.6249,
+        "min": 2.2025,
+        "max": 3.235,
+        "total": 455.8
+      },
+      "load_seconds": 5.128,
+      "peak_memory_bytes_max": 16248887296,
+      "generation_fingerprint": "acbb7fbf0f6f9aa89a0a8043a72df99c2e75ec7e4e506eb1957a05cf8b6fc990"
+    },
+    "dream": {
+      "saved_samples": 200,
+      "gaps": 0,
+      "coverage": "complete",
+      "elapsed_seconds": {
+        "mean": 2.102,
+        "median": 2.0371,
+        "p95": 2.9077,
+        "min": 2.013,
+        "max": 2.9912,
+        "total": 420.4
+      },
+      "load_seconds": 4.38,
+      "peak_memory_bytes_max": 15535792640,
+      "generation_fingerprint": "0b912444955b1f80b6ca1b41a33d4d37be7cc0eae2ab27a467d3ad245d8be688"
+    }
+  },
+  "labels": {
+    "llada": {
+      "valid": 194,
+      "excluded": 6,
+      "partitions": {
+        "train": {
+          "n": 118,
+          "correct": 29,
+          "incorrect": 89
+        },
+        "val": {
+          "n": 29,
+          "correct": 11,
+          "incorrect": 18
+        },
+        "test": {
+          "n": 47,
+          "correct": 16,
+          "incorrect": 31
+        }
+      }
+    },
+    "dream": {
+      "valid": 178,
+      "excluded": 22,
+      "partitions": {
+        "train": {
+          "n": 108,
+          "correct": 30,
+          "incorrect": 78
+        },
+        "val": {
+          "n": 25,
+          "correct": 11,
+          "incorrect": 14
+        },
+        "test": {
+          "n": 45,
+          "correct": 13,
+          "incorrect": 32
+        }
+      }
+    }
+  },
+  "evaluation": {
+    "llada": {
+      "valid_n": 194,
+      "aggregate": {
+        "test_auroc_fixed": {
+          "mean": 0.8823924731182796,
+          "min": 0.872983870967742,
+          "max": 0.8911290322580645,
+          "n": 3
+        },
+        "test_ap_fixed": {
+          "mean": 0.9237977926839314,
+          "min": 0.9022349799132697,
+          "max": 0.939225718152203,
+          "n": 3
+        },
+        "test_f1_fixed": {
+          "mean": 0.8690476190476191,
+          "min": 0.8571428571428571,
+          "max": 0.875,
+          "n": 3
+        },
+        "test_auroc_val_selected": {
+          "mean": 0.8823924731182796,
+          "min": 0.872983870967742,
+          "max": 0.8911290322580645,
+          "n": 3
+        },
+        "val_auroc_fixed": {
+          "mean": 0.9074074074074074,
+          "min": 0.8787878787878788,
+          "max": 0.9242424242424242,
+          "n": 3
+        },
+        "test_bootstrap": [
+          {
+            "seed": 42,
+            "ci_low": 0.7547199434556915,
+            "ci_high": 0.9747678856231488,
+            "valid_resamples": 1000,
+            "requested": 1000,
+            "mean": 0.8808920733273605,
+            "median": 0.887218045112782
+          },
+          {
+            "seed": 43,
+            "ci_low": 0.742405303030303,
+            "ci_high": 0.9809598214285714,
+            "valid_resamples": 1000,
+            "requested": 1000,
+            "mean": 0.8728160823957369,
+            "median": 0.8791437728937729
+          },
+          {
+            "seed": 44,
+            "ci_low": 0.776551948051948,
+            "ci_high": 0.9747706797706797,
+            "valid_resamples": 1000,
+            "requested": 1000,
+            "mean": 0.8899077699426169,
+            "median": 0.8949490662139219
+          }
+        ]
+      }
+    },
+    "dream": {
+      "valid_n": 178,
+      "aggregate": {
+        "test_auroc_fixed": {
+          "mean": 0.8092948717948718,
+          "min": 0.8028846153846153,
+          "max": 0.8149038461538461,
+          "n": 3
+        },
+        "test_ap_fixed": {
+          "mean": 0.8814943064902604,
+          "min": 0.8584096452040667,
+          "max": 0.8948730519724222,
+          "n": 3
+        },
+        "test_f1_fixed": {
+          "mean": 0.8457232291182583,
+          "min": 0.819672131147541,
+          "max": 0.8787878787878788,
+          "n": 3
+        },
+        "test_auroc_val_selected": {
+          "mean": 0.8092948717948718,
+          "min": 0.8028846153846153,
+          "max": 0.8149038461538461,
+          "n": 3
+        },
+        "val_auroc_fixed": {
+          "mean": 0.8766233766233767,
+          "min": 0.8701298701298701,
+          "max": 0.8896103896103895,
+          "n": 3
+        },
+        "test_bootstrap": [
+          {
+            "seed": 42,
+            "ci_low": 0.6239679058758006,
+            "ci_high": 0.9571774193548386,
+            "valid_resamples": 1000,
+            "requested": 1000,
+            "mean": 0.8109158919959956,
+            "median": 0.8148593304843306
+          },
+          {
+            "seed": 43,
+            "ci_low": 0.6405371128937437,
+            "ci_high": 0.9471217105263158,
+            "valid_resamples": 1000,
+            "requested": 1000,
+            "mean": 0.8157178889164028,
+            "median": 0.8244818376068377
+          },
+          {
+            "seed": 44,
+            "ci_low": 0.638075455010939,
+            "ci_high": 0.931162210338681,
+            "valid_resamples": 1000,
+            "requested": 1000,
+            "mean": 0.7991308647887851,
+            "median": 0.8049551551389786
+          }
+        ]
+      }
+    }
+  },
+  "common_test_set": {
+    "llada_test_n": 47,
+    "dream_test_n": 45,
+    "common_n": 44,
+    "llada_common_test_auroc": [
+      0.875,
+      0.8660714285714286,
+      0.8861607142857143
+    ],
+    "dream_common_test_auroc": [
+      0.8163771712158809,
+      0.8213399503722085,
+      0.8163771712158808
+    ]
+  },
+  "deviations": [
+    "generation pipelines differ from the main project (DynHD samplers), so only per-pipeline in-domain results are reported",
+    "Dream steps 64 / temperature 0.0 instead of the paper default 128 / 0.2 (main-table alignment)",
+    "labels come from our reviewed rule sign-off, not GPT-4o-mini",
+    "scale is pilot200 (test 47/45), so CIs are wide; expansion to 800-2000 is the next decision",
+    "upstream passes generation_logits_hook_func=None which crashes the pinned Dream revision; the wrapper coerces it to the identity hook"
+  ],
+  "limits": [
+    "not a detector comparison across models",
+    "pilot scale only",
+    "test never used for tuning"
+  ]
+}
