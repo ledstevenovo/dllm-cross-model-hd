@@ -285,7 +285,14 @@ for cycle in $(seq 1 "$CYCLES"); do
   pending=0
   for s in 01_backup 02_labels 03_stage7 04_tre_offline 05_tre_permutation \
            06_multiseed 07_importance 08_stability 09_dynhd 10_consistency 11_report 12_commit; do
-    is_done "$s" || pending=$((pending + 1))
+    is_done "$s" && continue
+    # a successful degraded fallback covers its primary step
+    case "$s" in
+      03_stage7)          is_done 03_stage7_degraded && continue ;;
+      05_tre_permutation) is_done 05_tre_permutation_degraded && continue ;;
+      08_stability)       is_done 08_stability_degraded && continue ;;
+    esac
+    pending=$((pending + 1))
   done
   log "cycle $cycle finished: pending=$pending elapsed=$(elapsed_min)m"
   if [ "$pending" -eq 0 ]; then
