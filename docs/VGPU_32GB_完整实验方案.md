@@ -38,7 +38,7 @@ CPU环境维持uv+.venv和现有锁，不把torch加入CPU锁。平台预装的t
 
 LLaDA官方README建议transformers4.38.2，Dream建议transformers4.46.2、torch2.5.1。分别建立独立推理venv；候选先尝试使用平台torch2.8.0，只有模型导入/加载失败才在相应隔离环境回退到官方组合。不要直接全局升级transformers或覆盖平台镜像。官方旧版本组合如不适用于Python3.12，可另建Python3.11推理环境；CPU工具仍保留原环境。CUDA wheel版本不必等于驱动界面显示的“CUDA13.0”，应核验驱动兼容性及torch.version.cuda。
 
-**真实模型采集适配器已实现并具备CPU替身验收，实际模型/GPU仍待验收。** 入口scripts/collect_llada.py / collect_dream.py，具体安装、单题、20题及恢复命令见PHASE2_COLLECTORS.md。无卡阶段完成参数解析、持久化、断点恢复、trace-v1契约测试、manifest、CPU夹具测试和Dream shift源码核对；真实forward和hook时点在有卡阶段验证。
+**真实模型采集适配器已实现并具备CPU替身验收，实际模型/GPU仍待验收。** 入口scripts/collect_llada.py / collect_dream.py，具体安装、单题、20题及恢复命令见PHASE2_COLLECTORS.md。无卡阶段完成参数解析、持久化、断点恢复、trace-v1契约测试、manifest、CPU夹具测试和Dream shift源码核对；真实forward和hook时点在有卡阶段验证。无卡环境准备（2026-10-21）已完成：两套隔离推理venv与固定revision权重缓存（合计约31.3GB，逐文件哈希复核）就绪，生产加载路径CPU真实加载通过；证据与有卡核验清单见reports/phase2_env_prep.json。
 
 契约：保存pre-reveal熵/top1概率/可选top1 token、MASK与实际新揭示位置，统计FP32，GPU即时归约后只转CPU小数组。全词表logits不跨步保存。保留原始prompt与chat-wrapper后token IDs、checkpoint/tokenizer/代码revision、seed、实际T/forward次数、EOS/有效长度、precision和环境。断点续跑只跳过配置一致且校验通过的样本。
 

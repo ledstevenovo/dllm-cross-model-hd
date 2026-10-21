@@ -17,3 +17,5 @@
 已新增collect_llada.py/collect_dream.py、位置/数值验证、逐题manifest与原子保存/恢复。独立CPU采集器环境全套100项通过；原CPU环境82项通过、2个torch测试模块明确跳过。40条64×64替身轨迹通过实际适配器→NPZ→标签提案→parquet链路。详见docs/PHASE2_COLLECTORS.md和reports/phase2_*。
 
 这里的模型是明确标记的CPU替身；真实7B/8B加载、云端torch2.8/CUDA12.8/BF16、显存及每模型20题仍待有卡阶段核验。历史报告中的“采集器尚未实现”为当时快照，已被本段更新。
+
+无卡准备（2026-10-21）：两套推理venv（.venv-llada/.venv-dream，继承平台torch2.8.0+cu128，venv内不装torch）与HF缓存权重（LLaDA 16.0GB/6分片、Dream 15.2GB/4分片，逐文件哈希独立复核通过）就绪；生产加载路径的CPU真实加载检查与fixture单题演练通过。有卡单题/smoke20、显存、BF16仍未验证。证据见reports/phase2_env_prep.json。
