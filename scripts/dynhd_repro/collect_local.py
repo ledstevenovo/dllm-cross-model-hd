@@ -131,13 +131,14 @@ class ValidatingSampler:
 
     def sample(self, *args, **kwargs):
         item = fixtures.Context.current()
+        stats = {"elapsed_seconds": None, "actual_T": None}
         try:
             if torch.cuda.is_available():
                 torch.cuda.reset_peak_memory_stats()
             started = __import__("time").perf_counter()
             result = self.inner.sample(*args, **kwargs)
             elapsed = __import__("time").perf_counter() - started
-            stats = {"elapsed_seconds": round(elapsed, 4), "actual_T": None}
+            stats["elapsed_seconds"] = round(elapsed, 4)
             if torch.cuda.is_available():
                 stats["peak_memory_bytes"] = {"allocated": int(torch.cuda.max_memory_allocated()),
                                               "reserved": int(torch.cuda.max_memory_reserved())}
@@ -155,7 +156,7 @@ class ValidatingSampler:
             STATE.setdefault("item_stats", {})[item["id"]] = stats
             return result
         except Exception as error:
-            stats = STATE.setdefault("item_stats", {}).get(item["id"], {})
+            STATE.setdefault("item_stats", {})[item["id"]] = stats
             _record_failure(item, "sample", error, actual_t=stats.get("actual_T"))
             raise
 
@@ -214,11 +215,16 @@ def _patched_build_model_and_sampler(model_path: str, device: str, inference: Di
             alg=str(inference.get("dream_alg", "entropy")),
             alg_temp=float(inference.get("dream_alg_temp", 0.0)),
         )
-        STATE["load_seconds"] = round(time.perf_counter() - started, 3)
-        return "dream", model, ValidatingSampler(inner, steps)
-    model = LLaDAModel(model_path, device=device)
+        family = "dream"
+    else:
+        model = LLaDAModel(model_path, device=device)
+        inner = LLaDASampler(model, num_steps=steps)
+        family = "llada"
     STATE["load_seconds"] = round(time.perf_counter() - started, 3)
-    return "llada", model, ValidatingSampler(LLaDASampler(model, num_steps=steps), steps)
+    if torch.cuda.is_available():
+        free_bytes, total_bytes = torch.cuda.mem_get_info()
+        STATE["device_memory_after_load"] = {"free_bytes": int(free_bytes), "total_bytes": int(total_bytes)}
+    return family, model, ValidatingSampler(inner, steps)
 
 
 def _patched_labeler_factory(*args, **kwargs):
@@ -402,6 +408,7 @@ def main(argv: Optional[list] = None) -> int:
                         "transformers": __import__("transformers").__version__,
                         "cuda_available": torch.cuda.is_available()},
         "load_seconds": STATE.get("load_seconds"),
+        "device_memory_after_load": STATE.get("device_memory_after_load"),
         "saved_count": len(saved_ids), "failed_count": len(failed),
         "not_started_count": sum(1 for g in gaps if g["state"] == "not_started"),
         "exit_code": exit_code, "error": error_text,
