@@ -13443,6 +13443,548 @@
       "paper_source": "https://arxiv.org/abs/2509.23653",
       "paper_sha256": "06b36684a766ec26a69e52198e879669bd1798385ca8d1e585c931014d2c24e6",
       "license_files": []
+    },
+    {
+      "name": "TraceDet",
+      "upstream": "https://github.com/chang-sx/TraceDet.git",
+      "revision": "356337ac5b95ef6064d0b124f1ef4854440f75b4",
+      "files": [
+        {
+          "path": "DLLM_generate/__pycache__/data_loader.cpython-310.pyc",
+          "bytes": 9294,
+          "sha256": "5c8e681040a5a71618ed41ae32263e5b873f353215bb211e1ede68ac655d08f3",
+          "git_mode": "100644"
+        },
+        {
+          "path": "DLLM_generate/data_generator.py",
+          "bytes": 3728,
+          "sha256": "cca8886a15f179ab2074adcb08e87577dce2c6bc9255bb110eb5832130a2bd8d",
+          "git_mode": "100644"
+        },
+        {
+          "path": "DLLM_generate/data_loader.py",
+          "bytes": 8077,
+          "sha256": "3b4f5643fb163dc4157ea9427f4bc0593492b2f2e8621b8e3c0b464247b52df9",
+          "git_mode": "100644"
+        },
+        {
+          "path": "DLLM_generate/dream_entropy.py",
+          "bytes": 9956,
+          "sha256": "c3521a9b58f5d2977722957b65cb9dd41e7c128075d83c4862bcff5226282cbd",
+          "git_mode": "100644"
+        },
+        {
+          "path": "DLLM_generate/generate.py",
+          "bytes": 9624,
+          "sha256": "dc708c2473750ffac1289021ee1706ca5f58cb34296696ca1dea95371beda983",
+          "git_mode": "100644"
+        },
+        {
+          "path": "DLLM_generate/generate_interoutput.py",
+          "bytes": 9822,
+          "sha256": "26f970399440e55588c22d7647157c4a109239ea6a2d8ecbc85bf37c1195caac",
+          "git_mode": "100644"
+        },
+        {
+          "path": "DLLM_generate/metric_qwen.py",
+          "bytes": 7028,
+          "sha256": "f8b23d1bd5ce0340f478f5269c967967f71e474eae68235cec1edc89d5e30c0d",
+          "git_mode": "100644"
+        },
+        {
+          "path": "DLLM_generate/pt_data_generator_bertscore.py",
+          "bytes": 2250,
+          "sha256": "3767ce9e4f89d2034fab1c14d88c90ced13f2de3a86403bfa386281cf40d00d4",
+          "git_mode": "100644"
+        },
+        {
+          "path": "DLLM_generate/pt_data_generator_with_answer.py",
+          "bytes": 2304,
+          "sha256": "63667d0dcb2599545b3dde0d267b6dec4e5c323b199c5e85687581e5684183b9",
+          "git_mode": "100644"
+        },
+        {
+          "path": "LICENSE",
+          "bytes": 1069,
+          "sha256": "6d8b3db69c2a033568ec96432e64b00bbc3be7e37d472475d137418364675bcf",
+          "git_mode": "100644"
+        },
+        {
+          "path": "README.md",
+          "bytes": 4243,
+          "sha256": "314e1cf79a3c7c8ae7b0c155184c44da0eab02bfe63ee06e12a070c8133aa404",
+          "git_mode": "100644"
+        },
+        {
+          "path": "environment.yml",
+          "bytes": 6394,
+          "sha256": "d78f51166fece32ca05020d125c6a6345129da6c07a1dc5bd4d50d0fa6aa93e6",
+          "git_mode": "100644"
+        },
+        {
+          "path": "figures/TraceDet.png",
+          "bytes": 275033,
+          "sha256": "cd2b43b2613e79ab527e484d3736302d59fb8e0f63c4763a68ba1463fd66c260",
+          "git_mode": "100644"
+        },
+        {
+          "path": "models/Scomb_transformer_split=1.pt",
+          "bytes": 701797,
+          "sha256": "6b187c7458972e22563a9405d39d2c47f09bb2e244dfc4b6fe9495a18a85deb3",
+          "git_mode": "100644"
+        },
+        {
+          "path": "models/TimeHalu.py",
+          "bytes": 8394,
+          "sha256": "f0940b92f2b101eeb8b4f5b3ac6e42f2d13a08cff949f0ed7b3f30f54666f6b0",
+          "git_mode": "100644"
+        },
+        {
+          "path": "models/__init__.py",
+          "bytes": 56,
+          "sha256": "dd4bd7da212e56c58d2f93be57ae2234d53308492e99f4418afc38ebd69dc075",
+          "git_mode": "100644"
+        },
+        {
+          "path": "models/bc_model4.py",
+          "bytes": 14029,
+          "sha256": "b55e8529828d14c712ec2e6c1e771dd37999ac387ea0028a3fbef1e9fd022c7f",
+          "git_mode": "100644"
+        },
+        {
+          "path": "models/encoders/positional_enc.py",
+          "bytes": 1246,
+          "sha256": "e19ac6160fa26b78136ba1c380c755561562c6e35b89fd2c4b45e28cbd25485f",
+          "git_mode": "100644"
+        },
+        {
+          "path": "models/encoders/simple.py",
+          "bytes": 2820,
+          "sha256": "98da6c4025b169f3903b8738f0c335b5c6acbbc27fbcabe0bc6cd998cb37a2e7",
+          "git_mode": "100644"
+        },
+        {
+          "path": "models/encoders/transformer_simple.py",
+          "bytes": 12579,
+          "sha256": "b4fef11b2d315d965e231c58c2e7ce62a9deea008d628cb38a3247e3225d1b00",
+          "git_mode": "100644"
+        },
+        {
+          "path": "models/layers.py",
+          "bytes": 35349,
+          "sha256": "a63b1e2257e61cf533bb23e8c3cbfa877a9070cee5bfa220ffbc36ad633c01c8",
+          "git_mode": "100644"
+        },
+        {
+          "path": "models/mlp.py",
+          "bytes": 5064,
+          "sha256": "62f9089fd83c433dc8aee09bba19db7d9a37e3cf3c3e7f129d31cc26ade9ffb5",
+          "git_mode": "100644"
+        },
+        {
+          "path": "models/run_model_utils.py",
+          "bytes": 3018,
+          "sha256": "8eca5c68c0dfcd08018b0f3e2b5319f224aafa3de6aeee748e758cd969a08a5a",
+          "git_mode": "100644"
+        },
+        {
+          "path": "qwen_eval.sh",
+          "bytes": 285,
+          "sha256": "cf0f3dcbc087be1c27c2f608801668226aa68d822f5093df17113482087333fa",
+          "git_mode": "100644"
+        },
+        {
+          "path": "run_data.sh",
+          "bytes": 311,
+          "sha256": "5f4ba6defc11cf7470ca0e1f35b0d23c1bd989602b3b8e98b5f7eaa19786e3de",
+          "git_mode": "100644"
+        },
+        {
+          "path": "step_entropy_ave.py",
+          "bytes": 597,
+          "sha256": "14a76e63fa39f3a25d060be30cd85d47b0d0a71f2c265af25eb21e0f46577fe5",
+          "git_mode": "100644"
+        },
+        {
+          "path": "train_lstm_baseline.py",
+          "bytes": 1330,
+          "sha256": "69c31f708d79d735a586dfd4aa86d714bf25e89238ad5c88ff03371a531992bc",
+          "git_mode": "100644"
+        },
+        {
+          "path": "train_main.py",
+          "bytes": 6424,
+          "sha256": "0977bb31ee9f3090d7e595b6ecd26d7f1d9b7723655fd19b3cd11a1a07ac2d6f",
+          "git_mode": "100644"
+        },
+        {
+          "path": "train_main_interprete.py",
+          "bytes": 5716,
+          "sha256": "2a2a224806124a017ed4a9bc911c86dae09f25ed96eda125c2f1c2f1eba46170",
+          "git_mode": "100644"
+        },
+        {
+          "path": "train_transformer_baseline.py",
+          "bytes": 1382,
+          "sha256": "3caaa874a9a55a1f3d6125d49901b8b634f3a9e961b4144168d5200cad1df613",
+          "git_mode": "100644"
+        },
+        {
+          "path": "train_tuning.py",
+          "bytes": 4914,
+          "sha256": "8e26d3f4db06168aff3ac73714154d2077b8c61dfcf644ba9cfb47c625da5a20",
+          "git_mode": "100644"
+        },
+        {
+          "path": "trainers/__init__.py",
+          "bytes": 52,
+          "sha256": "ace82a2b2672e588d244ef9a7e2369071e616418c6a9d10c6d763e5c76a6583d",
+          "git_mode": "100644"
+        },
+        {
+          "path": "trainers/train_TimeHalu.py",
+          "bytes": 3513,
+          "sha256": "478a092fd13cf59505a208dd946b70a71aa9907c6d8fd90e6cdb917aa98c1c0c",
+          "git_mode": "100644"
+        },
+        {
+          "path": "trainers/train_transformer.py",
+          "bytes": 7675,
+          "sha256": "0996d890294ed9408d4889889cd392e67a4d8807f592f6ed2546e66540dc61a8",
+          "git_mode": "100644"
+        },
+        {
+          "path": "triviaqa_test_resultlist_mask.json",
+          "bytes": 2956779,
+          "sha256": "432ab8089b97793bd4e58a8bb58db0c5ae178afac09ac4e200627e4d65a15621",
+          "git_mode": "100644"
+        },
+        {
+          "path": "tuning.sh",
+          "bytes": 532,
+          "sha256": "5f091cb514328b8300b699c42c02589a86a05db610e4917ab7df479883323ae6",
+          "git_mode": "100644"
+        },
+        {
+          "path": "utils/__init__.py",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "git_mode": "100644"
+        },
+        {
+          "path": "utils/__pycache__/__init__.cpython-310.pyc",
+          "bytes": 156,
+          "sha256": "daeef4be93cca3290b52fe5626cf49f01e789aa5b436b7f3145ad63d030345d7",
+          "git_mode": "100644"
+        },
+        {
+          "path": "utils/attention.py",
+          "bytes": 15801,
+          "sha256": "0f91e04c319cd5785a3203e370693263c516eac6e153bbfc7296d9ff4a929daf",
+          "git_mode": "100644"
+        },
+        {
+          "path": "utils/cl.py",
+          "bytes": 2487,
+          "sha256": "01b50f613b4164aa7d2b0a35d5bc3ef57d2300584b36990469ca16855d079f9c",
+          "git_mode": "100644"
+        },
+        {
+          "path": "utils/concepts.py",
+          "bytes": 8941,
+          "sha256": "9bf1781bc31ba88461ef59816cf7617d5eb040fb78ec382001e333e490d0f319",
+          "git_mode": "100644"
+        },
+        {
+          "path": "utils/constants.py",
+          "bytes": 83,
+          "sha256": "8e3de0adcec6c87f1a0396727d1e9550ae37f0be4ecfc3d92e75cfcd845ac0d7",
+          "git_mode": "100644"
+        },
+        {
+          "path": "utils/data/__init__.py",
+          "bytes": 197,
+          "sha256": "4d7cec1f391e2ece66e3ccf57017887252fdeec7d93ac9ca6d08c332c410c54e",
+          "git_mode": "100644"
+        },
+        {
+          "path": "utils/data/__pycache__/__init__.cpython-310.pyc",
+          "bytes": 402,
+          "sha256": "b934914021dff6f457f5f3ce20dca46aa3e7c398710f3449282e9eb8778eca14",
+          "git_mode": "100644"
+        },
+        {
+          "path": "utils/data/__pycache__/preprocess.cpython-310.pyc",
+          "bytes": 13768,
+          "sha256": "75fa628c29a4c2bbe5c69481db083a5ab1e7bfd8eaa79a25d6c8a04399edfabe",
+          "git_mode": "100644"
+        },
+        {
+          "path": "utils/data/__pycache__/synth.cpython-310.pyc",
+          "bytes": 1247,
+          "sha256": "9e70a34a661234d966a511e82e0d74f29bb18e217cfe335b4c5d8ebf65d5be65",
+          "git_mode": "100644"
+        },
+        {
+          "path": "utils/data/__pycache__/utils_phy12.cpython-310.pyc",
+          "bytes": 15038,
+          "sha256": "bf81e4bdcffe53fde8e7d9f0d9e41eb92a1d228906785bbcdd87b9f58f669fae",
+          "git_mode": "100644"
+        },
+        {
+          "path": "utils/data/datasets.py",
+          "bytes": 397,
+          "sha256": "aedb10321c147f01f314ea2b2ec4fbbc2cc4e5485e50c9821d4a65c0deb525bd",
+          "git_mode": "100644"
+        },
+        {
+          "path": "utils/data/preprocess.py",
+          "bytes": 21642,
+          "sha256": "ca3a4b32845a02d6e36ed3c74de53071b7400c350f23611fbf0cd6074dceda53",
+          "git_mode": "100644"
+        },
+        {
+          "path": "utils/data/synth.py",
+          "bytes": 1596,
+          "sha256": "6cd7c7553ed28b49b3ae5cea69c82ec2150c2df0366b25565c7c7754267a586b",
+          "git_mode": "100644"
+        },
+        {
+          "path": "utils/data/utils_phy12.py",
+          "bytes": 21237,
+          "sha256": "02c0188f99ebff788e42af544bbf195d586be25eb8b3541e8f9a4d6645673721",
+          "git_mode": "100644"
+        },
+        {
+          "path": "utils/evaluation.py",
+          "bytes": 10614,
+          "sha256": "cc69e44c7046b88792b9c91e358904bb7a821caa75aeac453f648b585b2b4505",
+          "git_mode": "100644"
+        },
+        {
+          "path": "utils/predictors/__init__.py",
+          "bytes": 204,
+          "sha256": "ccac42a0bce505702f74036e7bd741afb3de96c159f628657f11888ecb0e7cf3",
+          "git_mode": "100644"
+        },
+        {
+          "path": "utils/predictors/eval.py",
+          "bytes": 6638,
+          "sha256": "e1afa5ebdf701f805937e36b999165f422a2e491f3d7efc41bdb116a871602c2",
+          "git_mode": "100644"
+        },
+        {
+          "path": "utils/predictors/loss.py",
+          "bytes": 12210,
+          "sha256": "dea7ddc781deea7c56cdd1c6b2b70b494460c852ea152194bf30291e6c351b1d",
+          "git_mode": "100644"
+        },
+        {
+          "path": "utils/predictors/select_models.py",
+          "bytes": 1932,
+          "sha256": "60d144af8cfa80a4397cd36881893502100412648866c26aa829bcd5a2771005",
+          "git_mode": "100644"
+        }
+      ],
+      "paper": "2510.01274_TraceDet.pdf",
+      "paper_source": "https://arxiv.org/abs/2510.01274",
+      "paper_sha256": "81b5132d507a61451ac1bebd8fe44f86e4ee587cb60b2040b7698eaca68611cf",
+      "license_files": [
+        "LICENSE"
+      ]
+    },
+    {
+      "name": "TDGNet",
+      "upstream": "https://github.com/arshiahemmat/tdgnet_code.git",
+      "revision": "a2b5d432a8fe4d405d21aa876b69b3ba92ea46c0",
+      "files": [
+        {
+          "path": "LICENSE",
+          "git_mode": "100644",
+          "bytes": 1076,
+          "sha256": "eb71a26e9868d11398207cdbb4d264d66109f54c19291833aac15636ff78a0fd"
+        },
+        {
+          "path": "MANIFEST.in",
+          "git_mode": "100644",
+          "bytes": 216,
+          "sha256": "be08047a80adb4449a1fa9316fa3095b68098cffe7f15c55f779984671736403"
+        },
+        {
+          "path": "README.md",
+          "git_mode": "100644",
+          "bytes": 4322,
+          "sha256": "a03ee51171f415ac8c46bda5cae4b11e7b2db8ea03ed185c08b40ee607a0c3b2"
+        },
+        {
+          "path": "assets/tdgnet-banner.png",
+          "git_mode": "100644",
+          "bytes": 121884,
+          "sha256": "bd2730e9a3fbf036d3a7c1e1a3133a3ef8aa95b5ab503f2326a20d84a710857b"
+        },
+        {
+          "path": "assets/tdgnet-banner.svg",
+          "git_mode": "100644",
+          "bytes": 6619,
+          "sha256": "4125cee167fa304f4cddf386cd417bb41831bc7d6923b6260efa7802895d350b"
+        },
+        {
+          "path": "assets/tdgnet-pipeline.png",
+          "git_mode": "100644",
+          "bytes": 258784,
+          "sha256": "be1d33cedf4570e160677fc7dbd6b79f780053ed604df819c8eea073831ec822"
+        },
+        {
+          "path": "assets/tdgnet-pipeline.svg",
+          "git_mode": "100644",
+          "bytes": 10654,
+          "sha256": "56a7a136c527ee28bcd101e1125fae92acca685a4c653af1519fd54700817398"
+        },
+        {
+          "path": "configs/base.yaml",
+          "git_mode": "100644",
+          "bytes": 314,
+          "sha256": "7254a26a87c59b127908c4243e76acceaf7a15c11a14980ebe9ed4be202af7db"
+        },
+        {
+          "path": "docs/trace-format.md",
+          "git_mode": "100644",
+          "bytes": 2823,
+          "sha256": "f1b23a4a1f3a5f801af2039c93f0d85eeb71a3e9f6f70ed4ce148610a23b2446"
+        },
+        {
+          "path": "examples/quickstart.py",
+          "git_mode": "100644",
+          "bytes": 2878,
+          "sha256": "8ff17b06a404e6ca59fd0a18c6dcc8b4768ad515ee64b92734d97c4b2c3c5e23"
+        },
+        {
+          "path": "pyproject.toml",
+          "git_mode": "100644",
+          "bytes": 819,
+          "sha256": "88ce93abdb07f207624fdffc6d98a2d229998676c9ff34e1939219a77ce96599"
+        },
+        {
+          "path": "scripts/evaluate.py",
+          "git_mode": "100644",
+          "bytes": 1886,
+          "sha256": "d914cb1e026004c2a892ab4202944bb7e01870b72db24299e7af24a3b4ce449d"
+        },
+        {
+          "path": "scripts/train.py",
+          "git_mode": "100644",
+          "bytes": 2507,
+          "sha256": "241ea196ba600f00da6c06ec7af0e95edc1df969fd1ffa11400f20cebda47c88"
+        },
+        {
+          "path": "tdgnet/__init__.py",
+          "git_mode": "100644",
+          "bytes": 1165,
+          "sha256": "4d45bba39b0d0c52b094723e662e49dcfdbd9af0e226d3757f3cbce76ed8ce27"
+        },
+        {
+          "path": "tdgnet/checkpoint.py",
+          "git_mode": "100644",
+          "bytes": 1192,
+          "sha256": "e9c1c81bd1b2be695a260bf93aff05a4d038b3c48ead56ebffdcf98fa7408179"
+        },
+        {
+          "path": "tdgnet/config.py",
+          "git_mode": "100644",
+          "bytes": 1214,
+          "sha256": "c1dbd6f1cccfca759853a3d6de0b30be17a2b8a4df44eaab1b4ee2ebd07cdfcd"
+        },
+        {
+          "path": "tdgnet/data.py",
+          "git_mode": "100644",
+          "bytes": 10345,
+          "sha256": "590a8c10e5a4d5d15b73155406beb19b0c04ccba8b673095416920c8934dee40"
+        },
+        {
+          "path": "tdgnet/graph.py",
+          "git_mode": "100644",
+          "bytes": 3590,
+          "sha256": "15a4fa9273cdf2eca15118f3e21f3b4565d87641db0633b6093074805a5b26f6"
+        },
+        {
+          "path": "tdgnet/keyframes.py",
+          "git_mode": "100644",
+          "bytes": 664,
+          "sha256": "9127f56c9a5f26feb903d55845c53b6923d2246293ecbe25f0102afe48517d34"
+        },
+        {
+          "path": "tdgnet/model.py",
+          "git_mode": "100644",
+          "bytes": 14337,
+          "sha256": "a4da28555a5e2b3c2240bae715b86c1b13f670ca591afa5824a0a07c0e1723cd"
+        },
+        {
+          "path": "tdgnet/storage.py",
+          "git_mode": "100644",
+          "bytes": 5895,
+          "sha256": "ce9deb3713b58c82421fb90c3662b7d998070a0a68f619282e8e03d4e907b04c"
+        },
+        {
+          "path": "tdgnet/train.py",
+          "git_mode": "100644",
+          "bytes": 7998,
+          "sha256": "c10370ba10e75b7f5e2009e8db70da532237094e4a8e0469438e682ff19c64ca"
+        },
+        {
+          "path": "tests/test_cli.py",
+          "git_mode": "100644",
+          "bytes": 2481,
+          "sha256": "674ac4098b35d9c879f0817f520a06613e06ba3e839563ad0730787c96229f05"
+        },
+        {
+          "path": "tests/test_config.py",
+          "git_mode": "100644",
+          "bytes": 1203,
+          "sha256": "5ff649f98647e3d27861e0d6f9c1c4fb2059b168d7a9373a17a2c86d07d5867e"
+        },
+        {
+          "path": "tests/test_data.py",
+          "git_mode": "100644",
+          "bytes": 2137,
+          "sha256": "b505054e45f6cc22924d5d41164dca058f87c4175d80d11360168b87fe65322c"
+        },
+        {
+          "path": "tests/test_equations.py",
+          "git_mode": "100644",
+          "bytes": 5134,
+          "sha256": "8ea5f41110c45cee72c6538c5d69b03f4f59fb319edad549add7ded72255f982"
+        },
+        {
+          "path": "tests/test_graph.py",
+          "git_mode": "100644",
+          "bytes": 1940,
+          "sha256": "611766b7d79dab490bdd49fd06235c8d0dea027400bd42f2f8969eb80cf01a23"
+        },
+        {
+          "path": "tests/test_keyframes.py",
+          "git_mode": "100644",
+          "bytes": 793,
+          "sha256": "05aa2fd2d46c5addb8448bf477fbceca9ad28b3aa25ea1d25d7e8225757ab454"
+        },
+        {
+          "path": "tests/test_storage.py",
+          "git_mode": "100644",
+          "bytes": 2023,
+          "sha256": "782868a7d88694de41799ca6a6199e5bbd8e1cfa2abd20ae4624c30aa8990243"
+        },
+        {
+          "path": "tests/test_training.py",
+          "git_mode": "100644",
+          "bytes": 3930,
+          "sha256": "cb24a4f709790c35ec8735ae5e14b413665902391f097d3d34e84ada8e54e96f"
+        }
+      ],
+      "paper": "2602.08048_TDGNet.pdf",
+      "paper_source": "https://arxiv.org/abs/2602.08048",
+      "paper_sha256": "e3681ea73a8d594bc35ef33c7aab03a8b3aecdde4b899916de3e92068dcd9ebb",
+      "license_files": [
+        "LICENSE"
+      ]
     }
   ]
 }

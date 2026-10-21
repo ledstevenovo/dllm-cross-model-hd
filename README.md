@@ -74,3 +74,5 @@ python scripts/verify_collectors_cpu.py --output results/collectors_cpu_new
 ## 论文与完整上游代码
 
 [references/README.md](references/README.md) 收录5个仓库的完整跟踪文件快照、对应5篇PDF、固定提交与逐文件哈希。它们保持各自上游许可，与本项目采集器分开；不是已完成论文复现的声明。
+
+主线论文资料现以 [六篇研究索引](references/README.md) 为准：TRE、TraceDet、DynHD、DeMTS、TDGNet、Lost in Diffusion。源码缺口逐篇记录，不以附加参考替代。

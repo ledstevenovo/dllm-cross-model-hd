@@ -1,0 +1,63 @@
+{
+  "scope": "six directly relevant hallucination-detection papers; extra legacy references are not mainline methods",
+  "papers": [
+    {
+      "method": "TRE",
+      "paper": "papers/2607.22661_TRE.pdf",
+      "paper_source": "https://arxiv.org/abs/2607.22661",
+      "paper_sha256": "a682389e88d1f78d940ca945dabbfd311fb4fb020d1dce994babcd4a739cdfe6",
+      "code_status": "not_confirmed_downloadable",
+      "code_path": null,
+      "checked_date": "2026-10-21",
+      "note": "No confirmed downloadable author repository found in this dated search; not a claim that code cannot exist."
+    },
+    {
+      "method": "TraceDet",
+      "paper": "papers/2510.01274_TraceDet.pdf",
+      "paper_source": "https://arxiv.org/abs/2510.01274",
+      "paper_sha256": "81b5132d507a61451ac1bebd8fe44f86e4ee587cb60b2040b7698eaca68611cf",
+      "code_status": "author_repository_snapshot",
+      "code_path": "repos/TraceDet",
+      "checked_date": "2026-10-21"
+    },
+    {
+      "method": "DynHD",
+      "paper": "papers/2603.16459_DynHD.pdf",
+      "paper_source": "https://arxiv.org/abs/2603.16459",
+      "paper_sha256": "7ce53db0bab4bd22746349ac0335177c1739ec131c9e847554a1d5d723028df9",
+      "code_status": "author_repository_snapshot",
+      "code_path": "repos/DynHD",
+      "checked_date": "2026-10-21"
+    },
+    {
+      "method": "DeMTS",
+      "paper": "papers/2608.14632_DeMTS.pdf",
+      "paper_source": "https://arxiv.org/abs/2608.14632",
+      "paper_sha256": "1d5b46ea06372d3324de56f26f17dae7edc03b37423b63116111e372f79b1302",
+      "code_status": "not_confirmed_downloadable",
+      "code_path": null,
+      "checked_date": "2026-10-21",
+      "note": "No confirmed downloadable author repository found in this dated search; not a claim that code cannot exist."
+    },
+    {
+      "method": "TDGNet",
+      "paper": "papers/2602.08048_TDGNet.pdf",
+      "paper_source": "https://arxiv.org/abs/2602.08048",
+      "paper_sha256": "e3681ea73a8d594bc35ef33c7aab03a8b3aecdde4b899916de3e92068dcd9ebb",
+      "code_status": "first_author_repository_snapshot",
+      "code_path": "repos/TDGNet",
+      "checked_date": "2026-10-21",
+      "upstream": "https://github.com/arshiahemmat/tdgnet_code",
+      "revision": "a2b5d432a8fe4d405d21aa876b69b3ba92ea46c0"
+    },
+    {
+      "method": "Lost-in-Diffusion",
+      "paper": "papers/2604.10556_LostInDiffusion.pdf",
+      "paper_source": "https://arxiv.org/abs/2604.10556",
+      "paper_sha256": "0a887861b010adaf99aecd880b04f7b27fc36dbfb551bcff419a212e44634bec",
+      "code_status": "author_repository_snapshot",
+      "code_path": "repos/Lost-in-Diffusion",
+      "checked_date": "2026-10-21"
+    }
+  ]
+}
