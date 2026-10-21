@@ -1,0 +1,39 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+build/
+dist/
+
+# Environments and editors
+.venv/
+venv/
+env/
+.idea/
+.vscode/
+*.swp
+*~
+
+# Secrets and local configuration
+.env
+.env.*
+!.env.example
+
+# Generated data, checkpoints, and logs
+/data/
+/results/
+/archive/
+/models/
+*.pt
+*.pth
+*.bin
+*.safetensors
+*.log
+
+# Notebooks and operating systems
+.ipynb_checkpoints/
+.DS_Store
+Thumbs.db

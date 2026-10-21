@@ -10,3 +10,6 @@
 *.parquet -text
 *.npz -text
 *.png binary
+
+# Preserve upstream reference snapshot bytes for manifest verification.
+references/** -text

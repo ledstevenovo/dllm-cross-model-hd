@@ -1,0 +1,22 @@
+cff-version: 1.2.0
+message: "If you use DynHD, please cite the paper below."
+title: "DynHD: Hallucination Detection for Diffusion Large Language Models via Denoising Dynamics Deviation Learning"
+type: software
+authors:
+  - family-names: Qian
+    given-names: Yanyu
+  - family-names: Tan
+    given-names: Yue
+  - family-names: Liu
+    given-names: Yixin
+  - family-names: Yu
+    given-names: Wang
+  - family-names: Pan
+    given-names: Shirui
+version: 0.1.0
+date-released: 2026-03-17
+license: MIT
+identifiers:
+  - type: url
+    value: "https://arxiv.org/abs/2603.16459"
+    description: "DynHD paper on arXiv"

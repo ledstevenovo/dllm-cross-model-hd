@@ -1,0 +1,28 @@
+model:
+  model_path: "Dream-org/Dream-v0-Instruct-7B"
+  device: "cuda"
+
+inference:
+  num_steps: 128
+  temperature: 0.2
+  top_p: null
+  top_k: null
+  dream_alg: "entropy"
+  dream_alg_temp: 0.0
+
+data:
+  datasets:
+    - name: "triviaqa"
+      num_samples: 2000
+  trace_save_dir: "data/traces"
+
+features:
+  top_k: 5
+
+labeling:
+  method: "openai"
+  kwargs:
+    model: "gpt-4o-mini"
+    base_url: "https://api.openai.com/v1"
+    temperature: 0.0
+    max_retries: 3

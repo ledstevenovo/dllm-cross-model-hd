@@ -70,3 +70,7 @@ python scripts/verify_collectors_cpu.py --output results/collectors_cpu_new
 ```
 
 普通CPU项目环境未安装torch时，采集器测试会明确skip；必须另运行说明中的独立采集器测试环境，不能用skip冒充通过。
+
+## 论文与完整上游代码
+
+[references/README.md](references/README.md) 收录5个仓库的完整跟踪文件快照、对应5篇PDF、固定提交与逐文件哈希。它们保持各自上游许可，与本项目采集器分开；不是已完成论文复现的声明。
