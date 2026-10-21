@@ -25,9 +25,10 @@ STOP_AFTER_MIN="${STOP_AFTER_MIN:-420}"
 CYCLES="${CYCLES:-4}"
 STALL_MIN="${STALL_MIN:-8}"
 
-ALL_STEPS="01_backup 02_labels 03_stage7 03_stage7_degraded 04_tre_offline 05_tre_permutation \
-05_tre_permutation_degraded 06_multiseed 07_importance 08_stability 08_stability_degraded \
-09_dynhd 10_consistency 11_report 12_commit"
+ALL_STEPS="01_backup 02_labels 03_stage7 04_tre_offline 05_tre_permutation \
+06_multiseed 07_importance 08_stability 09_dynhd 10_consistency 11_report 12_commit"
+# Degraded variants are fallbacks: they are only "pending" when their primary step failed.
+DEGRADED="03_stage7_degraded 05_tre_permutation_degraded 08_stability_degraded"
 
 sleep "$INTERVAL"
 
@@ -61,6 +62,10 @@ start_queue() {
   pending=""
   for s in $ALL_STEPS; do [ -f "$DONE/$s" ] || pending="$pending $s"; done
   echo "PENDING:$pending"
+  for s in $DEGRADED; do
+    [ -f "$DONE/$s" ] || continue
+    echo "DEGRADED_USED: $s"
+  done
 
   # steps that failed and have no success marker -> need intervention
   failed=""
