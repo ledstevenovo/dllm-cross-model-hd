@@ -508,16 +508,16 @@ reports/tre_repro/
 - [x] LLaDA FP16 真实单题跑通（旧 64/64/64，附录A.2）；128/64/128 + prompt③ 单题预检通过，观察开关一致、跨进程可重复（附录D.2）。
 - [x] 冻结题单已生成：800 题唯一、20 题 smoke 与 800 不相交、与池内 train/validation 簇级不相交；抽样 seed 与池哈希登记（附录C/D.1）。
 - [x] 评分入口与 6 项契约测试落地：回答哈希绑定、覆盖校验、needs_review 门禁与 `--allow-partial`（附录C）。
-- [ ] 用 `triviaqa` smoke20 跑完整 20 题；≥3 题与原生 sampler 对照，覆盖多 token 揭示；填写完整配置冻结表。
-- [ ] 原论文版本/题单/split/prompt/生成/judge 协议写进 `protocol_diff.md`，不冒充一致。
-- [ ] 正式 800 题生成 + J2 judge（二判流程）+ 评分入口主表；分歧剔除、needs_review 与失败分别计数。
-- [ ] 原始 TRE 按公式计算，与手算/独立复算一致（单题口径已通过，正式批次需再跑一次全量断言）；正类方向正确。
-- [ ] 无训练、无测试集调参、无量化/精度混杂；差异表完整。
-- [ ] 给出 AUROC、CI、N 及论文对照；不预设复现一定达到原值。
-- [ ] Dream 是否复现、是否仅 BF16 变体、哪些 baseline 未做，逐项明确。
-- [ ] 原始记录与代码环境有独立备份，可停止 GPU 后离线复算。
+- [x] 用 `triviaqa` smoke20 跑完整 20 题；≥3 题与原生 sampler 对照，覆盖多 token 揭示；填写完整配置冻结表。（R0 证据：`reports/tre_repro/pilot_report.md`）
+- [x] 原论文版本/题单/split/prompt/生成/judge 协议写进 `protocol_diff.md`，不冒充一致。（`reports/tre_repro/protocol_diff.md`）
+- [x] 正式 800 题生成 + J2 judge（二判流程）+ 评分入口主表；分歧剔除、needs_review 与失败分别计数。（800/800 保留、翻转 0、needs_review 0；限流 80 条按协议整体重跑，留档 `.retry.jsonl`）
+- [x] 原始 TRE 按公式计算，与手算/独立复算一致（正式批次全量断言：800/800 与 `scores.csv` 完全一致，最大差 0.0）；正类方向正确。
+- [x] 无训练、无测试集调参、无量化/精度混杂；差异表完整。
+- [x] 给出 AUROC、CI、N 及论文对照；不预设复现一定达到原值。（TRE 78.34%，CI 74.92–81.72，n=800；见 `reports/tre_repro/reproduction_report.md`）
+- [x] Dream 是否复现、是否仅 BF16 变体、哪些 baseline 未做，逐项明确。（FP16 阻塞、BF16 变体待立项、baseline 未做 —— 见复现报告 §6）
+- [ ] 原始记录与代码环境有独立备份，可停止 GPU 后离线复算。（当前：轨迹/标注/评分均在持久盘；独立备份与停卡复算待执行）
 
-**当前结论：题单、prompt、judge 提示词、评分入口与预检均已就位，可以进入 v3.1 的 R0 正式验收（smoke20）与随后的 800 题采集。** 旧 64/64/64 单题成功不等于新配置已全面验收。J2 moma judge 与 ③裸问题 prompt 已选定，替代 judge 不是阻塞项。正式 800 题需先通过同配置 smoke20、冻结协议并落地完整性校验。本轮交付定位为替代 judge 下的 TRE 方法复现；严格数值对齐仍受 split、prompt、EOS 与生成配置缺口限制。**Dream FP16 仍待解决**，不关闭保护或沿用 T4 NF4 数据绕过。
+**当前结论（2026-10-22 更新）：R1 已完成 —— LLaDA × TriviaQA × 自定预算的 TRE AUROC 78.34%（CI 74.92–81.72，n=800），正式批次全量复算一致，标注无 needs_review。** 与论文表 1 的差距（−3.9 / −8.2 个百分点）在明示差异（替代 judge、自选题单、prompt、EOS 口径、生成预算）下可解释，不能归因于方法本身；R2 扩展（HotpotQA/CSQA、另一预算列）与 Dream 的等效方案另行立项。**Dream FP16 仍待解决**，不关闭保护或沿用 T4 NF4 数据绕过。
 
 ---
 

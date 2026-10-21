@@ -1,0 +1,99 @@
+{
+  "created_at_utc": "20261021T175014Z",
+  "code_commit": "f21eeba1180eea6bef0fdbbdb8f4b0a4931e004e",
+  "direction": "positive class = hallucinated/incorrect; higher score = higher risk",
+  "pre_registered_main_metric": "tre (all generated positions); tre_effective is reported as a robustness variant",
+  "run": "data/trajectories/tre_repro/llada_triviaqa_fp16_L128_S64_B128_v3",
+  "run_manifest_sha256": "911eec1404390f5a3a5c728e783fac37cc9fefcc7d1ea25cffef00d0a811cc5f",
+  "questions": {
+    "path": "data/tre_repro/questions/triviaqa_eval800.jsonl",
+    "sha256": "257396001137e0d51274e7c9c5917c308459766e618ca6c99c84a9590ae5f766"
+  },
+  "judgments": {
+    "path": "data/tre_repro/labels/llada_triviaqa_fp16_L128_S64_B128_v3/paper_judgments.jsonl",
+    "sha256": "c5b1f07b7f23ad5ed079ed39bd1a3d68efdddc87b5c631aa5c608da323f1120c",
+    "judge_prompt_sha256": "2d125bea4f6a5d5a5f97cbb48666c1c872f093d9356a00b09283dc88e5bd46cd"
+  },
+  "decoding_config": {
+    "model_id": "GSAI-ML/LLaDA-8B-Instruct",
+    "precision": "float16",
+    "gen_length": 128,
+    "steps": 64,
+    "block_size": 128,
+    "seed": 20261021,
+    "traces": 800
+  },
+  "bootstrap": {
+    "repeats": 1000,
+    "seed": 20261021,
+    "unit": "question_id"
+  },
+  "counts": {
+    "initial_n": 800,
+    "kept_n": 800,
+    "dropped_n": 0,
+    "needs_review_n": 0,
+    "unjudged_n": 0,
+    "missing_trace_n": 0,
+    "judge_first_correct_n": 293,
+    "judge_first_incorrect_n": 507,
+    "judge_second_ran_n": 507,
+    "judge_flip_n": 0,
+    "main_table_eligible": true,
+    "positive_n": 507,
+    "negative_n": 293,
+    "main_metrics": {
+      "tre": {
+        "n": 800,
+        "auroc": 0.7833673283922693,
+        "positive": 507,
+        "negative": 293,
+        "positive_rate": 0.63375,
+        "auprc": 0.827520518358802,
+        "bootstrap_attempts": 1000,
+        "bootstrap_valid": 1000,
+        "bootstrap_unit": "question_id",
+        "auroc_low": 0.7491604374589015,
+        "auroc_high": 0.817240420926541,
+        "auprc_low": 0.7882591862164199,
+        "auprc_high": 0.8678313780531954
+      },
+      "tre_effective": {
+        "n": 800,
+        "auroc": 0.8269685158632389,
+        "positive": 507,
+        "negative": 293,
+        "positive_rate": 0.63375,
+        "auprc": 0.868478721607751,
+        "bootstrap_attempts": 1000,
+        "bootstrap_valid": 1000,
+        "bootstrap_unit": "question_id",
+        "auroc_low": 0.7972057193872023,
+        "auroc_high": 0.8552545464328467,
+        "auprc_low": 0.8334672659086481,
+        "auprc_high": 0.9011465646921367
+      }
+    },
+    "main_metric": "tre",
+    "diagnostic_auroc": {
+      "effective_length": 0.3986846268284966,
+      "tail_tre": 0.6242839159615217,
+      "tail_share": 0.23707009713835653,
+      "note": "diagnostics only; direction not flipped, never used to pick the main metric"
+    },
+    "generation_diagnostics": {
+      "termination_counts": {
+        "eot": 769,
+        "eos": 31
+      },
+      "empty_answer_n": 0,
+      "truncated_n": 0,
+      "effective_length_min": 1,
+      "effective_length_median": 12.0,
+      "effective_length_p95": 29.049999999999955,
+      "effective_length_max": 126,
+      "tail_share_mean": 0.6035288885374505,
+      "tail_share_median": 0.6048893657403093
+    }
+  }
+}
