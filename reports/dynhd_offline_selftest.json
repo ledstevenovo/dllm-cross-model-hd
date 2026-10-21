@@ -1,109 +1,109 @@
 {
-  "date": "2026-10-21",
+  "date": "2026-10-22",
   "root": "/root/autodl-tmp/dynhd_repro/engineering/selftest/run",
   "scenarios": {
     "A_shape_failure": {
       "cmd": "/root/autodl-tmp/dllm-cross-model-hd/.venv-dynhd/bin/python /root/autodl-tmp/dllm-cross-model-hd/scripts/dynhd_repro/collect_local.py --model llada --config /root/autodl-tmp/dllm-cross-model-hd/configs/dynhd_repro/llada_local.yaml --subset /root/autodl-tmp/dynhd_repro/engineering/selftest/run/acceptance13.jsonl --fixture fault --run-id runA --output-dir /root/autodl-tmp/dynhd_repro/engineering/selftest/run/runA --fault-plan /root/autodl-tmp/dynhd_repro/engineering/selftest/run/plan13.json",
       "exit": 1,
-      "seconds": 2.31,
+      "seconds": 2.15,
       "stdout_tail": "Collecting 13 traces into /root/autodl-tmp/dynhd_repro/engineering/selftest/run/runA\n[error] index=12 id=hotpotqa__5a74d4f355429974ef308c79dup: RuntimeError: actual_T=63 differs from requested steps=64\n[wrapper] run=runA saved=12 failed=1 not_started=0 exit=1\n",
-      "stderr_tail": "\ncollect[triviaqa]:   0%|          | 0/13 [00:00<?, ?it/s]\ncollect[triviaqa]: 100%|██████████| 13/13 [00:00<00:00, 214.24it/s]\n"
+      "stderr_tail": "\ncollect[triviaqa]:   0%|          | 0/13 [00:00<?, ?it/s]\ncollect[triviaqa]:   8%|▊         | 1/13 [00:00<00:01,  8.64it/s]\ncollect[triviaqa]: 100%|██████████| 13/13 [00:00<00:00, 87.98it/s]\n"
     },
     "B_label_save_failure": {
       "cmd": "/root/autodl-tmp/dllm-cross-model-hd/.venv-dynhd/bin/python /root/autodl-tmp/dllm-cross-model-hd/scripts/dynhd_repro/collect_local.py --model llada --config /root/autodl-tmp/dllm-cross-model-hd/configs/dynhd_repro/llada_local.yaml --subset /root/autodl-tmp/dynhd_repro/engineering/selftest/run/three.jsonl --fixture fault --run-id runB --output-dir /root/autodl-tmp/dynhd_repro/engineering/selftest/run/runB --fault-plan /root/autodl-tmp/dynhd_repro/engineering/selftest/run/planB.json",
       "exit": 1,
       "seconds": 2.17,
       "stdout_tail": "Collecting 3 traces into /root/autodl-tmp/dynhd_repro/engineering/selftest/run/runB\n[error] index=1 id=triviaqa__qf_270: RuntimeError: fixture label failure for triviaqa__qf_270\n[error] index=2 id=triviaqa__qw_1940: RuntimeError: fixture save failure for triviaqa__qw_1940\n[wrapper] run=runB saved=1 failed=2 not_started=0 exit=1\n",
-      "stderr_tail": "\ncollect[triviaqa]:   0%|          | 0/3 [00:00<?, ?it/s]\ncollect[triviaqa]: 100%|██████████| 3/3 [00:00<00:00, 85.76it/s]\n"
+      "stderr_tail": "\ncollect[triviaqa]:   0%|          | 0/3 [00:00<?, ?it/s]\ncollect[triviaqa]:  33%|███▎      | 1/3 [00:00<00:00,  6.39it/s]\ncollect[triviaqa]: 100%|██████████| 3/3 [00:00<00:00, 18.58it/s]\n"
     },
     "C1_interrupted": {
       "cmd": "/root/autodl-tmp/dllm-cross-model-hd/.venv-dynhd/bin/python /root/autodl-tmp/dllm-cross-model-hd/scripts/dynhd_repro/collect_local.py --model llada --config /root/autodl-tmp/dllm-cross-model-hd/configs/dynhd_repro/llada_local.yaml --subset /root/autodl-tmp/dynhd_repro/engineering/selftest/run/six.jsonl --fixture fault --run-id runC1 --output-dir /root/autodl-tmp/dynhd_repro/engineering/selftest/run/runC1 --fault-plan /root/autodl-tmp/dynhd_repro/engineering/selftest/run/planC.json",
       "exit": 3,
-      "seconds": 2.16,
+      "seconds": 2.26,
       "stdout_tail": "Collecting 6 traces into /root/autodl-tmp/dynhd_repro/engineering/selftest/run/runC1\n[wrapper] run=runC1 saved=3 failed=0 not_started=3 exit=3\n",
-      "stderr_tail": "\ncollect[triviaqa]:   0%|          | 0/6 [00:00<?, ?it/s]\ncollect[triviaqa]:  50%|█████     | 3/6 [00:00<00:00, 85.07it/s]\n"
+      "stderr_tail": "\ncollect[triviaqa]:   0%|          | 0/6 [00:00<?, ?it/s]\ncollect[triviaqa]:  17%|█▋        | 1/6 [00:00<00:00,  6.09it/s]\ncollect[triviaqa]:  50%|█████     | 3/6 [00:00<00:00, 17.37it/s]\n"
     },
     "C2_gap_refill": {
       "cmd": "/root/autodl-tmp/dllm-cross-model-hd/.venv-dynhd/bin/python /root/autodl-tmp/dllm-cross-model-hd/scripts/dynhd_repro/collect_local.py --model llada --config /root/autodl-tmp/dllm-cross-model-hd/configs/dynhd_repro/llada_local.yaml --subset /root/autodl-tmp/dynhd_repro/engineering/selftest/run/six.jsonl --fixture fault --run-id runC2 --output-dir /root/autodl-tmp/dynhd_repro/engineering/selftest/run/runC2 --only-question-ids /root/autodl-tmp/dynhd_repro/engineering/selftest/run/gap_ids.txt --fault-plan /root/autodl-tmp/dynhd_repro/engineering/selftest/run/planC2.json",
       "exit": 0,
-      "seconds": 2.12,
+      "seconds": 2.22,
       "stdout_tail": "Collecting 3 traces into /root/autodl-tmp/dynhd_repro/engineering/selftest/run/runC2\nSaved 3 complete traces to /root/autodl-tmp/dynhd_repro/engineering/selftest/run/runC2\n[wrapper] run=runC2 saved=3 failed=0 not_started=0 exit=0\n",
-      "stderr_tail": "\ncollect[triviaqa]:   0%|          | 0/3 [00:00<?, ?it/s]\ncollect[triviaqa]: 100%|██████████| 3/3 [00:00<00:00, 86.18it/s]\n"
+      "stderr_tail": "\ncollect[triviaqa]:   0%|          | 0/3 [00:00<?, ?it/s]\ncollect[triviaqa]:  33%|███▎      | 1/3 [00:00<00:00,  6.04it/s]\ncollect[triviaqa]: 100%|██████████| 3/3 [00:00<00:00, 17.24it/s]\n"
     },
     "C_merge": {
       "cmd": "/root/autodl-tmp/dllm-cross-model-hd/.venv-dynhd/bin/python /root/autodl-tmp/dllm-cross-model-hd/scripts/dynhd_repro/merge_runs.py --inputs /root/autodl-tmp/dynhd_repro/engineering/selftest/run/runC1 /root/autodl-tmp/dynhd_repro/engineering/selftest/run/runC2 --out /root/autodl-tmp/dynhd_repro/engineering/selftest/run/mergedC",
       "exit": 0,
-      "seconds": 1.7,
+      "seconds": 1.66,
       "stdout_tail": "merged 6 samples from 2 runs into /root/autodl-tmp/dynhd_repro/engineering/selftest/run/mergedC\n",
       "stderr_tail": ""
     },
     "C_duplicate_default": {
       "cmd": "/root/autodl-tmp/dllm-cross-model-hd/.venv-dynhd/bin/python /root/autodl-tmp/dllm-cross-model-hd/scripts/dynhd_repro/merge_runs.py --inputs /root/autodl-tmp/dynhd_repro/engineering/selftest/run/runC2 /root/autodl-tmp/dynhd_repro/engineering/selftest/run/runC3 --out /root/autodl-tmp/dynhd_repro/engineering/selftest/run/merged_dup",
       "exit": 1,
-      "seconds": 1.71,
+      "seconds": 1.65,
       "stdout_tail": "",
       "stderr_tail": "duplicate sample id triviaqa__tc_2256 across runs; use --prefer to choose\n"
     },
     "C_duplicate_prefer": {
       "cmd": "/root/autodl-tmp/dllm-cross-model-hd/.venv-dynhd/bin/python /root/autodl-tmp/dllm-cross-model-hd/scripts/dynhd_repro/merge_runs.py --inputs /root/autodl-tmp/dynhd_repro/engineering/selftest/run/runC2 /root/autodl-tmp/dynhd_repro/engineering/selftest/run/runC3 --out /root/autodl-tmp/dynhd_repro/engineering/selftest/run/merged_prefer --prefer runC3",
       "exit": 0,
-      "seconds": 1.73,
+      "seconds": 1.69,
       "stdout_tail": "merged 3 samples from 2 runs into /root/autodl-tmp/dynhd_repro/engineering/selftest/run/merged_prefer\n",
       "stderr_tail": ""
     },
     "C_config_mismatch": {
       "cmd": "/root/autodl-tmp/dllm-cross-model-hd/.venv-dynhd/bin/python /root/autodl-tmp/dllm-cross-model-hd/scripts/dynhd_repro/merge_runs.py --inputs /root/autodl-tmp/dynhd_repro/engineering/selftest/run/runC1 /root/autodl-tmp/dynhd_repro/engineering/selftest/run/runD --out /root/autodl-tmp/dynhd_repro/engineering/selftest/run/merged_mismatch",
       "exit": 1,
-      "seconds": 1.66,
+      "seconds": 1.64,
       "stdout_tail": "",
-      "stderr_tail": "refusing to merge different generation fingerprints: ['5df24b3fdfb6d8119198ac045ce85af13be714f79d35759ed05805cd89b73f9c', 'cfd2aefd84ebd1cb25cc2d1e200f200b2c245e5b999cf10e02c8d411ae022399']\n"
+      "stderr_tail": "refusing to merge different generation fingerprints: ['acbb7fbf0f6f9aa89a0a8043a72df99c2e75ec7e4e506eb1957a05cf8b6fc990', 'cf6d941c2f5f6d8eb5974486e0b95ef865adb84d7be61a3e7dd35551f36ef916']\n"
     },
     "D_reviewed_hash_mismatch": {
       "cmd": "/root/autodl-tmp/dllm-cross-model-hd/.venv-dynhd/bin/python /root/autodl-tmp/dllm-cross-model-hd/scripts/dynhd_repro/collect_local.py --model llada --config /root/autodl-tmp/dllm-cross-model-hd/configs/dynhd_repro/llada_local.yaml --subset /root/autodl-tmp/dynhd_repro/engineering/selftest/run/one.jsonl --fixture fault --run-id runE --output-dir /root/autodl-tmp/dynhd_repro/engineering/selftest/run/runE --labels reviewed --labels-file /root/autodl-tmp/dynhd_repro/engineering/selftest/run/reviewed_wrong.jsonl --fault-plan /root/autodl-tmp/dynhd_repro/engineering/selftest/run/planB.json",
       "exit": 1,
-      "seconds": 2.13,
+      "seconds": 2.21,
       "stdout_tail": "Collecting 1 traces into /root/autodl-tmp/dynhd_repro/engineering/selftest/run/runE\n[error] index=0 id=triviaqa__qb_1147: RuntimeError: reviewed answer hash does not match the regenerated answer\n[wrapper] run=runE saved=0 failed=1 not_started=0 exit=1\n",
-      "stderr_tail": "\ncollect[triviaqa]:   0%|          | 0/1 [00:00<?, ?it/s]\ncollect[triviaqa]: 100%|██████████| 1/1 [00:00<00:00, 37.62it/s]\n"
+      "stderr_tail": "\ncollect[triviaqa]:   0%|          | 0/1 [00:00<?, ?it/s]\ncollect[triviaqa]: 100%|██████████| 1/1 [00:00<00:00,  6.48it/s]\ncollect[triviaqa]: 100%|██████████| 1/1 [00:00<00:00,  6.46it/s]\n"
     },
     "E_engineering": {
       "cmd": "/root/autodl-tmp/dllm-cross-model-hd/.venv-dynhd/bin/python /root/autodl-tmp/dllm-cross-model-hd/scripts/dynhd_repro/check_engineering.py --data-dir /root/autodl-tmp/dynhd_repro/engineering/selftest/run/runA --out /root/autodl-tmp/dynhd_repro/engineering/selftest/run/check_engineering.json",
       "exit": 0,
-      "seconds": 1.73,
-      "stdout_tail": "{\n  \"data_dir\": \"/root/autodl-tmp/dynhd_repro/engineering/selftest/run/runA\",\n  \"files\": 12,\n  \"labels\": {\n    \"0\": 6,\n    \"1\": 6\n  },\n  \"dtypes\": [\n    \"(64, 3)\"\n  ],\n  \"fingerprints\": [\n    \"5df24b3fdfb6d8119198ac045ce85af13be714f79d35759ed05805cd89b73f9c\"\n  ],\n  \"ok\": true\n}\ncheck_engineering: OK\n",
+      "seconds": 1.7,
+      "stdout_tail": "{\n  \"data_dir\": \"/root/autodl-tmp/dynhd_repro/engineering/selftest/run/runA\",\n  \"files\": 12,\n  \"labels\": {\n    \"0\": 6,\n    \"1\": 6\n  },\n  \"dtypes\": [\n    \"(64, 3)\"\n  ],\n  \"fingerprints\": [\n    \"acbb7fbf0f6f9aa89a0a8043a72df99c2e75ec7e4e506eb1957a05cf8b6fc990\"\n  ],\n  \"ok\": true\n}\ncheck_engineering: OK\n",
       "stderr_tail": ""
     },
     "E_make_split": {
       "cmd": "/root/autodl-tmp/dllm-cross-model-hd/.venv-dynhd/bin/python /root/autodl-tmp/dllm-cross-model-hd/scripts/dynhd_repro/make_split.py --subset /root/autodl-tmp/dynhd_repro/engineering/selftest/run/acceptance13.jsonl --valid-dir /root/autodl-tmp/dynhd_repro/engineering/selftest/run/runA --out /root/autodl-tmp/dynhd_repro/engineering/selftest/run/splits/pilot200.json --index-map /root/autodl-tmp/dynhd_repro/engineering/selftest/run/splits/index_map.json",
       "exit": 0,
-      "seconds": 0.06,
+      "seconds": 0.07,
       "stdout_tail": "valid files 12 -> train/val/test = 7/2/3\nwrote /root/autodl-tmp/dynhd_repro/engineering/selftest/run/splits/pilot200.json and /root/autodl-tmp/dynhd_repro/engineering/selftest/run/splits/index_map.json\n",
       "stderr_tail": ""
     },
     "E_relabel": {
       "cmd": "/root/autodl-tmp/dllm-cross-model-hd/.venv-dynhd/bin/python /root/autodl-tmp/dllm-cross-model-hd/scripts/dynhd_repro/relabel.py --subset /root/autodl-tmp/dynhd_repro/engineering/selftest/run/acceptance13.jsonl --raw-dir /root/autodl-tmp/dynhd_repro/engineering/selftest/run/runA --labels-file /root/autodl-tmp/dynhd_repro/engineering/selftest/run/relabel_labels.jsonl --valid-dir /root/autodl-tmp/dynhd_repro/engineering/selftest/run/pilot200/valid --excluded-dir /root/autodl-tmp/dynhd_repro/engineering/selftest/run/pilot200/excluded --report /root/autodl-tmp/dynhd_repro/engineering/selftest/run/relabel.json",
       "exit": 0,
-      "seconds": 1.7,
+      "seconds": 1.66,
       "stdout_tail": "{\n  \"raw_dir\": \"/root/autodl-tmp/dynhd_repro/engineering/selftest/run/runA\",\n  \"valid_dir\": \"/root/autodl-tmp/dynhd_repro/engineering/selftest/run/pilot200/valid\",\n  \"excluded_dir\": \"/root/autodl-tmp/dynhd_repro/engineering/selftest/run/pilot200/excluded\",\n  \"raw_files\": 12,\n  \"included\": 10,\n  \"excluded\": 2,\n  \"raw_unchanged\": true,\n  \"ok\": true\n}\nrelabel: OK\n",
       "stderr_tail": ""
     },
     "E_check_valid_rejects_fixture": {
       "cmd": "/root/autodl-tmp/dllm-cross-model-hd/.venv-dynhd/bin/python /root/autodl-tmp/dllm-cross-model-hd/scripts/dynhd_repro/check_valid.py --model llada --valid-dir /root/autodl-tmp/dynhd_repro/engineering/selftest/run/pilot200/valid --split /root/autodl-tmp/dynhd_repro/engineering/selftest/run/splits/pilot200.json --index-map /root/autodl-tmp/dynhd_repro/engineering/selftest/run/splits/index_map.json --out /root/autodl-tmp/dynhd_repro/engineering/selftest/run/check_valid.json",
       "exit": 2,
-      "seconds": 1.86,
-      "stdout_tail": "{\n  \"model\": \"llada\",\n  \"valid_dir\": \"/root/autodl-tmp/dynhd_repro/engineering/selftest/run/pilot200/valid\",\n  \"files\": 10,\n  \"counts\": {\n    \"total\": 10,\n    \"train\": {\n      \"n\": 7,\n      \"label0\": 4,\n      \"label1\": 3\n    },\n    \"val\": {\n      \"n\": 2,\n      \"label0\": 1,\n      \"label1\": 1\n    },\n    \"test\": {\n      \"n\": 1,\n      \"label0\": 0,\n      \"label1\": 1\n    }\n  },\n  \"fingerprints\": [\n    \"5df24b3fdfb6d8119198ac045ce85af13be714f79d35759ed05805cd89b73f9c\"\n  ],\n  \"ok\": false\n}\n ! 000000.pt: test_fixture data must not enter formal valid\n ! 000001.pt: test_fixture data must not enter formal valid\n ! 000002.pt: test_fixture data must not enter formal valid\n ! 000003.pt: test_fixture data must not enter formal valid\n ! 000004.pt: test_fixture data must not enter formal valid\n ! 000005.pt: test_fixture data must not enter formal valid\n ! 000006.pt: test_fixture data must not enter formal valid\n ! 000007.pt: test_fixture data must not enter formal valid\n ! 000008.pt: test_fixture data must not enter formal valid\n ! 000009.pt: test_fixture data must not enter formal valid\n ! split does not cover every valid file exactly once\n ! index_map does not cover every valid file\ncheck_valid: FAILED\n",
+      "seconds": 1.63,
+      "stdout_tail": "{\n  \"model\": \"llada\",\n  \"valid_dir\": \"/root/autodl-tmp/dynhd_repro/engineering/selftest/run/pilot200/valid\",\n  \"files\": 10,\n  \"counts\": {\n    \"total\": 10,\n    \"train\": {\n      \"n\": 7,\n      \"label0\": 4,\n      \"label1\": 3\n    },\n    \"val\": {\n      \"n\": 2,\n      \"label0\": 1,\n      \"label1\": 1\n    },\n    \"test\": {\n      \"n\": 1,\n      \"label0\": 0,\n      \"label1\": 1\n    }\n  },\n  \"fingerprints\": [\n    \"acbb7fbf0f6f9aa89a0a8043a72df99c2e75ec7e4e506eb1957a05cf8b6fc990\"\n  ],\n  \"ok\": false\n}\n ! 000000.pt: test_fixture data must not enter formal valid\n ! 000001.pt: test_fixture data must not enter formal valid\n ! 000002.pt: test_fixture data must not enter formal valid\n ! 000003.pt: test_fixture data must not enter formal valid\n ! 000004.pt: test_fixture data must not enter formal valid\n ! 000005.pt: test_fixture data must not enter formal valid\n ! 000006.pt: test_fixture data must not enter formal valid\n ! 000007.pt: test_fixture data must not enter formal valid\n ! 000008.pt: test_fixture data must not enter formal valid\n ! 000009.pt: test_fixture data must not enter formal valid\n ! split does not cover every valid file exactly once\n ! index_map does not cover every valid file\ncheck_valid: FAILED\n",
       "stderr_tail": ""
     },
     "F_train": {
       "cmd": "/root/autodl-tmp/dllm-cross-model-hd/.venv-dynhd/bin/python -m dynhd.cli.train_detector --data-path /root/autodl-tmp/dynhd_repro/engineering/selftest/run/runA --out-dir /root/autodl-tmp/dynhd_repro/engineering/selftest/run/train --device cpu --seed 42 --split /root/autodl-tmp/dynhd_repro/engineering/selftest/run/splits/pilot200.json --max-steps 64 --prompt-dim 8 --hidden-dim 16 --epochs-stage1 2 --epochs-stage2 3 --batch-size 4 --verbose",
       "exit": 0,
-      "seconds": 3.68,
+      "seconds": 3.63,
       "stdout_tail": "stage1 epoch=1 loss=0.204733\nstage1 epoch=2 loss=0.201793\nstage2 epoch=1 loss=0.729625 val_auroc=0.5000\nstage2 epoch=2 loss=0.731673 val_auroc=0.5000\nstage2 epoch=3 loss=0.736164 val_auroc=0.5000\nSaved checkpoint: /root/autodl-tmp/dynhd_repro/engineering/selftest/run/train/detector.pt\n",
       "stderr_tail": ""
     },
     "F_eval": {
       "cmd": "/root/autodl-tmp/dllm-cross-model-hd/.venv-dynhd/bin/python -m dynhd.cli.eval_detector --data-path /root/autodl-tmp/dynhd_repro/engineering/selftest/run/runA --ckpt /root/autodl-tmp/dynhd_repro/engineering/selftest/run/train/detector.pt --split /root/autodl-tmp/dynhd_repro/engineering/selftest/run/splits/pilot200.json --split-part test --device cpu --threshold 0.5",
       "exit": 0,
-      "seconds": 2.65,
+      "seconds": 2.77,
       "stdout_tail": "{\n  \"samples\": 3,\n  \"auroc\": 0.5,\n  \"accuracy\": 0.3333333333333333,\n  \"precision\": 0.0,\n  \"recall\": 0.0,\n  \"f1\": 0.0\n}\n",
       "stderr_tail": ""
     }
