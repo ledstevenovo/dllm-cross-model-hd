@@ -19,3 +19,9 @@
 这里的模型是明确标记的CPU替身；真实7B/8B加载、云端torch2.8/CUDA12.8/BF16、显存及每模型20题仍待有卡阶段核验。历史报告中的“采集器尚未实现”为当时快照，已被本段更新。
 
 无卡准备（2026-10-21）：两套推理venv（.venv-llada/.venv-dream，继承平台torch2.8.0+cu128，venv内不装torch）与HF缓存权重（LLaDA 16.0GB/6分片、Dream 15.2GB/4分片，逐文件哈希独立复核通过）就绪；生产加载路径的CPU真实加载检查与fixture单题演练通过。有卡单题/smoke20、显存、BF16仍未验证。证据见reports/phase2_env_prep.json。
+
+## TRE / DynHD 复现进度（2026-10-21/22）
+
+- TRE：R0 验收通过；正式 800 题 LLaDA FP16 采集完成（800/800 校验通过）；judge（J2）待 API key，评分入口已就绪。见 reports/tre_repro/。
+- DynHD：步骤 0–2 完成（隔离环境、适配层 + CPU 验收 22/22、两模型有卡单题与 hook 对齐/非干扰/decode 检查全通过）；步骤 3（smoke20 工程验收）未执行。见 reports/dynhd_*.json。
+- 两条线的权重、轨迹与运行目录不入库，均留在 /root/autodl-tmp 持久盘。
