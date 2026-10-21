@@ -11,15 +11,41 @@ GPU 只在**采集/重采**时需要；此清单中的每一步都不占用 GPU�
 
 **唯一约束**：切无卡会重启容器，正在跑的进程会被杀。切换前 `screen -ls` 必须为空。
 
-## 1. 三项待办（本次采纳口径后）
+## 1. 隔夜队列（12 步，2026-10-22 夜实际执行）
 
-| # | 任务 | 预计 | 命令 / 产物 |
+一键全跑（后台，推荐参数）：
+
+```bash
+cd /root/autodl-tmp/dllm-cross-model-hd
+STABILITY_REPEATS=800 STABILITY_MAX_SECONDS=12600 STOP_AFTER_MIN=600 CYCLES=4 \
+  screen -dmS overnight bash scripts/overnight_nogpu.sh
+screen -dmS guard bash scripts/overnight_guard.sh     # 独立守护，每 5 分钟
+```
+
+步骤与产物（`.done/NN_*` 标记断点续跑，重跑自动跳过）：
+
+| 步 | 内容 | 无卡实测 | 产物 |
 |---|---|---|---|
-| 1 | 备份打包 + 独立复算 | 打包 ~5 分钟 / 复算 ~10 分钟 | `scripts/overnight_nogpu.sh` 步骤 1；产物 `/root/autodl-tmp/backup_<date>/{tre_repro,main_project,dynhd_repro}.tar.gz` + `MANIFEST.sha256` |
-| 2 | 主项目签核 → 特征 → 阶段 7 | 1–1.5 小时 | 步骤 2–3；产物 `data/labels/*.reviewed.jsonl`、`data/features/pilot200_*.parquet`、`results/stage7/{main,ablations}` |
-| 3 | DynHD 步骤 7 交付汇总 | 30–40 分钟 | 步骤 4；产物 `reports/dynhd_reproduction_summary.{md,json}` |
+| 01 | 备份打包 | ~10 s | `/root/autodl-tmp/backup_<date>/*.tar.gz` + `MANIFEST.sha256` |
+| 02 | 标签签核 + 特征抽取 | ~5 min | `data/labels/*.reviewed.jsonl`、`data/features/pilot200_*.parquet` |
+| 03 | 阶段 7 迁移矩阵 | ~20 min | `results/stage7/{main,ablations}/`（失败降级：单特征集 + bootstrap 200） |
+| 04 | TRE 离线分析（29 分数族） | ~7 min | `reports/tre_repro/offline_analysis.json` |
+| 05 | TRE 簇级置换检验（10000 次） | ~8 min | `reports/tre_repro/permutation_test.json`（失败降级 2000 次） |
+| 06 | 多种子矩阵（5 seeds） | ~38 min | `reports/main_project_multiseed.{json,csv}` |
+| 07 | 特征重要性（LOO + 置换） | ~2 min | `reports/main_project_importance.{json,csv}` |
+| 08 | 稳定性重采样（800 次/格） | ~2.8–3.5 h | `reports/main_project_stability.{json,csv}` |
+| 09 | DynHD 交付汇总 | ~2 s | `reports/dynhd_reproduction_summary.{md,json}` |
+| 10 | 标签一致性（无 key 自动跳过） | – | `overnight_logs/10_label_consistency.log` |
+| 11 | 晨检报告 | ~10 s | `reports/overnight_<date>_summary.md` |
+| 12 | 提交推送（`reports/ scripts/ docs/`） | ~5 s | 远端 main |
 
-一键全跑（后台）：`screen -dmS overnight bash scripts/overnight_nogpu.sh`
+稳定性重采样说明（0.5 核实测 ~1.6 s/次重拟合）：
+
+- 每格耗时 ≈ REPEATS × 1.6 s；8 个组合全部完成 ≈ 8 × REPEATS × 1.6 s（800 次 ≈ 2.8 h）；
+- `STABILITY_MAX_SECONDS` 为整步硬上限：到点按组合边界停止，已完成的组合保留、未完成组合标 `partial` 并写入 `missing_combos`，检查点保留可续跑（`<out>.checkpoint.json`，已 gitignore）；
+- 每个组合使用由 `--seed` + 组合键派生的独立确定性 RNG，续跑结果与不中断一致。
+
+一键晨间汇总：`.venv/bin/python scripts/morning_digest.py` → `reports/morning_digest.md`（跨产物关键数字 + provenance + partial 告警）。
 
 ## 2. 之后的无卡任务队列
 
@@ -42,9 +68,11 @@ GPU 只在**采集/重采**时需要；此清单中的每一步都不占用 GPU�
 ## 4. 早上验收 3 步
 
 ```bash
-cat /root/autodl-tmp/overnight_logs/driver.log     # 每步 rc
-ls results/stage7/main && cat reports/overnight_*_summary.md
-screen -ls                                          # 为空才可切无卡
+cat /root/autodl-tmp/overnight_logs/driver.log        # 每步 rc / SKIP / FAIL
+cat reports/overnight_$(date +%Y%m%d)_summary.md      # 队列自产摘要
+.venv/bin/python scripts/morning_digest.py            # 跨产物一页汇总
+ls results/stage7/main reports/main_project_stability.json
+screen -ls                                            # 为空才可切卡
 ```
 
 ## 5. 失败升级规则（用户 2026-10-22 指令）
@@ -64,7 +92,7 @@ screen -ls                                          # 为空才可切无卡
 - `overnight_logs/monitor.log`：每 20 分钟一轮快照，出现 `ACTION_REQUIRED: failed steps: ...` 即表示需要修复；
 - `overnight_logs/guard.log`：独立守护（每 5 分钟）记录会话重启与卡死重启动作。
 
-## 5. 红线（无卡也不变）
+## 6. 红线（无卡也不变）
 
 - 权重、轨迹、结果目录不入 Git；标签必须 `human_reviewed=true` + `human:<reviewer>` 才进正式指标；
 - 不用测试集调参；不伪造人工来源；不静默改精度/EOS 口径；
