@@ -1,0 +1,444 @@
+{
+  "llada": {
+    "model": "llada",
+    "item": {
+      "sample_id": "triviaqa__qw_10077",
+      "role": "longest_prompt",
+      "rendered_prompt_tokens": 118
+    },
+    "started_utc": "2026-10-21T15:56:29Z",
+    "load_seconds": 5.553,
+    "device": "cuda:0",
+    "dtype": "torch.bfloat16",
+    "device_memory_after_load": {
+      "free_bytes": 17494114304,
+      "total_bytes": 33796456448
+    },
+    "hook_alignment": {
+      "model": "llada",
+      "rule": "raw[:, prompt_len:] (identity)",
+      "steps_checked": 5,
+      "steps_requested": 5,
+      "exact_matches": 5,
+      "results": [
+        {
+          "step": 0,
+          "exact_equal": true,
+          "max_abs_diff": 0.0,
+          "shape_raw": [
+            1,
+            182,
+            126464
+          ],
+          "shape_extractor": [
+            1,
+            64,
+            126464
+          ]
+        },
+        {
+          "step": 1,
+          "exact_equal": true,
+          "max_abs_diff": 0.0,
+          "shape_raw": [
+            1,
+            182,
+            126464
+          ],
+          "shape_extractor": [
+            1,
+            64,
+            126464
+          ]
+        },
+        {
+          "step": 2,
+          "exact_equal": true,
+          "max_abs_diff": 0.0,
+          "shape_raw": [
+            1,
+            182,
+            126464
+          ],
+          "shape_extractor": [
+            1,
+            64,
+            126464
+          ]
+        },
+        {
+          "step": 3,
+          "exact_equal": true,
+          "max_abs_diff": 0.0,
+          "shape_raw": [
+            1,
+            182,
+            126464
+          ],
+          "shape_extractor": [
+            1,
+            64,
+            126464
+          ]
+        },
+        {
+          "step": 4,
+          "exact_equal": true,
+          "max_abs_diff": 0.0,
+          "shape_raw": [
+            1,
+            182,
+            126464
+          ],
+          "shape_extractor": [
+            1,
+            64,
+            126464
+          ]
+        }
+      ]
+    },
+    "observation_non_interference": {
+      "identical_tokens": true,
+      "identical_text": true,
+      "generated_token_count": 64,
+      "first_eos_position": 4,
+      "first_mask_position": null,
+      "upstream_decode_cut_position": null,
+      "eos_observed": true,
+      "mask_observed": false,
+      "decode_rule": "mask dropped in place, EOS removed by skip_special_tokens (no positional cut)"
+    },
+    "decode_unit_check": {
+      "llada": {
+        "tokenizer": "GSAI-ML/LLaDA-8B-Instruct",
+        "eos_id": 126081,
+        "mask_id": 126336,
+        "rule": "mask dropped anywhere; EOS/EOT removed by skip_special_tokens",
+        "mask_dropped_in_place": true,
+        "eos_removed_by_skip_special": true,
+        "keeps_text_after_eos": true,
+        "base_text": "The capital of France is Paris"
+      },
+      "dream": {
+        "tokenizer": "Dream-org/Dream-v0-Instruct-7B",
+        "eos_id": 151643,
+        "mask_id": 151666,
+        "rule": "cut at first EOS or mask, then skip_special_tokens",
+        "cut_at_eos": true,
+        "cut_at_mask": true,
+        "base_text": "The capital of France is Paris"
+      }
+    },
+    "checks_failed": []
+  },
+  "dream": {
+    "model": "dream",
+    "item": {
+      "sample_id": "triviaqa__qw_10077",
+      "role": "longest_prompt",
+      "rendered_prompt_tokens": 121
+    },
+    "started_utc": "2026-10-21T15:56:48Z",
+    "load_seconds": 4.335,
+    "device": "cuda:0",
+    "dtype": "torch.bfloat16",
+    "device_memory_after_load": {
+      "free_bytes": 18114871296,
+      "total_bytes": 33796456448
+    },
+    "hook_alignment": {
+      "model": "dream",
+      "rule": "cat([raw[:,:1], raw[:,:-1]])[:, prompt_len:]",
+      "steps_checked": 5,
+      "steps_requested": 5,
+      "exact_matches": 5,
+      "results": [
+        {
+          "step": 0,
+          "exact_equal": true,
+          "max_abs_diff": 0.0,
+          "shape_raw": [
+            1,
+            185,
+            152064
+          ],
+          "shape_extractor": [
+            1,
+            64,
+            152064
+          ]
+        },
+        {
+          "step": 1,
+          "exact_equal": true,
+          "max_abs_diff": 0.0,
+          "shape_raw": [
+            1,
+            185,
+            152064
+          ],
+          "shape_extractor": [
+            1,
+            64,
+            152064
+          ]
+        },
+        {
+          "step": 2,
+          "exact_equal": true,
+          "max_abs_diff": 0.0,
+          "shape_raw": [
+            1,
+            185,
+            152064
+          ],
+          "shape_extractor": [
+            1,
+            64,
+            152064
+          ]
+        },
+        {
+          "step": 3,
+          "exact_equal": true,
+          "max_abs_diff": 0.0,
+          "shape_raw": [
+            1,
+            185,
+            152064
+          ],
+          "shape_extractor": [
+            1,
+            64,
+            152064
+          ]
+        },
+        {
+          "step": 4,
+          "exact_equal": true,
+          "max_abs_diff": 0.0,
+          "shape_raw": [
+            1,
+            185,
+            152064
+          ],
+          "shape_extractor": [
+            1,
+            64,
+            152064
+          ]
+        }
+      ]
+    },
+    "observation_non_interference": {
+      "identical_tokens": true,
+      "identical_text": true,
+      "generated_token_count": 64,
+      "first_eos_position": 4,
+      "first_mask_position": null,
+      "upstream_decode_cut_position": 4,
+      "eos_observed": true,
+      "mask_observed": false,
+      "decode_rule": "cut at first EOS or mask, then skip_special_tokens"
+    },
+    "decode_unit_check": {
+      "llada": {
+        "tokenizer": "GSAI-ML/LLaDA-8B-Instruct",
+        "eos_id": 126081,
+        "mask_id": 126336,
+        "rule": "mask dropped anywhere; EOS/EOT removed by skip_special_tokens",
+        "mask_dropped_in_place": true,
+        "eos_removed_by_skip_special": true,
+        "keeps_text_after_eos": true,
+        "base_text": "The capital of France is Paris"
+      },
+      "dream": {
+        "tokenizer": "Dream-org/Dream-v0-Instruct-7B",
+        "eos_id": 151643,
+        "mask_id": 151666,
+        "rule": "cut at first EOS or mask, then skip_special_tokens",
+        "cut_at_eos": true,
+        "cut_at_mask": true,
+        "base_text": "The capital of France is Paris"
+      }
+    },
+    "checks_failed": []
+  },
+  "date": "2026-10-21T15:58:39Z",
+  "single_runs": {
+    "llada": {
+      "run_dir": "/root/autodl-tmp/dynhd_repro/acceptance/llada/raw/single",
+      "run_id": "single",
+      "load_seconds": 5.257,
+      "device": {
+        "python": "3.12.3",
+        "torch": "2.8.0+cu128",
+        "transformers": "4.46.2",
+        "cuda_available": true
+      },
+      "saved": 2,
+      "failed": 0,
+      "not_started": 0,
+      "items": [
+        {
+          "file": "000000.pt",
+          "sample_id": "triviaqa__qw_10077",
+          "question_id": null,
+          "generated_text": "Abolitionism",
+          "provisional_label": 0,
+          "provisional_kind": "correct",
+          "elapsed_seconds": 3.6839,
+          "actual_T": 64,
+          "peak_memory_bytes": {
+            "allocated": 16248887296,
+            "reserved": 16341008384
+          },
+          "features_shape": [
+            64,
+            3
+          ],
+          "features_finite": true,
+          "features_mean": 2.6291,
+          "features_max": 4.335,
+          "features_topk_mean_column": 2.38,
+          "prompt_emb_dim": 4096,
+          "prompt_emb_finite": true,
+          "answer_sha256": "5d6459edd88edfabf7e079d9e7a67810b4f2756f159e07bb6ad2cab1828cf78c",
+          "item_seed": 2889054933,
+          "generation_fingerprint": "0b17b5f45e8ab151e604b3cca2f8a23d53d0a835988bef1a9b246bc47dc838a2",
+          "raw_file_sha256": "1857e18698aab8ea3c7bd96b82066c54390ec83da6642fa516f4398501a748b9",
+          "rendered_prompt_tokens": 118,
+          "final_input_tokens": 182
+        },
+        {
+          "file": "000001.pt",
+          "sample_id": "hotpotqa__5a7149cf5542994082a3e773",
+          "question_id": null,
+          "generated_text": "Finola Dwyer was a producer of the 2015 British-Canadian-Irish romantic drama \"The Notebook.\"",
+          "provisional_label": 1,
+          "provisional_kind": "incorrect",
+          "elapsed_seconds": 2.2418,
+          "actual_T": 64,
+          "peak_memory_bytes": {
+            "allocated": 16196776960,
+            "reserved": 16341008384
+          },
+          "features_shape": [
+            64,
+            3
+          ],
+          "features_finite": true,
+          "features_mean": 2.5999,
+          "features_max": 8.3098,
+          "features_topk_mean_column": 2.5074,
+          "prompt_emb_dim": 4096,
+          "prompt_emb_finite": true,
+          "answer_sha256": "a4ca27bc8f9e4a2cb57149b4e95ea91c0d5e9e0af43a3b3966f841add2494d80",
+          "item_seed": 2499076477,
+          "generation_fingerprint": "0b17b5f45e8ab151e604b3cca2f8a23d53d0a835988bef1a9b246bc47dc838a2",
+          "raw_file_sha256": "ce8a67a25605f75ebce029cd4f51596259c229c39a06541162195683c2b6ea4c",
+          "rendered_prompt_tokens": 51,
+          "final_input_tokens": 115
+        }
+      ]
+    },
+    "dream": {
+      "run_dir": "/root/autodl-tmp/dynhd_repro/acceptance/dream/raw/single",
+      "run_id": "single",
+      "load_seconds": 4.86,
+      "device": {
+        "python": "3.12.3",
+        "torch": "2.8.0+cu128",
+        "transformers": "4.46.2",
+        "cuda_available": true
+      },
+      "saved": 2,
+      "failed": 0,
+      "not_started": 0,
+      "items": [
+        {
+          "file": "000000.pt",
+          "sample_id": "triviaqa__qw_10077",
+          "question_id": null,
+          "generated_text": "abolitionist movement",
+          "provisional_label": 0,
+          "provisional_kind": "correct",
+          "elapsed_seconds": 3.5094,
+          "actual_T": 64,
+          "peak_memory_bytes": {
+            "allocated": 15535583744,
+            "reserved": 15718154240
+          },
+          "features_shape": [
+            64,
+            3
+          ],
+          "features_finite": true,
+          "features_mean": 3.4033,
+          "features_max": 9.9214,
+          "features_topk_mean_column": 3.0746,
+          "prompt_emb_dim": 3584,
+          "prompt_emb_finite": true,
+          "answer_sha256": "98652497b791318960e82953128f65dc1315cf7530adad500b587eab456cc9aa",
+          "item_seed": 2889054933,
+          "generation_fingerprint": "8aee9e006d264f30298400261cb4171ceb12af3e694ded8e17b8ed759fabcb4d",
+          "raw_file_sha256": "edb4bd83d279147522aa26a4a771ff5f74dbca17052cd8e92fe7eaba09e23c5a",
+          "rendered_prompt_tokens": 121,
+          "final_input_tokens": 185
+        },
+        {
+          "file": "000001.pt",
+          "sample_id": "hotpotqa__5a7149cf5542994082a3e773",
+          "question_id": null,
+          "generated_text": "The",
+          "provisional_label": 1,
+          "provisional_kind": "incorrect",
+          "elapsed_seconds": 2.0472,
+          "actual_T": 64,
+          "peak_memory_bytes": {
+            "allocated": 15479730176,
+            "reserved": 15718154240
+          },
+          "features_shape": [
+            64,
+            3
+          ],
+          "features_finite": true,
+          "features_mean": 4.4619,
+          "features_max": 6.6843,
+          "features_topk_mean_column": 4.431,
+          "prompt_emb_dim": 3584,
+          "prompt_emb_finite": true,
+          "answer_sha256": "b344d80e24a3679999fa964450b34bc24d1578a35509f934c1418b0a20d21a67",
+          "item_seed": 2499076477,
+          "generation_fingerprint": "8aee9e006d264f30298400261cb4171ceb12af3e694ded8e17b8ed759fabcb4d",
+          "raw_file_sha256": "7a1d09671f95f25aa7b5c25c2da86ceefcde9d6fb4fc953bb7661d0d5f2d6a67",
+          "rendered_prompt_tokens": 55,
+          "final_input_tokens": 119
+        }
+      ]
+    }
+  },
+  "predefined_branches": {
+    "T_equals_steps": "normal, main run",
+    "systematic_T_lt_steps": "separate run_id and steps config, reported separately, never mixed with the main run",
+    "sporadic_T_lt_steps": "sample marked invalid, investigated, no silent rewriting"
+  },
+  "upstream_deviations": [
+    {
+      "item": "Dream generation_logits_hook_func=None",
+      "detail": "Upstream DynHD passes generation_logits_hook_func=None; the pinned Dream revision (05334cb9) calls it unconditionally (generation_utils.py:307/415) and raises TypeError. The wrapper coerces None to the identity hook on the model wrapper instance (never in the upstream snapshot); first failed attempt archived at acceptance/dream/raw/single_failed_logits_hook.",
+      "effect": "none on sampling semantics; enables the Dream single-question run"
+    }
+  ],
+  "main_config_alignment": {
+    "steps": 64,
+    "gen_length": 64,
+    "temperature_llada": 0.0,
+    "temperature_dream": 0.0,
+    "dream_alg": "entropy",
+    "dream_alg_temp": 0.0,
+    "note": "paper default Dream steps 128 / temperature 0.2; main-table alignment recorded as deviation"
+  }
+}

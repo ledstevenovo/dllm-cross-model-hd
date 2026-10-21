@@ -1,0 +1,30 @@
+# DynHD local reproduction config (Dream) — main-table aligned: 64 steps, temperature 0,
+# alg=entropy, alg_temp=0.0 (paper default is 128 steps / temperature 0.2; recorded deviation).
+model:
+  model_path: "/root/autodl-tmp/hf-cache/hub/models--Dream-org--Dream-v0-Instruct-7B/snapshots/05334cb9faaf763692dcf9d8737c642be2b2a6ae"
+  device: "cuda"
+
+inference:
+  num_steps: 64
+  temperature: 0.0
+  top_p: null
+  top_k: null
+  dream_alg: "entropy"
+  dream_alg_temp: 0.0
+
+data:
+  datasets:
+    - name: "triviaqa"
+      num_samples: 20000
+  trace_save_dir: "/root/autodl-tmp/dynhd_repro"
+
+features:
+  top_k: 5
+
+labeling:
+  method: "openai"
+  kwargs:
+    model: "offline-proposal"
+    base_url: "http://127.0.0.1/unused"
+    temperature: 0.0
+    max_retries: 0

@@ -1,0 +1,27 @@
+# DynHD local reproduction config (LLaDA) — main-table aligned: 64 steps, temperature 0.
+model:
+  model_path: "/root/autodl-tmp/hf-cache/hub/models--GSAI-ML--LLaDA-8B-Instruct/snapshots/08b83a6feb34df1a6011b80c3c00c7563e963b07"
+  device: "cuda"
+
+inference:
+  num_steps: 64
+  temperature: 0.0
+
+data:
+  datasets:
+    - name: "triviaqa"
+      num_samples: 20000
+  trace_save_dir: "/root/autodl-tmp/dynhd_repro"
+
+features:
+  top_k: 5
+
+# method stays "openai" for upstream validation only; the local wrapper replaces the
+# labeler and never performs API requests.
+labeling:
+  method: "openai"
+  kwargs:
+    model: "offline-proposal"
+    base_url: "http://127.0.0.1/unused"
+    temperature: 0.0
+    max_retries: 0

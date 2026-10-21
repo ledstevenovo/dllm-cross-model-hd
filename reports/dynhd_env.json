@@ -1,0 +1,55 @@
+{
+  "date": "2026-10-21",
+  "venv": ".venv-dynhd",
+  "python": "3.12.3 (/root/miniconda3/bin/python3, uv venv --system-site-packages --seed)",
+  "inherited_platform": {
+    "torch": "2.8.0+cu128",
+    "torch.version.cuda": "12.8",
+    "numpy_shadowed_by_venv": true
+  },
+  "installed_pins": {
+    "transformers": "4.46.2",
+    "accelerate": "1.2.1",
+    "numpy": "1.26.4",
+    "scikit-learn": "1.5.0",
+    "PyYAML": "6.0.1",
+    "tqdm": "4.66.1"
+  },
+  "commands": {
+    "create_venv": "uv venv .venv-dynhd --python /root/miniconda3/bin/python3 --system-site-packages --seed",
+    "install": ".venv-dynhd/bin/pip install transformers==4.46.2 accelerate==1.2.1 numpy==1.26.4 scikit-learn==1.5.0 PyYAML==6.0.1 tqdm==4.66.1",
+    "import_check": ".venv-dynhd/bin/python -c \"import torch, transformers, sklearn, yaml; print(torch.__version__, transformers.__version__)\"",
+    "upstream_tests": "(cd references/repos/DynHD && PYTHONPATH=. .venv-dynhd/bin/python -m unittest discover -s tests -v)"
+  },
+  "results": {
+    "import_check": {
+      "exit": 0,
+      "stdout": "2.8.0+cu128 4.46.2"
+    },
+    "upstream_tests": {
+      "exit": 0,
+      "summary": "Ran 7 tests in 7.445s - OK",
+      "tests": [
+        "DataTests.test_trace_round_trip_and_config_loading",
+        "DetectorTests.test_invalid_feature_shape_fails_fast",
+        "DetectorTests.test_training_and_evaluation_cli",
+        "DetectorTests.test_two_stage_training_and_prediction",
+        "FeatureTests.test_entropy_evidence_shape_and_order",
+        "FeatureTests.test_semantic_filter_covers_paper_categories",
+        "RepositoryTests.test_public_text_has_no_secrets_or_non_ascii_comments"
+      ]
+    }
+  },
+  "snapshot_check": {
+    "path": "references/repos/DynHD",
+    "revision": "6c099adb23fa2b7040a5efb39b95b19255ef738c",
+    "files_checked": 36,
+    "sha256_mismatches": 0,
+    "missing": 0
+  },
+  "freeze_file": "reports/dynhd_pip_freeze.txt",
+  "fallbacks_not_needed": [
+    "platform torch 2.8.0 works; no torch 2.5.1",
+    "transformers 4.46.2 works; no 4.46.3 bump"
+  ]
+}
