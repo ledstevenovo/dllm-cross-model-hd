@@ -54,3 +54,5 @@ Thumbs.db
 # Local test scratch and generated labels
 pytest-of-*/
 data/labels/
+# TRE reproduction (v3) judge outputs: contain full responses and raw judge payloads
+data/tre_repro/labels/

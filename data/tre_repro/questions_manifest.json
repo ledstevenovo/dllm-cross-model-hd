@@ -1,0 +1,83 @@
+{
+  "manifest_version": "tre-repro-questions-v1",
+  "created_at_utc": "20261021T130521Z",
+  "schema_version": "tre-repro-question-v3",
+  "decision": "B: sample from the frozen pool's test partition; see docs/TRE_4080SUPER_32GB_复现方案.md §4.2",
+  "generation_seed": 20261021,
+  "sampling_seed": 20261021,
+  "selection_rule": "sort pool rows by question_id, draw EVAL_TOTAL+SMOKE_TOTAL with random.Random(SAMPLING_SEED); first EVAL_TOTAL -> evaluation list, remaining -> smoke list",
+  "dataset": "triviaqa",
+  "source_split": "validation",
+  "source_config": "rc.nocontext",
+  "source_split_note": "the upstream rc.nocontext test split carries no usable gold answers, so the pool (and these lists) are drawn from the validation split; 'split=test' inside the file is an internal role only",
+  "prompt": {
+    "prompt_template_version": "v3-bare-question",
+    "prompt_style": "bare question only; the model's own chat template is applied exactly once at collection time; no instruction prefix, no answer tags, no context",
+    "example_prompt": "In which constituency did Shirley Williams become the first elected MP for the SDP?",
+    "example_prompt_fingerprint": "sha256:281ee27c7e2cf76f53a086ed81b60e499393d622786f49236ac7f59927862bc9"
+  },
+  "pool": {
+    "file": "data/raw_qa/triviaqa/test.jsonl",
+    "sha256": "f70b770c1915ce7078a5d81bbda6bbc114bdfada3e29f2299a36d37a6cdf3773",
+    "rows": 2532,
+    "unique_questions": 2532,
+    "unique_clusters": 2526
+  },
+  "files": {
+    "triviaqa_eval800": {
+      "path": "data/tre_repro/questions/triviaqa_eval800.jsonl",
+      "samples": 800,
+      "unique_questions": 800,
+      "unique_clusters": 799,
+      "sha256": "257396001137e0d51274e7c9c5917c308459766e618ca6c99c84a9590ae5f766",
+      "first_sample_id": "triviaqa__sfq_7438__seed20261021"
+    },
+    "smoke20": {
+      "path": "data/tre_repro/questions/smoke20.jsonl",
+      "samples": 20,
+      "unique_questions": 20,
+      "unique_clusters": 20,
+      "sha256": "b946cb5ab9dcccfbb0deed7e774c05de4de39db47653b096861cd5cd398d1e08",
+      "first_sample_id": "triviaqa__qw_12770__seed20261021"
+    }
+  },
+  "validation": {
+    "triviaqa_eval800": {
+      "checked": 800,
+      "unique_sample_ids": 800,
+      "unique_question_ids": 800,
+      "problems": [],
+      "duplicate_sample_ids": []
+    },
+    "smoke20": {
+      "checked": 20,
+      "unique_sample_ids": 20,
+      "unique_question_ids": 20,
+      "problems": [],
+      "duplicate_sample_ids": []
+    }
+  },
+  "disjoint": {
+    "eval800_vs_smoke20_questions": 0,
+    "eval800_clusters_vs_train_partition": 0,
+    "eval800_clusters_vs_validation_partition": 0,
+    "note": "cluster-level disjointness from the pool's train/validation partitions is what allows a later trained baseline to reuse them without near-duplicate leakage"
+  },
+  "overlap_with_frozen_subsets": {
+    "pilot200.jsonl": {
+      "triviaqa_questions": 119,
+      "overlap_eval800": 5,
+      "overlap_smoke20": 1
+    },
+    "small200.jsonl": {
+      "triviaqa_questions": 121,
+      "overlap_eval800": 40,
+      "overlap_smoke20": 0
+    },
+    "smoke20.jsonl": {
+      "triviaqa_questions": 12,
+      "overlap_eval800": 0,
+      "overlap_smoke20": 0
+    }
+  }
+}
