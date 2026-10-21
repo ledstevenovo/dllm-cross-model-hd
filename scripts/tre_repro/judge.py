@@ -51,6 +51,9 @@ ENDPOINT = "https://zhenze-huhehaote.cmecloud.cn/v1/chat/completions"
 MODEL = "deepseek-v4.1-flash"
 VERDICTS = ("correct", "incorrect")
 LOCK = threading.Lock()
+_RATE_LOCK = threading.Lock()
+_LAST_CALL = [0.0]
+_MIN_INTERVAL = 0.0
 
 
 def sha256_text(text: str) -> str:
@@ -121,6 +124,12 @@ def build_request(prompt_text: str, question: str, references: list[str], answer
 
 
 def call_judge(request: dict, api_key: str, timeout: int) -> dict:
+    if _MIN_INTERVAL > 0:
+        with _RATE_LOCK:
+            wait = _LAST_CALL[0] + _MIN_INTERVAL - time.perf_counter()
+            if wait > 0:
+                time.sleep(wait)
+            _LAST_CALL[0] = time.perf_counter()
     data = json.dumps(request).encode("utf-8")
     http = urllib.request.Request(
         ENDPOINT, data=data, method="POST",
@@ -188,7 +197,13 @@ def judge_once(request: dict, api_key: str, timeout: int, retries: int, raw_log,
             }, ensure_ascii=False) + "\n")
             raw_log.flush()
         if verdict is not None:
+            with LOCK:
+                print(f"[judge] {sample_id[:34]} {pass_name} #{attempt_no} -> {verdict} "
+                      f"({result.get('latency_s')}s)", flush=True)
             return verdict, reason, attempts
+        with LOCK:
+            print(f"[judge] {sample_id[:34]} {pass_name} #{attempt_no} -> {reason[:60]} "
+                  f"({result.get('latency_s')}s)", flush=True)
         if retry < retries:
             time.sleep(2 ** attempt_no)  # after attempt 1 -> 2 s, 2 -> 4 s, 3 -> 8 s
     return None, attempts[-1]["parse_error"] if attempts else "no attempt", attempts
@@ -266,6 +281,7 @@ def validate_existing(rows: list[dict], samples: dict[str, dict], prompt_hash: s
 
 
 def main() -> int:
+    global MODEL, ENDPOINT, _MIN_INTERVAL
     parser = argparse.ArgumentParser(description="TRE J2 judge client (frozen prompt v3)")
     parser.add_argument("--run", required=True, help="trajectory run directory")
     parser.add_argument("--questions", default=str(ROOT / "data/tre_repro/questions/triviaqa_eval800.jsonl"))
@@ -281,8 +297,15 @@ def main() -> int:
     parser.add_argument("--sample-ids", help="file with one sample_id per line (scope --retry-needs-review or a partial run)")
     parser.add_argument("--retry-needs-review", action="store_true",
                         help="re-judge rows whose status is needs_review (previous attempts are backed up)")
+    parser.add_argument("--model", default=MODEL, help="judge model id (must stay one model per label file)")
+    parser.add_argument("--endpoint", default=ENDPOINT, help="chat-completions endpoint")
+    parser.add_argument("--min-interval", type=float, default=0.0,
+                        help="minimum seconds between API call starts (pace down under rate limits)")
     parser.add_argument("--dry-run", action="store_true", help="print one request without calling the API")
     args = parser.parse_args()
+    MODEL = args.model
+    ENDPOINT = args.endpoint
+    _MIN_INTERVAL = float(args.min_interval or 0.0)
 
     prompt_path = Path(args.prompt)
     prompt_text = prompt_path.read_text(encoding="utf-8")
