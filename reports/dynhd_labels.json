@@ -1,0 +1,80 @@
+{
+  "date": "2026-10-21T17:20:09Z",
+  "reviewer": "ledstevenovo",
+  "review_mode": "rule-signoff:2026-10-22",
+  "models": {
+    "llada": {
+      "pilot_answers": 200,
+      "valid": 194,
+      "excluded": 6,
+      "excluded_reasons": {
+        "format_failure_echo": 2,
+        "format_failure_fragment": 4
+      },
+      "partitions": {
+        "train": {
+          "n": 118,
+          "correct": 29,
+          "incorrect": 89
+        },
+        "val": {
+          "n": 29,
+          "correct": 11,
+          "incorrect": 18
+        },
+        "test": {
+          "n": 47,
+          "correct": 16,
+          "incorrect": 31
+        }
+      },
+      "view1_failure_and_coverage": {
+        "answers": 200,
+        "valid": 194,
+        "excluded": 6,
+        "coverage_of_valid": 0.97,
+        "excluded_rate": 0.03
+      },
+      "view2_valid_metrics": "computed in reports/dynhd_eval_llada.json (step 6)"
+    },
+    "dream": {
+      "pilot_answers": 200,
+      "valid": 178,
+      "excluded": 22,
+      "excluded_reasons": {
+        "format_failure_fragment": 22
+      },
+      "partitions": {
+        "train": {
+          "n": 108,
+          "correct": 30,
+          "incorrect": 78
+        },
+        "val": {
+          "n": 25,
+          "correct": 11,
+          "incorrect": 14
+        },
+        "test": {
+          "n": 45,
+          "correct": 13,
+          "incorrect": 32
+        }
+      },
+      "view1_failure_and_coverage": {
+        "answers": 200,
+        "valid": 178,
+        "excluded": 22,
+        "coverage_of_valid": 0.89,
+        "excluded_rate": 0.11
+      },
+      "view2_valid_metrics": "computed in reports/dynhd_eval_dream.json (step 6)"
+    }
+  },
+  "view3_common_valid_test": {
+    "llada_test_n": 47,
+    "dream_test_n": 45,
+    "common_n": 44,
+    "note": "common valid test set within the frozen test partition; metrics in the step-6 evidence"
+  }
+}
