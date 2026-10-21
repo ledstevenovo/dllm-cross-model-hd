@@ -47,6 +47,23 @@ ls results/stage7/main && cat reports/overnight_*_summary.md
 screen -ls                                          # 为空才可切无卡
 ```
 
+## 5. 失败升级规则（用户 2026-10-22 指令）
+
+**某步最终失败时，不报告、直接修：**
+
+1. 队列自身的重试（每步 3 次，5/20/45 秒退避）与降级（换小参数）先跑；
+2. 失败后仍不成功 → 队列在下一轮看门狗周期再试（最多 4 轮）；
+3. 仍失败 → 由会话 agent **立即派 subagent**：
+   - 读该步日志 `overnight_logs/NN_*.log` 与 `driver.log` 中的 FAIL 行，
+   - 定位根因（脚本 bug / 数据形状 / 依赖 / 资源），写出最小修复，
+   - 修复后用同一命令重跑该步并核对产物，**不再重复询问用户**；
+4. 修复必须留下痕迹：commit message 写明失败原因与修复内容；
+5. 只有在需要用户输入（密钥、外部决策）时才升级到用户。
+
+监控产物：
+- `overnight_logs/monitor.log`：每 20 分钟一轮快照，出现 `ACTION_REQUIRED: failed steps: ...` 即表示需要修复；
+- `overnight_logs/guard.log`：独立守护（每 5 分钟）记录会话重启与卡死重启动作。
+
 ## 5. 红线（无卡也不变）
 
 - 权重、轨迹、结果目录不入 Git；标签必须 `human_reviewed=true` + `human:<reviewer>` 才进正式指标；
