@@ -76,7 +76,7 @@ def main() -> int:
     if not problems or all("split" not in p for p in problems):
         indices = {part: sorted(int(i) for i in split.get(part, [])) for part in ("train", "val", "test")}
         flat = indices["train"] + indices["val"] + indices["test"]
-        if flat != list(range(len(files))):
+        if sorted(flat) != list(range(len(files))):
             problems.append("split does not cover every valid file exactly once")
         for part in ("train", "val"):
             counts = {0: 0, 1: 0}
