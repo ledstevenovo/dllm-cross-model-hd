@@ -1,0 +1,105 @@
+{
+  "run": "data/trajectories/tre_repro/llada_triviaqa_fp16_L128_S64_B128_v3",
+  "date": "2026-10-21",
+  "question_list": "data/tre_repro/questions/triviaqa_eval800.jsonl",
+  "question_list_sha256": "257396001137e0d51274e7c9c5917c308459766e618ca6c99c84a9590ae5f766",
+  "command": "env HF_HOME=/root/autodl-tmp/hf-cache HF_HUB_OFFLINE=1 .venv-llada/bin/python scripts/collect_llada.py --questions data/tre_repro/questions/triviaqa_eval800.jsonl --output data/trajectories/tre_repro/llada_triviaqa_fp16_L128_S64_B128_v3 --precision float16 --gen-length 128 --steps 64 --block-size 128 --seed 20261021",
+  "identity": {
+    "precision": "float16",
+    "device": "cuda",
+    "synthetic": false,
+    "seed": 20261021,
+    "question_count": 800
+  },
+  "decoding": {
+    "gen_length": 128,
+    "steps": 64,
+    "block_size": 128,
+    "temperature": 0.0
+  },
+  "environment": {
+    "python": "3.12.3",
+    "torch": "2.8.0+cu128",
+    "numpy": "2.3.2",
+    "transformers": "4.46.3",
+    "accelerate": "1.15.0",
+    "cuda_runtime": "12.8",
+    "device": "cuda",
+    "gpu": "NVIDIA GeForce RTX 4080 SUPER",
+    "capability": [
+      8,
+      9
+    ]
+  },
+  "load_seconds": 6.465843413025141,
+  "checks": {
+    "samples": 800,
+    "problems": [],
+    "problem_count": 0,
+    "schedule_replay_mismatch_steps": 6713,
+    "schedule_total_steps": 51200,
+    "schedule_examples": [
+      {
+        "sample_id": "triviaqa__sfq_7438__seed20261021",
+        "step": 11,
+        "expected": [
+          108,
+          109
+        ],
+        "actual": [
+          104,
+          108
+        ]
+      },
+      {
+        "sample_id": "triviaqa__sfq_7438__seed20261021",
+        "step": 12,
+        "expected": [
+          105,
+          107
+        ],
+        "actual": [
+          103,
+          105
+        ]
+      },
+      {
+        "sample_id": "triviaqa__sfq_7438__seed20261021",
+        "step": 13,
+        "expected": [
+          107,
+          109
+        ],
+        "actual": [
+          106,
+          107
+        ]
+      }
+    ],
+    "token_assignment_failures": 0,
+    "hash_mismatch_count": 0,
+    "effective_length": {
+      "min": 1,
+      "median": 12.0,
+      "max": 126
+    },
+    "terminations": {
+      "eot": 769,
+      "eos": 31
+    },
+    "empty_answers": 0,
+    "truncated": 0,
+    "reveals_per_step_values": [
+      2
+    ],
+    "stop_token_count_mean": 114.68,
+    "stop_token_share_mean": 0.8959,
+    "tre_visible_mean": 9.8022,
+    "tre_termination_token_mean": 0.9877,
+    "tre_tail_mean": 11.1198,
+    "tail_share_mean": 0.5634
+  },
+  "schedule_replay_note": "FP16 selection confidence vs FP32 recorded stats: 13% of steps differ at near-ties (|dp| <= 3.5e-4); sampling rule matches the frozen reference, see protocol_diff.md item 10",
+  "full_checks_report": "/root/autodl-tmp/tre_logs/run_checks.json",
+  "judge_status": "pending: J2 client implementation + MOMA_API_KEY; scoring entry scripts/score_tre_repro.py is ready"
+}
