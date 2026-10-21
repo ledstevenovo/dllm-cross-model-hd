@@ -6,13 +6,20 @@ tuning: for every source/target cell this runs many repeated train/validation sp
 (bootstrapped at the question-cluster level) and reports the distribution of AUROC, the
 probability that the transfer gap exceeds zero, and the rank stability of feature sets.
 
-Cost scales with --repeats x cells; a full 200-repeat pass takes hours on CPU.
+Checkpointing: after each (source, feature_set, kind) combo the partial result is written to
+``<out>.checkpoint.json`` together with the run parameters. A re-run with the same parameters
+skips the finished combos, so a crash hours in does not discard completed cells. Each combo
+gets its own deterministic RNG seed derived from ``--seed`` and the combo key, so a resumed
+combo produces exactly what an uninterrupted run would produce.
+
+Cost scales with --repeats x cells; a full 1500-repeat pass takes hours on 0.5 CPU.
 
 Output: reports/main_project_stability.json (+ .csv). Secondary analysis only.
 """
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import sys
 import time
@@ -26,6 +33,11 @@ REPO = SCRIPT_DIR.parent
 sys.path.insert(0, str(REPO))
 from src.detectors import FEATURE_SETS, fit_source  # noqa: E402
 from src.evaluation import binary_metrics  # noqa: E402
+
+
+def combo_seed(base_seed: int, key: str) -> np.random.SeedSequence:
+    digest = hashlib.sha256(key.encode("utf-8")).digest()
+    return np.random.SeedSequence([base_seed, int.from_bytes(digest[:8], "big")])
 
 
 def cluster_resample(pool: pd.DataFrame, rng) -> pd.DataFrame:
@@ -50,6 +62,9 @@ def main() -> int:
     parser.add_argument("--feature-sets", nargs="+", default=["entropy_raw", "relative_normalized"])
     parser.add_argument("--kinds", nargs="+", default=["lr", "mlp"])
     parser.add_argument("--allow-nonbf16", action="store_true")
+    parser.add_argument("--checkpoint", default=None,
+                        help="resume file (default <out>.checkpoint.json); schema-versioned")
+    parser.add_argument("--no-checkpoint", action="store_true", help="disable checkpointing")
     args = parser.parse_args()
 
     frame = pd.read_parquet(args.features)
@@ -57,14 +72,34 @@ def main() -> int:
         raise SystemExit("formal analysis requires BF16 traces")
     frame = frame[frame.human_reviewed & frame.label.isin(["correct", "incorrect"])].copy()
     domains = sorted(frame.model_id.unique())
-    rng = np.random.default_rng(args.seed)
-    started = time.perf_counter()
 
-    cells = []
+    out = Path(args.out)
+    ckpt_path = Path(args.checkpoint) if args.checkpoint else out.with_suffix(out.suffix + ".checkpoint.json")
+    params = {"schema": "stability-v2", "repeats": args.repeats, "seed": args.seed,
+              "feature_sets": sorted(args.feature_sets), "kinds": sorted(args.kinds),
+              "domains": domains, "rows": int(len(frame)),
+              "features": str(args.features)}
+
+    cells, done_combos = [], set()
+    if not args.no_checkpoint and ckpt_path.exists():
+        saved = json.loads(ckpt_path.read_text())
+        if saved.get("params") == params:
+            cells = saved.get("cells", [])
+            done_combos = {tuple(key) for key in saved.get("done_combos", [])}
+            print(f"resume: {len(done_combos)} combos and {len(cells)} cells already in {ckpt_path}", flush=True)
+        else:
+            print(f"checkpoint params differ from this run -> starting fresh ({ckpt_path})", flush=True)
+
+    started = time.perf_counter()
     for source in domains:
         for feature_set in args.feature_sets:
             columns = FEATURE_SETS[feature_set]
             for kind in args.kinds:
+                combo_key = (source, feature_set, kind)
+                if combo_key in done_combos:
+                    print(f"skip {source.split('/')[-1][:12]} {feature_set:20s} {kind:3s} (checkpoint)", flush=True)
+                    continue
+                rng = np.random.default_rng(combo_seed(args.seed, "|".join(combo_key)))
                 per_repeat = {target: [] for target in domains}
                 refit_failures = 0
                 for repeat in range(args.repeats):
@@ -103,20 +138,30 @@ def main() -> int:
                         "p_above_0_7": float(np.mean(np.asarray(values) > 0.7)),
                         "p_above_0_8": float(np.mean(np.asarray(values) > 0.8)),
                     })
-                done = len(cells)
+                done_combos.add(combo_key)
+                if not args.no_checkpoint:
+                    ckpt_path.parent.mkdir(parents=True, exist_ok=True)
+                    ckpt_path.write_text(json.dumps(
+                        {"params": params, "done_combos": [list(key) for key in sorted(done_combos)],
+                         "cells": cells,
+                         "updated_at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())}, ensure_ascii=False))
                 elapsed = time.perf_counter() - started
-                print(f"[{done}] {source.split('/')[-1][:12]} {feature_set:20s} {kind:3s} "
-                      f"{args.repeats} repeats | {elapsed/60:.1f} min elapsed", flush=True)
+                print(f"[{len(cells)} cells] {source.split('/')[-1][:12]} {feature_set:20s} {kind:3s} "
+                      f"{args.repeats} repeats | {elapsed/60:.1f} min this run", flush=True)
 
-    out = Path(args.out)
     payload = {"features": args.features, "repeats": args.repeats, "seed": args.seed,
                "resampling_unit": "question cluster inside each frozen split",
                "elapsed_seconds": round(time.perf_counter() - started, 1), "cells": cells,
+               "checkpoint": None if args.no_checkpoint else str(ckpt_path),
                "notes": ["each repeat refits on resampled train/validation and scores the resampled test",
                          "reported quantiles are resampling spread, not a confidence interval on the population",
-                         "no threshold tuning happens here; the fitted threshold is used as-is"]}
+                         "no threshold tuning happens here; the fitted threshold is used as-is",
+                         "combos are reproducible: each has a deterministic RNG seed derived from --seed and its key"]}
+    out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(json.dumps(payload, indent=2, ensure_ascii=False) + "\n")
     pd.DataFrame(cells).to_csv(out.with_suffix(".csv"), index=False)
+    if not args.no_checkpoint and ckpt_path.exists():
+        ckpt_path.unlink()
     cross = [c for c in cells if c["source"] != c["target"]]
     if cross:
         best = max(cross, key=lambda c: c["auroc_mean"])
