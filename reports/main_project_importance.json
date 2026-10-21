@@ -1,0 +1,830 @@
+{
+  "features": "/root/autodl-tmp/dllm-cross-model-hd/results/stage7/features_combined.parquet",
+  "kind": "lr",
+  "seed": 42,
+  "permutations": 20,
+  "bootstrap": 200,
+  "cells": [
+    {
+      "source": "Dream-org/Dream-v0-Instruct-7B",
+      "target": "Dream-org/Dream-v0-Instruct-7B",
+      "feature_set": "entropy_raw",
+      "kind": "lr",
+      "n": 45,
+      "base": {
+        "n": 45,
+        "positive": 32,
+        "negative": 13,
+        "positive_rate": 0.7111111111111111,
+        "auroc": 0.8028846153846154,
+        "auprc": 0.8710541953708667,
+        "f1": 0.8666666666666667,
+        "threshold": 0.6992129159860921,
+        "brier": 0.13290280911209895,
+        "ece": 0.13845078667933317,
+        "bootstrap_attempts": 200,
+        "bootstrap_valid": 200,
+        "bootstrap_unit": "question_id",
+        "auroc_low": 0.6237373737373737,
+        "auroc_high": 0.9601666666666667,
+        "auprc_low": 0.7352459561627654,
+        "auprc_high": 0.9897238892371635
+      },
+      "leave_one_out": {
+        "mean_entropy": {
+          "auroc": 0.8052884615384615,
+          "delta": 0.0024038461538460343
+        },
+        "early_entropy": {
+          "auroc": 0.8028846153846154,
+          "delta": 0.0
+        },
+        "middle_entropy": {
+          "auroc": 0.8269230769230769,
+          "delta": 0.024038461538461453
+        },
+        "late_entropy": {
+          "auroc": 0.8245192307692308,
+          "delta": 0.02163461538461542
+        },
+        "revealing_entropy": {
+          "auroc": 0.7908653846153846,
+          "delta": -0.012019230769230838
+        },
+        "entropy_change": {
+          "auroc": 0.8173076923076923,
+          "delta": 0.014423076923076872
+        }
+      },
+      "permutation": {
+        "mean_entropy": {
+          "mean_drop": -0.007451923076923045,
+          "std_drop": 0.012207657620764046,
+          "repeats": 20
+        },
+        "early_entropy": {
+          "mean_drop": -0.01430288461538457,
+          "std_drop": 0.01806046906130894,
+          "repeats": 20
+        },
+        "middle_entropy": {
+          "mean_drop": -0.007211538461538425,
+          "std_drop": 0.013427153888239386,
+          "repeats": 20
+        },
+        "late_entropy": {
+          "mean_drop": -0.014182692307692247,
+          "std_drop": 0.017449009080730278,
+          "repeats": 20
+        },
+        "revealing_entropy": {
+          "mean_drop": -0.006129807692307643,
+          "std_drop": 0.0326469832163509,
+          "repeats": 20
+        },
+        "entropy_change": {
+          "mean_drop": 0.00829326923076928,
+          "std_drop": 0.017541078029988402,
+          "repeats": 20
+        }
+      }
+    },
+    {
+      "source": "Dream-org/Dream-v0-Instruct-7B",
+      "target": "GSAI-ML/LLaDA-8B-Instruct",
+      "feature_set": "entropy_raw",
+      "kind": "lr",
+      "n": 48,
+      "base": {
+        "n": 48,
+        "positive": 32,
+        "negative": 16,
+        "positive_rate": 0.6666666666666666,
+        "auroc": 0.830078125,
+        "auprc": 0.9160781736233755,
+        "f1": 0.43902439024390244,
+        "threshold": 0.6992129159860921,
+        "brier": 0.21039702251574707,
+        "ece": 0.2171319029625791,
+        "bootstrap_attempts": 200,
+        "bootstrap_valid": 200,
+        "bootstrap_unit": "question_id",
+        "auroc_low": 0.7202639471021823,
+        "auroc_high": 0.9394623316498316,
+        "auprc_low": 0.8135810724510172,
+        "auprc_high": 0.978409625434398
+      },
+      "leave_one_out": {
+        "mean_entropy": {
+          "auroc": 0.830078125,
+          "delta": 0.0
+        },
+        "early_entropy": {
+          "auroc": 0.83203125,
+          "delta": 0.001953125
+        },
+        "middle_entropy": {
+          "auroc": 0.900390625,
+          "delta": 0.0703125
+        },
+        "late_entropy": {
+          "auroc": 0.89453125,
+          "delta": 0.064453125
+        },
+        "revealing_entropy": {
+          "auroc": 0.802734375,
+          "delta": -0.02734375
+        },
+        "entropy_change": {
+          "auroc": 0.884765625,
+          "delta": 0.0546875
+        }
+      },
+      "permutation": {
+        "mean_entropy": {
+          "mean_drop": 0.01806640625,
+          "std_drop": 0.013230529875117142,
+          "repeats": 20
+        },
+        "early_entropy": {
+          "mean_drop": 0.00908203125,
+          "std_drop": 0.01730776240668814,
+          "repeats": 20
+        },
+        "middle_entropy": {
+          "mean_drop": 0.01572265625,
+          "std_drop": 0.017021066963649918,
+          "repeats": 20
+        },
+        "late_entropy": {
+          "mean_drop": 0.03984375,
+          "std_drop": 0.029962490792525703,
+          "repeats": 20
+        },
+        "revealing_entropy": {
+          "mean_drop": 0.04365234375,
+          "std_drop": 0.027037028318004083,
+          "repeats": 20
+        },
+        "entropy_change": {
+          "mean_drop": -0.01162109375,
+          "std_drop": 0.02980340117432266,
+          "repeats": 20
+        }
+      }
+    },
+    {
+      "source": "Dream-org/Dream-v0-Instruct-7B",
+      "target": "Dream-org/Dream-v0-Instruct-7B",
+      "feature_set": "relative_normalized",
+      "kind": "lr",
+      "n": 45,
+      "base": {
+        "n": 45,
+        "positive": 32,
+        "negative": 13,
+        "positive_rate": 0.7111111111111111,
+        "auroc": 0.8004807692307693,
+        "auprc": 0.8706399857966437,
+        "f1": 0.8666666666666667,
+        "threshold": 0.6908217603363476,
+        "brier": 0.13874741160560194,
+        "ece": 0.14167301320161035,
+        "bootstrap_attempts": 200,
+        "bootstrap_valid": 200,
+        "bootstrap_unit": "question_id",
+        "auroc_low": 0.6336489898989899,
+        "auroc_high": 0.954920567547902,
+        "auprc_low": 0.7355851733631391,
+        "auprc_high": 0.9885389312340046
+      },
+      "leave_one_out": {
+        "mean_entropy_vocab_normalized": {
+          "auroc": 0.7908653846153846,
+          "delta": -0.009615384615384692
+        },
+        "early_entropy_vocab_normalized": {
+          "auroc": 0.7980769230769231,
+          "delta": -0.0024038461538461453
+        },
+        "middle_entropy_vocab_normalized": {
+          "auroc": 0.7908653846153846,
+          "delta": -0.009615384615384692
+        },
+        "late_entropy_vocab_normalized": {
+          "auroc": 0.8052884615384616,
+          "delta": 0.004807692307692291
+        },
+        "revealing_entropy_vocab_normalized": {
+          "auroc": 0.78125,
+          "delta": -0.019230769230769273
+        },
+        "entropy_change_vocab_normalized": {
+          "auroc": 0.7932692307692308,
+          "delta": -0.007211538461538436
+        },
+        "mean_uncertainty": {
+          "auroc": 0.795673076923077,
+          "delta": -0.004807692307692291
+        },
+        "mean_reveal_progress": {
+          "auroc": 0.8028846153846154,
+          "delta": 0.0024038461538461453
+        },
+        "revealed_fraction": {
+          "auroc": 0.8004807692307693,
+          "delta": 0.0
+        },
+        "reveal_progress_entropy_vocab_normalized": {
+          "auroc": 0.795673076923077,
+          "delta": -0.004807692307692291
+        }
+      },
+      "permutation": {
+        "mean_entropy_vocab_normalized": {
+          "mean_drop": -0.0014423076923076538,
+          "std_drop": 0.008812645567222778,
+          "repeats": 20
+        },
+        "early_entropy_vocab_normalized": {
+          "mean_drop": 0.0008413461538461786,
+          "std_drop": 0.007909895857583128,
+          "repeats": 20
+        },
+        "middle_entropy_vocab_normalized": {
+          "mean_drop": -0.006249999999999978,
+          "std_drop": 0.011883852975296441,
+          "repeats": 20
+        },
+        "late_entropy_vocab_normalized": {
+          "mean_drop": -0.0075721153846153525,
+          "std_drop": 0.009860898055754158,
+          "repeats": 20
+        },
+        "revealing_entropy_vocab_normalized": {
+          "mean_drop": 0.01826923076923081,
+          "std_drop": 0.026479431981206412,
+          "repeats": 20
+        },
+        "entropy_change_vocab_normalized": {
+          "mean_drop": 0.017307692307692347,
+          "std_drop": 0.022621712223112683,
+          "repeats": 20
+        },
+        "mean_uncertainty": {
+          "mean_drop": 0.006129807692307721,
+          "std_drop": 0.019595032687599843,
+          "repeats": 20
+        },
+        "mean_reveal_progress": {
+          "mean_drop": -0.002403846153846123,
+          "std_drop": 0.009402695776734615,
+          "repeats": 20
+        },
+        "revealed_fraction": {
+          "mean_drop": 0.0,
+          "std_drop": 0.0,
+          "repeats": 20
+        },
+        "reveal_progress_entropy_vocab_normalized": {
+          "mean_drop": 0.004927884615384653,
+          "std_drop": 0.0067767573841396485,
+          "repeats": 20
+        }
+      }
+    },
+    {
+      "source": "Dream-org/Dream-v0-Instruct-7B",
+      "target": "GSAI-ML/LLaDA-8B-Instruct",
+      "feature_set": "relative_normalized",
+      "kind": "lr",
+      "n": 48,
+      "base": {
+        "n": 48,
+        "positive": 32,
+        "negative": 16,
+        "positive_rate": 0.6666666666666666,
+        "auroc": 0.494140625,
+        "auprc": 0.6616139310297461,
+        "f1": 0.4230769230769231,
+        "threshold": 0.6908217603363476,
+        "brier": 0.26917606300262914,
+        "ece": 0.28536989079611746,
+        "bootstrap_attempts": 200,
+        "bootstrap_valid": 200,
+        "bootstrap_unit": "question_id",
+        "auroc_low": 0.29088309151785713,
+        "auroc_high": 0.680172164351852,
+        "auprc_low": 0.509814562875413,
+        "auprc_high": 0.8733256129888058
+      },
+      "leave_one_out": {
+        "mean_entropy_vocab_normalized": {
+          "auroc": 0.462890625,
+          "delta": -0.03125
+        },
+        "early_entropy_vocab_normalized": {
+          "auroc": 0.509765625,
+          "delta": 0.015625
+        },
+        "middle_entropy_vocab_normalized": {
+          "auroc": 0.46484375,
+          "delta": -0.029296875
+        },
+        "late_entropy_vocab_normalized": {
+          "auroc": 0.47265625,
+          "delta": -0.021484375
+        },
+        "revealing_entropy_vocab_normalized": {
+          "auroc": 0.48828125,
+          "delta": -0.005859375
+        },
+        "entropy_change_vocab_normalized": {
+          "auroc": 0.50390625,
+          "delta": 0.009765625
+        },
+        "mean_uncertainty": {
+          "auroc": 0.515625,
+          "delta": 0.021484375
+        },
+        "mean_reveal_progress": {
+          "auroc": 0.77734375,
+          "delta": 0.283203125
+        },
+        "revealed_fraction": {
+          "auroc": 0.494140625,
+          "delta": 0.0
+        },
+        "reveal_progress_entropy_vocab_normalized": {
+          "auroc": 0.56640625,
+          "delta": 0.072265625
+        }
+      },
+      "permutation": {
+        "mean_entropy_vocab_normalized": {
+          "mean_drop": 0.0189453125,
+          "std_drop": 0.012883224675031626,
+          "repeats": 20
+        },
+        "early_entropy_vocab_normalized": {
+          "mean_drop": 0.00419921875,
+          "std_drop": 0.011509774076496558,
+          "repeats": 20
+        },
+        "middle_entropy_vocab_normalized": {
+          "mean_drop": 0.00927734375,
+          "std_drop": 0.010889876089520816,
+          "repeats": 20
+        },
+        "late_entropy_vocab_normalized": {
+          "mean_drop": 0.05126953125,
+          "std_drop": 0.01667464383272525,
+          "repeats": 20
+        },
+        "revealing_entropy_vocab_normalized": {
+          "mean_drop": 0.06416015625,
+          "std_drop": 0.024914978412432794,
+          "repeats": 20
+        },
+        "entropy_change_vocab_normalized": {
+          "mean_drop": 0.007421875,
+          "std_drop": 0.020331271374489222,
+          "repeats": 20
+        },
+        "mean_uncertainty": {
+          "mean_drop": 0.07880859375,
+          "std_drop": 0.026176793789176218,
+          "repeats": 20
+        },
+        "mean_reveal_progress": {
+          "mean_drop": -0.12119140625,
+          "std_drop": 0.06775816819616515,
+          "repeats": 20
+        },
+        "revealed_fraction": {
+          "mean_drop": 0.0,
+          "std_drop": 0.0,
+          "repeats": 20
+        },
+        "reveal_progress_entropy_vocab_normalized": {
+          "mean_drop": -0.05205078125,
+          "std_drop": 0.018031004165216497,
+          "repeats": 20
+        }
+      }
+    },
+    {
+      "source": "GSAI-ML/LLaDA-8B-Instruct",
+      "target": "Dream-org/Dream-v0-Instruct-7B",
+      "feature_set": "entropy_raw",
+      "kind": "lr",
+      "n": 45,
+      "base": {
+        "n": 45,
+        "positive": 32,
+        "negative": 13,
+        "positive_rate": 0.7111111111111111,
+        "auroc": 0.8197115384615384,
+        "auprc": 0.8961933590445258,
+        "f1": 0.8571428571428571,
+        "threshold": 0.5068994296238737,
+        "brier": 0.15255936760338973,
+        "ece": 0.1649135285354809,
+        "bootstrap_attempts": 200,
+        "bootstrap_valid": 200,
+        "bootstrap_unit": "question_id",
+        "auroc_low": 0.6665404040404042,
+        "auroc_high": 0.9545952380952382,
+        "auprc_low": 0.7587715386794022,
+        "auprc_high": 0.9889942767403672
+      },
+      "leave_one_out": {
+        "mean_entropy": {
+          "auroc": 0.7884615384615384,
+          "delta": -0.03125
+        },
+        "early_entropy": {
+          "auroc": 0.8221153846153847,
+          "delta": 0.0024038461538462563
+        },
+        "middle_entropy": {
+          "auroc": 0.8149038461538461,
+          "delta": -0.004807692307692291
+        },
+        "late_entropy": {
+          "auroc": 0.8125,
+          "delta": -0.007211538461538436
+        },
+        "revealing_entropy": {
+          "auroc": 0.7596153846153846,
+          "delta": -0.060096153846153855
+        },
+        "entropy_change": {
+          "auroc": 0.8100961538461537,
+          "delta": -0.009615384615384692
+        }
+      },
+      "permutation": {
+        "mean_entropy": {
+          "mean_drop": 0.0007211538461538214,
+          "std_drop": 0.0058931012846784835,
+          "repeats": 20
+        },
+        "early_entropy": {
+          "mean_drop": 0.00048076923076920684,
+          "std_drop": 0.019013192243543472,
+          "repeats": 20
+        },
+        "middle_entropy": {
+          "mean_drop": 0.17704326923076918,
+          "std_drop": 0.05922578865017507,
+          "repeats": 20
+        },
+        "late_entropy": {
+          "mean_drop": 0.002403846153846129,
+          "std_drop": 0.01907993733940809,
+          "repeats": 20
+        },
+        "revealing_entropy": {
+          "mean_drop": 0.4390625,
+          "std_drop": 0.0874064211931333,
+          "repeats": 20
+        },
+        "entropy_change": {
+          "mean_drop": -0.018389423076923095,
+          "std_drop": 0.016484759496974078,
+          "repeats": 20
+        }
+      }
+    },
+    {
+      "source": "GSAI-ML/LLaDA-8B-Instruct",
+      "target": "GSAI-ML/LLaDA-8B-Instruct",
+      "feature_set": "entropy_raw",
+      "kind": "lr",
+      "n": 48,
+      "base": {
+        "n": 48,
+        "positive": 32,
+        "negative": 16,
+        "positive_rate": 0.6666666666666666,
+        "auroc": 0.84765625,
+        "auprc": 0.92371237679296,
+        "f1": 0.8405797101449275,
+        "threshold": 0.5068994296238737,
+        "brier": 0.1561317227388791,
+        "ece": 0.1212574733980794,
+        "bootstrap_attempts": 200,
+        "bootstrap_valid": 200,
+        "bootstrap_unit": "question_id",
+        "auroc_low": 0.7176723467164644,
+        "auroc_high": 0.9495857007575758,
+        "auprc_low": 0.8276071562493654,
+        "auprc_high": 0.9791150354677765
+      },
+      "leave_one_out": {
+        "mean_entropy": {
+          "auroc": 0.876953125,
+          "delta": 0.029296875
+        },
+        "early_entropy": {
+          "auroc": 0.84765625,
+          "delta": 0.0
+        },
+        "middle_entropy": {
+          "auroc": 0.87109375,
+          "delta": 0.0234375
+        },
+        "late_entropy": {
+          "auroc": 0.8828125,
+          "delta": 0.03515625
+        },
+        "revealing_entropy": {
+          "auroc": 0.869140625,
+          "delta": 0.021484375
+        },
+        "entropy_change": {
+          "auroc": 0.85546875,
+          "delta": 0.0078125
+        }
+      },
+      "permutation": {
+        "mean_entropy": {
+          "mean_drop": -0.00595703125,
+          "std_drop": 0.01045378113014579,
+          "repeats": 20
+        },
+        "early_entropy": {
+          "mean_drop": 0.03095703125,
+          "std_drop": 0.027788480180414774,
+          "repeats": 20
+        },
+        "middle_entropy": {
+          "mean_drop": 0.2828125,
+          "std_drop": 0.07100247402984895,
+          "repeats": 20
+        },
+        "late_entropy": {
+          "mean_drop": -0.0056640625,
+          "std_drop": 0.034746417622506874,
+          "repeats": 20
+        },
+        "revealing_entropy": {
+          "mean_drop": 0.45693359375,
+          "std_drop": 0.05640601667952956,
+          "repeats": 20
+        },
+        "entropy_change": {
+          "mean_drop": 0.07275390625,
+          "std_drop": 0.03510127537684428,
+          "repeats": 20
+        }
+      }
+    },
+    {
+      "source": "GSAI-ML/LLaDA-8B-Instruct",
+      "target": "Dream-org/Dream-v0-Instruct-7B",
+      "feature_set": "relative_normalized",
+      "kind": "lr",
+      "n": 45,
+      "base": {
+        "n": 45,
+        "positive": 32,
+        "negative": 13,
+        "positive_rate": 0.7111111111111111,
+        "auroc": 0.7788461538461539,
+        "auprc": 0.8749249721431809,
+        "f1": 0.8571428571428571,
+        "threshold": 0.4926840737837765,
+        "brier": 0.16732710766444586,
+        "ece": 0.1615529089563296,
+        "bootstrap_attempts": 200,
+        "bootstrap_valid": 200,
+        "bootstrap_unit": "question_id",
+        "auroc_low": 0.6112877081627082,
+        "auroc_high": 0.918109195402299,
+        "auprc_low": 0.7529736846146455,
+        "auprc_high": 0.9758435097738829
+      },
+      "leave_one_out": {
+        "mean_entropy_vocab_normalized": {
+          "auroc": 0.7740384615384615,
+          "delta": -0.004807692307692402
+        },
+        "early_entropy_vocab_normalized": {
+          "auroc": 0.7740384615384615,
+          "delta": -0.004807692307692402
+        },
+        "middle_entropy_vocab_normalized": {
+          "auroc": 0.8028846153846154,
+          "delta": 0.024038461538461564
+        },
+        "late_entropy_vocab_normalized": {
+          "auroc": 0.7860576923076923,
+          "delta": 0.007211538461538436
+        },
+        "revealing_entropy_vocab_normalized": {
+          "auroc": 0.7860576923076923,
+          "delta": 0.007211538461538436
+        },
+        "entropy_change_vocab_normalized": {
+          "auroc": 0.7884615384615385,
+          "delta": 0.009615384615384692
+        },
+        "mean_uncertainty": {
+          "auroc": 0.7836538461538461,
+          "delta": 0.004807692307692291
+        },
+        "mean_reveal_progress": {
+          "auroc": 0.78125,
+          "delta": 0.0024038461538461453
+        },
+        "revealed_fraction": {
+          "auroc": 0.7788461538461539,
+          "delta": 0.0
+        },
+        "reveal_progress_entropy_vocab_normalized": {
+          "auroc": 0.8028846153846154,
+          "delta": 0.024038461538461564
+        }
+      },
+      "permutation": {
+        "mean_entropy_vocab_normalized": {
+          "mean_drop": -0.021514423076923077,
+          "std_drop": 0.014944017666486904,
+          "repeats": 20
+        },
+        "early_entropy_vocab_normalized": {
+          "mean_drop": -0.020793269230769233,
+          "std_drop": 0.02398160342991117,
+          "repeats": 20
+        },
+        "middle_entropy_vocab_normalized": {
+          "mean_drop": -0.009495192307692302,
+          "std_drop": 0.01947671750996601,
+          "repeats": 20
+        },
+        "late_entropy_vocab_normalized": {
+          "mean_drop": -0.014423076923076905,
+          "std_drop": 0.01462202531321688,
+          "repeats": 20
+        },
+        "revealing_entropy_vocab_normalized": {
+          "mean_drop": 0.02451923076923076,
+          "std_drop": 0.030355161600604544,
+          "repeats": 20
+        },
+        "entropy_change_vocab_normalized": {
+          "mean_drop": -0.012019230769230749,
+          "std_drop": 0.005586033672414561,
+          "repeats": 20
+        },
+        "mean_uncertainty": {
+          "mean_drop": -0.01778846153846151,
+          "std_drop": 0.015970658886416418,
+          "repeats": 20
+        },
+        "mean_reveal_progress": {
+          "mean_drop": -0.0006009615384615308,
+          "std_drop": 0.0018425131871100783,
+          "repeats": 20
+        },
+        "revealed_fraction": {
+          "mean_drop": 0.0,
+          "std_drop": 0.0,
+          "repeats": 20
+        },
+        "reveal_progress_entropy_vocab_normalized": {
+          "mean_drop": -0.002524038461538436,
+          "std_drop": 0.009293749241453531,
+          "repeats": 20
+        }
+      }
+    },
+    {
+      "source": "GSAI-ML/LLaDA-8B-Instruct",
+      "target": "GSAI-ML/LLaDA-8B-Instruct",
+      "feature_set": "relative_normalized",
+      "kind": "lr",
+      "n": 48,
+      "base": {
+        "n": 48,
+        "positive": 32,
+        "negative": 16,
+        "positive_rate": 0.6666666666666666,
+        "auroc": 0.88671875,
+        "auprc": 0.9356105041987455,
+        "f1": 0.8611111111111112,
+        "threshold": 0.4926840737837765,
+        "brier": 0.14366376308316578,
+        "ece": 0.1309238366012523,
+        "bootstrap_attempts": 200,
+        "bootstrap_valid": 200,
+        "bootstrap_unit": "question_id",
+        "auroc_low": 0.7749474789915967,
+        "auroc_high": 0.9748034697750068,
+        "auprc_low": 0.8416332934740095,
+        "auprc_high": 0.9893940819642141
+      },
+      "leave_one_out": {
+        "mean_entropy_vocab_normalized": {
+          "auroc": 0.88671875,
+          "delta": 0.0
+        },
+        "early_entropy_vocab_normalized": {
+          "auroc": 0.896484375,
+          "delta": 0.009765625
+        },
+        "middle_entropy_vocab_normalized": {
+          "auroc": 0.89453125,
+          "delta": 0.0078125
+        },
+        "late_entropy_vocab_normalized": {
+          "auroc": 0.8671875,
+          "delta": -0.01953125
+        },
+        "revealing_entropy_vocab_normalized": {
+          "auroc": 0.892578125,
+          "delta": 0.005859375
+        },
+        "entropy_change_vocab_normalized": {
+          "auroc": 0.88671875,
+          "delta": 0.0
+        },
+        "mean_uncertainty": {
+          "auroc": 0.8984375,
+          "delta": 0.01171875
+        },
+        "mean_reveal_progress": {
+          "auroc": 0.86328125,
+          "delta": -0.0234375
+        },
+        "revealed_fraction": {
+          "auroc": 0.88671875,
+          "delta": 0.0
+        },
+        "reveal_progress_entropy_vocab_normalized": {
+          "auroc": 0.87109375,
+          "delta": -0.015625
+        }
+      },
+      "permutation": {
+        "mean_entropy_vocab_normalized": {
+          "mean_drop": 0.0126953125,
+          "std_drop": 0.016841102745937354,
+          "repeats": 20
+        },
+        "early_entropy_vocab_normalized": {
+          "mean_drop": 0.00498046875,
+          "std_drop": 0.01372026870419926,
+          "repeats": 20
+        },
+        "middle_entropy_vocab_normalized": {
+          "mean_drop": 0.00302734375,
+          "std_drop": 0.01411766253264832,
+          "repeats": 20
+        },
+        "late_entropy_vocab_normalized": {
+          "mean_drop": 0.0232421875,
+          "std_drop": 0.016822972095819417,
+          "repeats": 20
+        },
+        "revealing_entropy_vocab_normalized": {
+          "mean_drop": 0.02509765625,
+          "std_drop": 0.02085618355442948,
+          "repeats": 20
+        },
+        "entropy_change_vocab_normalized": {
+          "mean_drop": -0.0025390625,
+          "std_drop": 0.008560393359691847,
+          "repeats": 20
+        },
+        "mean_uncertainty": {
+          "mean_drop": -0.00458984375,
+          "std_drop": 0.011575870515785937,
+          "repeats": 20
+        },
+        "mean_reveal_progress": {
+          "mean_drop": 0.019921875,
+          "std_drop": 0.016406249999999997,
+          "repeats": 20
+        },
+        "revealed_fraction": {
+          "mean_drop": 0.0,
+          "std_drop": 0.0,
+          "repeats": 20
+        },
+        "reveal_progress_entropy_vocab_normalized": {
+          "mean_drop": 0.045703125,
+          "std_drop": 0.031087222540353097,
+          "repeats": 20
+        }
+      }
+    }
+  ],
+  "notes": [
+    "leave-one-out refits the detector without one feature",
+    "permutation shuffles one column in the target test set",
+    "both are secondary analyses; the committed matrix stays the main table"
+  ]
+}
