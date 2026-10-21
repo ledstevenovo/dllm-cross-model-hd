@@ -13,7 +13,9 @@ trace metadata; the frozen prompt hash is verified before any call. Credentials 
 
 Resume safety: stored rows are re-verified on startup (sample presence, answer hash, frozen
 prompt hash, model/endpoint); rows that fail are moved to ``paper_judgments.jsonl.stale.jsonl``
-and those samples are judged again instead of being reused.
+and those samples are judged again instead of being reused. Rows with ``status=needs_review``
+(rate limits, schema anomalies) block the main table and are re-judged with
+``--retry-needs-review`` (previous attempts are appended to ``paper_judgments.jsonl.retry.jsonl``).
 
 Retries: ``--retries N`` means N retries after the first call (N+1 calls max), waiting
 2 s, 4 s, 8 s, ... between them.
@@ -276,7 +278,9 @@ def main() -> int:
     parser.add_argument("--retries", type=int, default=3,
                         help="retries after the first call per pass (default 3 -> up to 4 calls, backoff 2/4/8 s)")
     parser.add_argument("--limit", type=int)
-    parser.add_argument("--sample-ids", help="file with one sample_id per line")
+    parser.add_argument("--sample-ids", help="file with one sample_id per line (scope --retry-needs-review or a partial run)")
+    parser.add_argument("--retry-needs-review", action="store_true",
+                        help="re-judge rows whose status is needs_review (previous attempts are backed up)")
     parser.add_argument("--dry-run", action="store_true", help="print one request without calling the API")
     args = parser.parse_args()
 
@@ -297,12 +301,14 @@ def main() -> int:
     run_questions = [q for q in references if q in {s["question_id"] for s in samples.values()}]
     print(f"run={run.name} samples={len(samples)} questions_in_file={len(references)}")
 
+    target_ids = set(samples)
     if args.sample_ids:
         wanted = {line.strip() for line in Path(args.sample_ids).read_text().splitlines() if line.strip()}
         unknown = wanted - set(samples)
         if unknown:
             raise SystemExit(f"sample-ids not in run: {sorted(unknown)[:3]}")
-        samples = {sid: s for sid, s in samples.items() if sid in wanted}
+        target_ids = wanted
+        print(f"scoped to {len(target_ids)} requested samples (stored rows outside the scope are kept)")
 
     label_dir = ROOT / f"data/tre_repro/labels/{run.name}"
     output = Path(args.output) if args.output else label_dir / "paper_judgments.jsonl"
@@ -326,6 +332,27 @@ def main() -> int:
         os.replace(tmp, output)
         print(f"quarantined {len(stale_rows)} stale judgments -> {stale_path}; those samples are re-judged")
 
+    # needs_review rows must be re-judged (rate limits, schema anomalies) before the main
+    # table can be complete; the previous attempt is backed up, never mixed in.
+    if args.retry_needs_review:
+        retry_rows = [row for row in valid_rows if row.get("status") == "needs_review"
+                      and row.get("sample_id") in target_ids]
+        if retry_rows and not args.dry_run:
+            retry_path = output.with_suffix(output.suffix + ".retry.jsonl")
+            with open(retry_path, "a", encoding="utf-8") as fh:
+                for row in retry_rows:
+                    fh.write(json.dumps(row, ensure_ascii=False) + "\n")
+            retry_ids = {row["sample_id"] for row in retry_rows}
+            keep = [row for row in valid_rows if row.get("sample_id") not in retry_ids]
+            tmp = output.with_suffix(output.suffix + ".tmp")
+            tmp.write_text("".join(json.dumps(row, ensure_ascii=False) + "\n" for row in keep), encoding="utf-8")
+            os.replace(tmp, output)
+            valid_rows = keep
+            existing = {row["sample_id"]: row for row in valid_rows}
+            print(f"retrying {len(retry_rows)} needs_review judgments (previous attempts -> {retry_path})")
+        elif retry_rows:
+            print(f"dry-run: would retry {len(retry_rows)} needs_review judgments")
+
     if args.dry_run:
         sample_id = next(iter(sorted(samples)))
         sample = samples[sample_id]
@@ -340,7 +367,7 @@ def main() -> int:
     if not api_key:
         raise SystemExit("MOMA_API_KEY is not set; export it in the shell before judging")
 
-    pending = [sid for sid in sorted(samples) if sid not in existing]
+    pending = [sid for sid in sorted(target_ids) if sid not in existing]
     if args.limit:
         pending = pending[: args.limit]
     print(f"already judged={len(existing)} pending={len(pending)} -> {output}")
