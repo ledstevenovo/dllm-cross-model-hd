@@ -56,3 +56,6 @@ pytest-of-*/
 data/labels/
 # TRE reproduction (v3) judge outputs: contain full responses and raw judge payloads
 data/tre_repro/labels/
+
+# stability study resume file (kept when a run stops early; not a deliverable)
+reports/*.checkpoint.json
