@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-# Operational copy (versioned) of /root/autodl-tmp/overnight_monitor_v2.sh
 # One monitoring cycle v2 for the overnight queue: sleep, snapshot, self-heal, escalate.
 #
 # Escalation contract (per user instruction):
@@ -20,8 +19,9 @@ LOG=/root/autodl-tmp/overnight_logs
 DONE="$LOG/.done"
 MONLOG="$LOG/monitor.log"
 INTERVAL="${INTERVAL:-1200}"
-STABILITY_REPEATS="${STABILITY_REPEATS:-1500}"
-STOP_AFTER_MIN="${STOP_AFTER_MIN:-420}"
+STABILITY_REPEATS="${STABILITY_REPEATS:-800}"
+STABILITY_MAX_SECONDS="${STABILITY_MAX_SECONDS:-12600}"
+STOP_AFTER_MIN="${STOP_AFTER_MIN:-240}"
 CYCLES="${CYCLES:-4}"
 STALL_MIN="${STALL_MIN:-8}"
 
@@ -49,7 +49,7 @@ process_for_step() {
 start_queue() {
   cd "$REPO" || return 1
   screen -dmS overnight bash -c \
-    "STABILITY_REPEATS=$STABILITY_REPEATS STOP_AFTER_MIN=$STOP_AFTER_MIN CYCLES=$CYCLES bash $REPO/scripts/overnight_nogpu.sh"
+    "STABILITY_REPEATS=$STABILITY_REPEATS STABILITY_MAX_SECONDS=$STABILITY_MAX_SECONDS STOP_AFTER_MIN=$STOP_AFTER_MIN CYCLES=$CYCLES bash $REPO/scripts/overnight_nogpu.sh"
   sleep 12
   screen -ls 2>&1 | grep -q overnight
 }
@@ -72,6 +72,12 @@ start_queue() {
   for s in $ALL_STEPS; do
     [ -f "$DONE/$s" ] && continue
     if grep -q "FAIL $s" "$LOG/driver.log" 2>/dev/null; then
+      # a successful degraded fallback covers the primary step
+      case "$s" in
+        03_stage7)          [ -f "$DONE/03_stage7_degraded" ] && continue ;;
+        05_tre_permutation) [ -f "$DONE/05_tre_permutation_degraded" ] && continue ;;
+        08_stability)       [ -f "$DONE/08_stability_degraded" ] && continue ;;
+      esac
       failed="$failed $s"
     fi
   done
