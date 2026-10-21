@@ -14,7 +14,8 @@ DONE="$LOG/.done"
 GUARDLOG="$LOG/guard.log"
 INTERVAL="${GUARD_INTERVAL:-300}"      # check every 5 min
 STALL_MIN="${GUARD_STALL_MIN:-8}"      # no process for this long -> hang
-STABILITY_REPEATS="${STABILITY_REPEATS:-1500}"
+STABILITY_REPEATS="${STABILITY_REPEATS:-500}"
+STABILITY_MAX_SECONDS="${STABILITY_MAX_SECONDS:-10800}"
 STOP_AFTER_MIN="${STOP_AFTER_MIN:-420}"
 CYCLES="${CYCLES:-4}"
 
@@ -37,7 +38,7 @@ process_for_step() {
 start_queue() {
   cd "$REPO" || return 1
   screen -dmS overnight bash -c \
-    "STABILITY_REPEATS=$STABILITY_REPEATS STOP_AFTER_MIN=$STOP_AFTER_MIN CYCLES=$CYCLES bash $REPO/scripts/overnight_nogpu.sh"
+    "STABILITY_REPEATS=$STABILITY_REPEATS STABILITY_MAX_SECONDS=$STABILITY_MAX_SECONDS STOP_AFTER_MIN=$STOP_AFTER_MIN CYCLES=$CYCLES bash $REPO/scripts/overnight_nogpu.sh"
   sleep 10
   screen -ls 2>&1 | grep -q overnight
 }

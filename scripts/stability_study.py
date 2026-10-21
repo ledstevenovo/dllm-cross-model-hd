@@ -65,6 +65,9 @@ def main() -> int:
     parser.add_argument("--checkpoint", default=None,
                         help="resume file (default <out>.checkpoint.json); schema-versioned")
     parser.add_argument("--no-checkpoint", action="store_true", help="disable checkpointing")
+    parser.add_argument("--max-seconds", type=int, default=0,
+                        help="stop early after this many seconds (0 = unlimited); partial combos are "
+                             "recorded with partial=true and the checkpoint is kept for a later resume")
     args = parser.parse_args()
 
     frame = pd.read_parquet(args.features)
@@ -91,6 +94,9 @@ def main() -> int:
             print(f"checkpoint params differ from this run -> starting fresh ({ckpt_path})", flush=True)
 
     started = time.perf_counter()
+    deadline = started + args.max_seconds if args.max_seconds > 0 else None
+    stopped_early = False
+    missing_combos = []
     for source in domains:
         for feature_set in args.feature_sets:
             columns = FEATURE_SETS[feature_set]
@@ -99,10 +105,24 @@ def main() -> int:
                 if combo_key in done_combos:
                     print(f"skip {source.split('/')[-1][:12]} {feature_set:20s} {kind:3s} (checkpoint)", flush=True)
                     continue
+                if deadline is not None and time.perf_counter() >= deadline:
+                    stopped_early = True
+                    missing_combos.append(list(combo_key))
+                    print(f"stop before {source.split('/')[-1][:12]} {feature_set:20s} {kind:3s} "
+                          f"(max-seconds reached)", flush=True)
+                    continue
                 rng = np.random.default_rng(combo_seed(args.seed, "|".join(combo_key)))
                 per_repeat = {target: [] for target in domains}
                 refit_failures = 0
+                repeats_done = 0
+                partial_combo = False
                 for repeat in range(args.repeats):
+                    if deadline is not None and time.perf_counter() >= deadline:
+                        partial_combo = True
+                        stopped_early = True
+                        print(f"stop mid {source.split('/')[-1][:12]} {feature_set:20s} {kind:3s} "
+                              f"after {repeats_done}/{args.repeats} repeats (max-seconds reached)", flush=True)
+                        break
                     sample = cluster_resample(frame, rng)
                     train = sample[(sample.model_id == source) & (sample.split == "train")]
                     dev = sample[(sample.model_id == source) & (sample.split == "validation")]
@@ -114,6 +134,7 @@ def main() -> int:
                     except Exception:
                         refit_failures += 1
                         continue
+                    repeats_done += 1
                     for target in domains:
                         test = sample[(sample.model_id == target) & (sample.split == "test")]
                         if test.empty or test.label.nunique() < 2:
@@ -129,6 +150,7 @@ def main() -> int:
                     cells.append({
                         "source": source, "target": target, "feature_set": feature_set, "kind": kind,
                         "repeats_requested": args.repeats, "repeats_valid": len(values),
+                        "partial": partial_combo,
                         "refit_failures": refit_failures,
                         "auroc_mean": float(np.mean(values)), "auroc_std": float(np.std(values)),
                         "auroc_p05": float(np.percentile(values, 5)),
@@ -138,7 +160,8 @@ def main() -> int:
                         "p_above_0_7": float(np.mean(np.asarray(values) > 0.7)),
                         "p_above_0_8": float(np.mean(np.asarray(values) > 0.8)),
                     })
-                done_combos.add(combo_key)
+                if not partial_combo:
+                    done_combos.add(combo_key)
                 if not args.no_checkpoint:
                     ckpt_path.parent.mkdir(parents=True, exist_ok=True)
                     ckpt_path.write_text(json.dumps(
@@ -152,6 +175,8 @@ def main() -> int:
     payload = {"features": args.features, "repeats": args.repeats, "seed": args.seed,
                "resampling_unit": "question cluster inside each frozen split",
                "elapsed_seconds": round(time.perf_counter() - started, 1), "cells": cells,
+               "stopped_early": stopped_early, "missing_combos": missing_combos,
+               "max_seconds": args.max_seconds,
                "checkpoint": None if args.no_checkpoint else str(ckpt_path),
                "notes": ["each repeat refits on resampled train/validation and scores the resampled test",
                          "reported quantiles are resampling spread, not a confidence interval on the population",
@@ -160,7 +185,7 @@ def main() -> int:
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(json.dumps(payload, indent=2, ensure_ascii=False) + "\n")
     pd.DataFrame(cells).to_csv(out.with_suffix(".csv"), index=False)
-    if not args.no_checkpoint and ckpt_path.exists():
+    if not args.no_checkpoint and ckpt_path.exists() and not stopped_early:
         ckpt_path.unlink()
     cross = [c for c in cells if c["source"] != c["target"]]
     if cross:

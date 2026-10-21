@@ -219,11 +219,13 @@ step 07_importance 3 3 "$LOG/07_importance.log" \
 
 # ---- 08 稳定性重采样（最长，带降级） ---------------------------------------
 if ! step 08_stability 30 2 "$LOG/08_stability.log" \
-      "$RUN" scripts/stability_study.py --repeats "$STABILITY_REPEATS"; then
+      "$RUN" scripts/stability_study.py --repeats "$STABILITY_REPEATS" \
+      --max-seconds "${STABILITY_MAX_SECONDS:-0}"; then
   reduced=$(( STABILITY_REPEATS / 10 )); [ "$reduced" -lt 50 ] && reduced=50
   log "08 degraded to $reduced repeats"
   step 08_stability_degraded 20 2 "$LOG/08_stability_degraded.log" \
-    "$RUN" scripts/stability_study.py --repeats "$reduced"
+    "$RUN" scripts/stability_study.py --repeats "$reduced" \
+    --max-seconds "${STABILITY_MAX_SECONDS:-0}"
 fi
 
 # ---- 09 DynHD 交付 ----------------------------------------------------------
