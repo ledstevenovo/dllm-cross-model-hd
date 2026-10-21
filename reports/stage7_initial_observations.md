@@ -3,7 +3,7 @@
 数据：`results/stage7/main/transfer_matrix.csv`（签核后代码 + reviewed 标签；seed 42，bootstrap 1000 按 question_id）。
 可用样本：LLaDA 195 / Dream 178（reviewed，`human:ledstevenovo:rule-signoff`；format_failure 不计入）；test 每方向 45–48 条。
 
-> 说明：本笔记的全部数字由当前 CSV 直接核对生成。早期草稿中的数字来自一次已被覆盖的运行，已废弃；以本文件与 CSV 为准。稳健性结论由稳定性重采样（`reports/main_project_stability.*`，800 次）给出，见 §5。
+> 说明：本笔记的全部数字由当前 CSV 直接核对生成。早期草稿中的数字来自一次已被覆盖的运行，已废弃；以本文件与 CSV 为准。稳健性结论由稳定性重采样（`reports/main_project_stability.*`，每格 300 次，全 16 格完成）给出，见 §5。
 
 ## 1. 域内（source = target）
 
@@ -42,7 +42,18 @@
   | Dream → LLaDA | +0.018 | +0.124 | **+0.393** | +0.248 |
 - LLaDA → Dream 四个组合的迁移代价均 ≤ 0.05（基本无损失）；Dream → LLaDA 除 entropy_raw+LR 外都明显更低，与上面异常一致。
 
-## 5. 稳定性重采样（第 8 步，运行中）
+## 5. 稳定性重采样：结论（2026-10-22 05:53 完成）
 
-- 产物：`reports/main_project_stability.json` / `.csv`；簇级重采样，每格 800 次重复，逐组合检查点续跑；整步设 3.5 小时硬上限（`--max-seconds`），若提前停止会在 JSON 中标记 `stopped_early` / `partial` / `missing_combos`。
-- 本节的结论在完成后补入（预期清晨 07:10–07:50）。
+产物：`reports/main_project_stability.json` / `.csv`。配置：簇级重采样（question cluster，冻结 split 内），每格 **300** 次重复，8 个组合 × 2 目标 = 16 格全部完成（`stopped_early=false`，无 partial）；每组合独立确定性 RNG；比原计划的 800 次低（本机实测 1.4–1.6 s/次重拟合，800 次要 5+ 小时），但完整表格优于一半表格的高重复数。
+
+**结论 1（异常格的判决）**：`relative_normalized + LR` Dream → LLaDA 在重采样下 **mean 0.514 ± 0.136，P(>0.5)=0.55，5–95% 分位 0.301–0.757**。即：
+- 它**不是"稳定低于随机"**，而是**与随机无异**——该特征×模型组合在跨模型时**没有可检测的迁移信号**（同方向 entropy_raw+LR 为 0.838，P(>0.7)=0.95）；
+- §3 中 hotpotqa 层的 0.141 由该层仅 4 个负例驱动，属小样本噪声，不作为"负迁移"证据。
+
+**结论 2（Dream → LLaDA 的稳定迁移缺口）**：四个组合中只有 `entropy_raw + LR` 稳定迁移（0.838，P(>0.5)=1.00，P(>0.7)=0.95）；另外三个——`entropy_raw+MLP` 0.555（P(>0.7)=0.18）、`relative_normalized+LR` 0.514（0.08）、`relative_normalized+MLP` 0.514（0.14）——**在重采样下都不可靠**。这与"模型类别的差异大于特征集差异"的初判一致，并给出了量化阈值。
+
+**结论 3（对照）**：`LLaDA → Dream` 四个组合全部稳定（P(>0.5) 0.94–1.00，P(>0.7) 0.72–0.88）；全部域内格 8/8 稳定（P(>0.5) 0.98–1.00，其中 LLaDA rel+LR = 0.874 ± 0.056）。
+
+**对决策门的意义（主方案 §8）**：稳定的"迁移缺口"确实存在，但形态是 **Dream 源域的方向性缺失**（同一特征、同一方向，仅 entropy_raw+LR 有效），而非任何组合的负迁移。若要扩池，优先补 Dream 源域（尤其 hotpotqa 层）并保持两特征×两模型的完整网格。
+
+注意：以上分位是重采样离散度，不是总体置信区间；阈值未在稳定性循环中重新调优。
