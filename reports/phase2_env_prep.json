@@ -1,0 +1,361 @@
+{
+  "date": "2026-10-21",
+  "scope": "32GB plan section 2 (no-GPU): isolated inference venvs, verified weight cache, offline CPU load-compatibility check; CUDA/BF16/VRAM/generation remain on-GPU gates",
+  "repo_commit_at_check": "38e9a640333ed4482c2bff3cb2949aa118ad642f",
+  "environment": {
+    "host_mode": "AutoDL no-GPU mode (torch.cuda.is_available() == False)",
+    "python": "3.12.3 (/root/miniconda3/bin/python3)",
+    "platform_torch": "2.8.0+cu128 (torch.version.cuda=12.8, numpy 2.3.2, protobuf 6.31.1)",
+    "reuse_mechanism": "uv venv --python /root/miniconda3/bin/python3 --system-site-packages --seed",
+    "torch_installed_in_venvs": false,
+    "driver_check": "pending: nvidia-smi/torch.cuda probe belong to the on-GPU gate"
+  },
+  "venvs": {
+    "llada": {
+      "path": ".venv-llada",
+      "python": ".venv-llada/bin/python",
+      "packages": {
+        "transformers": "4.46.3",
+        "accelerate": "1.15.0",
+        "tokenizers": "0.20.3",
+        "safetensors": "0.8.0",
+        "sentencepiece": "0.2.2",
+        "huggingface_hub": "0.36.2",
+        "hf_xet": "1.7.0",
+        "regex": "2026.9.29"
+      }
+    },
+    "dream": {
+      "path": ".venv-dream",
+      "python": ".venv-dream/bin/python",
+      "packages": {
+        "transformers": "4.46.2",
+        "accelerate": "1.15.0",
+        "tokenizers": "0.20.3",
+        "safetensors": "0.8.0",
+        "huggingface_hub": "0.36.2",
+        "hf_xet": "1.7.0",
+        "regex": "2026.9.29"
+      }
+    }
+  },
+  "hf_cache": {
+    "HF_HOME": "/root/autodl-tmp/hf-cache",
+    "HF_HUB_CACHE": "/root/autodl-tmp/hf-cache/hub",
+    "offline_flag_used_for_load_check": "HF_HUB_OFFLINE=1",
+    "note": "stray 40 KB aborted partial at /root/autodl-tmp/hf-cache/models--Dream-org--Dream-v0-Instruct-7B (created 2026-10-21 03:32 local) is outside hub/ and unused; left in place"
+  },
+  "weights": {
+    "llada": {
+      "repo_id": "GSAI-ML/LLaDA-8B-Instruct",
+      "revision": "08b83a6feb34df1a6011b80c3c00c7563e963b07",
+      "snapshot": "/root/autodl-tmp/hf-cache/hub/models--GSAI-ML--LLaDA-8B-Instruct/snapshots/08b83a6feb34df1a6011b80c3c00c7563e963b07",
+      "file_count": 16,
+      "total_snapshot_bytes": 16037450386,
+      "shard_count": 6,
+      "tensor_count": 291,
+      "verified_utc": "2026-10-21T02:48:05Z",
+      "independent_reverify": {
+        "repo_id": "GSAI-ML/LLaDA-8B-Instruct",
+        "revision": "08b83a6feb34df1a6011b80c3c00c7563e963b07",
+        "snapshot": "/root/autodl-tmp/hf-cache/hub/models--GSAI-ML--LLaDA-8B-Instruct/snapshots/08b83a6feb34df1a6011b80c3c00c7563e963b07",
+        "files_total": 16,
+        "files_ok": 16,
+        "mismatches": [],
+        "missing": [],
+        "all_ok": true
+      },
+      "expected_file_digests": [
+        {
+          "file": ".gitattributes",
+          "bytes": 1519,
+          "kind": "git-blob-sha1",
+          "digest": "a6344aac8c09253b3b630fb776ae94478aa0275b"
+        },
+        {
+          "file": "README.md",
+          "bytes": 431,
+          "kind": "git-blob-sha1",
+          "digest": "ee618ef47226bd42d5d4e650e0ddb19004e57793"
+        },
+        {
+          "file": "config.json",
+          "bytes": 1385,
+          "kind": "git-blob-sha1",
+          "digest": "021f5f1dbc5c4ff994be034f80a68eda43023de6"
+        },
+        {
+          "file": "configuration_llada.py",
+          "bytes": 12000,
+          "kind": "git-blob-sha1",
+          "digest": "3556bdac0bc0b06c6ec606830a28e9b3e6aeed56"
+        },
+        {
+          "file": "generation_config.json",
+          "bytes": 128,
+          "kind": "git-blob-sha1",
+          "digest": "eb204a82510094c3858dbd5a74ce794d936b73e9"
+        },
+        {
+          "file": "model-00001-of-00006.safetensors",
+          "bytes": 2109747184,
+          "kind": "sha256",
+          "digest": "ff6699df9635a267fb4ac801ea8012d39b21bb22ed290d5a57128521b889c230"
+        },
+        {
+          "file": "model-00002-of-00006.safetensors",
+          "bytes": 2948598128,
+          "kind": "sha256",
+          "digest": "b8ddf571b47f57ce654913877f3625d2c7b9a4c3f81cb6f41f6c3055473b0281"
+        },
+        {
+          "file": "model-00003-of-00006.safetensors",
+          "bytes": 2986883656,
+          "kind": "sha256",
+          "digest": "8347db2fd61a3b5bad2970c2f83ecb84b93632e276a41ca169dcc5efae15462c"
+        },
+        {
+          "file": "model-00004-of-00006.safetensors",
+          "bytes": 2952797224,
+          "kind": "sha256",
+          "digest": "93d8706872e7432d5cd40c9a61f9f9d270c101828cef2adaf27c67743d3dcf1a"
+        },
+        {
+          "file": "model-00005-of-00006.safetensors",
+          "bytes": 2919239128,
+          "kind": "sha256",
+          "digest": "ff5f765eb7ec8bfdbe3b962a9e920d71de43d55e04eb4844710c0efcc8855092"
+        },
+        {
+          "file": "model-00006-of-00006.safetensors",
+          "bytes": 2113931792,
+          "kind": "sha256",
+          "digest": "f25d4cc57b24a79a840d49c3b25d9a22dd5caf3a9766f591e4625377901194e2"
+        },
+        {
+          "file": "model.safetensors.index.json",
+          "bytes": 24941,
+          "kind": "git-blob-sha1",
+          "digest": "09d69a72c025a27f33511d39ddfb7c4ad2cff3f0"
+        },
+        {
+          "file": "modeling_llada.py",
+          "bytes": 61443,
+          "kind": "git-blob-sha1",
+          "digest": "810676f774fa5541030f36fbd7c451be588e8628"
+        },
+        {
+          "file": "special_tokens_map.json",
+          "bytes": 747,
+          "kind": "git-blob-sha1",
+          "digest": "fc6b5867397d3b8563cfa7f4aa826b10c3f8ffee"
+        },
+        {
+          "file": "tokenizer.json",
+          "bytes": 6098988,
+          "kind": "git-blob-sha1",
+          "digest": "cad7554367f38d7cf0234b8bc7ed098053e12714"
+        },
+        {
+          "file": "tokenizer_config.json",
+          "bytes": 51692,
+          "kind": "git-blob-sha1",
+          "digest": "3d3e45476f407f76fdb89dd78c543a990e3e664b"
+        }
+      ]
+    },
+    "dream": {
+      "repo_id": "Dream-org/Dream-v0-Instruct-7B",
+      "revision": "05334cb9faaf763692dcf9d8737c642be2b2a6ae",
+      "snapshot": "/root/autodl-tmp/hf-cache/hub/models--Dream-org--Dream-v0-Instruct-7B/snapshots/05334cb9faaf763692dcf9d8737c642be2b2a6ae",
+      "file_count": 18,
+      "total_snapshot_bytes": 15236443179,
+      "shard_count": 4,
+      "tensor_count": 339,
+      "verified_utc": "2026-10-21T02:51:29Z",
+      "independent_reverify": {
+        "repo_id": "Dream-org/Dream-v0-Instruct-7B",
+        "revision": "05334cb9faaf763692dcf9d8737c642be2b2a6ae",
+        "snapshot": "/root/autodl-tmp/hf-cache/hub/models--Dream-org--Dream-v0-Instruct-7B/snapshots/05334cb9faaf763692dcf9d8737c642be2b2a6ae",
+        "files_total": 18,
+        "files_ok": 18,
+        "mismatches": [],
+        "missing": [],
+        "all_ok": true
+      },
+      "expected_file_digests": [
+        {
+          "file": ".gitattributes",
+          "bytes": 1519,
+          "kind": "git-blob-sha1",
+          "digest": "a6344aac8c09253b3b630fb776ae94478aa0275b"
+        },
+        {
+          "file": "README.md",
+          "bytes": 408,
+          "kind": "git-blob-sha1",
+          "digest": "e4c36385a8e27491d502ae2f6b4bba29c78c76a8"
+        },
+        {
+          "file": "added_tokens.json",
+          "bytes": 656,
+          "kind": "git-blob-sha1",
+          "digest": "a3c908dc9df134c726061ae540546e5ef7db055d"
+        },
+        {
+          "file": "config.json",
+          "bytes": 927,
+          "kind": "git-blob-sha1",
+          "digest": "23b4959a1efed046572621c2d183c3438cc0b6a4"
+        },
+        {
+          "file": "configuration_dream.py",
+          "bytes": 3197,
+          "kind": "git-blob-sha1",
+          "digest": "96d1598e69f108469c292fa6a86fb143be07d70c"
+        },
+        {
+          "file": "generation_config.json",
+          "bytes": 326,
+          "kind": "git-blob-sha1",
+          "digest": "bb81a7907d49c65d3697eebc813ef2c41fd03a79"
+        },
+        {
+          "file": "generation_utils.py",
+          "bytes": 22332,
+          "kind": "git-blob-sha1",
+          "digest": "643334142c2cbeb4ec5f0ac644303a986366aac5"
+        },
+        {
+          "file": "merges.txt",
+          "bytes": 1671853,
+          "kind": "git-blob-sha1",
+          "digest": "31349551d90c7606f325fe0f11bbb8bd5fa0d7c7"
+        },
+        {
+          "file": "model-00001-of-00004.safetensors",
+          "bytes": 4877660776,
+          "kind": "sha256",
+          "digest": "3014d84950f2f3afcce622508b6625e9cd911b9c340f4206e35e6a3177aec993"
+        },
+        {
+          "file": "model-00002-of-00004.safetensors",
+          "bytes": 4932751008,
+          "kind": "sha256",
+          "digest": "78fc44a7eae29c3d13bba010ca12584f4220798d41c9e617579a33c47222aa57"
+        },
+        {
+          "file": "model-00003-of-00004.safetensors",
+          "bytes": 4330865200,
+          "kind": "sha256",
+          "digest": "eac5afaf9a0e0b4a23c7ac1dbe5f538ccdf9fac5c0db7919fd9625a92c378e48"
+        },
+        {
+          "file": "model-00004-of-00004.safetensors",
+          "bytes": 1089994880,
+          "kind": "sha256",
+          "digest": "398da65f1f599ca8d594a9d7a077a3b7c4eb0ddfdff8e7e004c3d259712b3cb7"
+        },
+        {
+          "file": "model.safetensors.index.json",
+          "bytes": 27752,
+          "kind": "git-blob-sha1",
+          "digest": "6ca5084b88f1a95fef37f1b94c6e87ff69422bb7"
+        },
+        {
+          "file": "modeling_dream.py",
+          "bytes": 36763,
+          "kind": "git-blob-sha1",
+          "digest": "45ce4736df4764510c625710b5db7586506d24e0"
+        },
+        {
+          "file": "special_tokens_map.json",
+          "bytes": 661,
+          "kind": "git-blob-sha1",
+          "digest": "f1a63e029f3c7863a8c2eba29b3f48e3eda1aab8"
+        },
+        {
+          "file": "tokenization_dream.py",
+          "bytes": 14028,
+          "kind": "git-blob-sha1",
+          "digest": "cca444f900c5f5d2909c65a49771dfbd32267e5c"
+        },
+        {
+          "file": "tokenizer_config.json",
+          "bytes": 7486,
+          "kind": "git-blob-sha1",
+          "digest": "0354ebfbf540d2f770b6b24fda583294f513f962"
+        },
+        {
+          "file": "vocab.json",
+          "bytes": 3383407,
+          "kind": "git-blob-sha1",
+          "digest": "6bce3a0a3866c4791a74d83d78f6824c3af64ec3"
+        }
+      ]
+    }
+  },
+  "weight_cache_history": {
+    "incident_utc": "2026-10-21T01:57:15Z",
+    "summary": "LLaDA shards 5/6 and 6/6 were corrupted by mixing hf_transfer with the standard downloader on the same .incomplete files; blobs and snapshot links were deleted and re-downloaded with the standard downloader only",
+    "report": "/root/autodl-tmp/model-download-reports/llada_corrupt_blobs.json",
+    "current_state": "both shards match their expected sha256 (verified again on 2026-10-21 after re-download)"
+  },
+  "cpu_load_check": {
+    "method": "src.collection_cli.load_components(family, config, 'bf16', 'cpu') in the family venv",
+    "hf_hub_offline": true,
+    "results": {
+      "llada": {
+        "status": "ok",
+        "load_seconds": 29.1,
+        "param_count": 8015581184,
+        "bf16_param_bytes": 16031162368,
+        "device_set": [
+          "cpu"
+        ],
+        "dtype_set": [
+          "torch.bfloat16"
+        ],
+        "model_class": "LLaDAModelLM",
+        "tokenizer_class": "PreTrainedTokenizerFast"
+      },
+      "dream": {
+        "status": "ok",
+        "load_seconds": 78.1,
+        "param_count": 7615616512,
+        "bf16_param_bytes": 15231233024,
+        "device_set": [
+          "cpu"
+        ],
+        "dtype_set": [
+          "torch.bfloat16"
+        ],
+        "model_class": "DreamModel",
+        "tokenizer_class": "DreamTokenizer"
+      }
+    },
+    "dream_native_source_lock": "verify_dream_source passed against configs/collection_sources.json",
+    "warnings": "LLaDA: cosmetic transformers offline legacy-cache warning; load used HF_HOME cache. Dream: generation-config do_sample/temperature warning from the checkpoint config."
+  },
+  "fixture_cli_smoke_in_real_venvs": {
+    "llada": ".venv-llada ... --fixture --device cpu --limit 1 --verify-observer -> 1/1 ok (results/envcheck_llada)",
+    "dream": ".venv-dream ... --fixture --device cpu --limit 1 --verify-observer -> 1/1 ok (results/envcheck_dream)",
+    "meaning": "production interpreter + transformers stack executes the full collection path; synthetic models only"
+  },
+  "official_fallbacks_not_needed": {
+    "llada": "no fallback to transformers 4.38.2 / python 3.11 in no-GPU checks",
+    "dream": "no fallback to torch 2.5.1 / transformers 4.46.2-official pin beyond the pinned 4.46.2 itself"
+  },
+  "pending_gpu_gates": [
+    "nvidia-smi / torch.version.cuda / torch.cuda.is_available on the real GPU instance",
+    "actual GPU name, free VRAM (mem_get_info), native BF16 support",
+    "single-question real forward per model (trajectory + --verify-observer)",
+    "smoke20 per model with load time, per-question time, allocated/reserved peaks",
+    "collector manifest env fields recorded from the real instance"
+  ],
+  "limits": [
+    "CPU load proves cache completeness, pinned revisions, remote-code compatibility with torch 2.8.0+cu128",
+    "It does NOT prove CUDA kernels, BF16 numerics, VRAM fit, throughput or generation quality",
+    "T4/NV4 route stays blocked pending a separately audited Dream FP16 sampler"
+  ]
+}

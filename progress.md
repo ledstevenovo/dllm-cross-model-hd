@@ -28,3 +28,5 @@ Final: minor (deferred): none.
 Final: fixed clean-clone test bootstrap — fresh git archive exposed 85 passed/15 setup errors because configured .tmp/pytest parent was absent; conftest now creates only the missing parent, then rerun archive acceptance.
 
 Task 4: local implementation complete — full CPU 100 passed; base CPU 82 passed/2 optional skips; clean Git export 100 passed; 40-trace reviewed CLI + offline join verified. Source hashes checked before staging delivery evidence. Commit/push delivery checked separately against remote main.
+
+Stage 2 follow-on（无卡准备，2026-10-21）: 32GB方案第1–2节执行 — 权重缓存31,262,468,976字节（LLaDA 6分片16文件、Dream 4分片18文件）经独立复核逐文件哈希16/16+18/18全通过；.venv-llada（transformers4.46.3）与.venv-dream（4.46.2）以--system-site-packages继承平台torch2.8.0+cu128（venv内不装torch）；HF_HOME=/root/autodl-tmp/hf-cache；生产load_components离线CPU真实加载通过（LLaDA 29.1s/8,015,581,184参数；Dream 78.1s/7,615,616,512参数，含Dream源码锁校验），两venv fixture单题演练通过。有卡单题/smoke20、显存、BF16与驱动核验仍待执行。证据reports/phase2_env_prep.json。

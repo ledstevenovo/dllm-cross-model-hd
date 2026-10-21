@@ -22,6 +22,8 @@ Windows将bin/python换成Scripts/python.exe。本机测试环境复用了已有
 
 保留平台base的torch2.8.0/CUDA12.8，分别建venv；如复用平台torch，可用 --system-site-packages，随后通过import检查版本，避免继承旧numpy/pandas等二进制包冲突。不要运行CPU测试torch安装命令来覆盖云端CUDA torch。
 
+本机无卡记录（2026-10-21）：已建立 .venv-llada（transformers 4.46.3、sentencepiece 0.2.2）与 .venv-dream（transformers 4.46.2），两者以 --system-site-packages 继承平台 torch 2.8.0+cu128（torch.version.cuda=12.8），venv 内未安装 torch；权重缓存 HF_HOME=/root/autodl-tmp/hf-cache（HF_HUB_CACHE 指向其 hub/）。用生产加载路径在 HF_HUB_OFFLINE=1 下完成 CPU 真实加载检查：LLaDA 8,015,581,184 参数、29.1s；Dream 7,615,616,512 参数、78.1s（含 Dream 原生生成源码锁校验），全部 bfloat16/CPU，未回退官方旧组合。两套 venv 的 fixture CLI 单题演练通过。CUDA/BF16 算子、显存与真实生成仍未验证；单题真实 forward 与 smoke20 仍是有卡门槛。证据见 reports/phase2_env_prep.json，权重下载/校验报告在 /root/autodl-tmp/model-download-reports/。
+
 LLaDA候选依赖 requirements/collector-llada.txt 使用模型config标注的transformers4.46.3；Dream使用官方4.46.2。这些是配置起点，不代表实际模型兼容已通过。两环境都要另有CUDA torch。先在正确推理venv确认torch.version.cuda、驱动兼容、实际GPU和BF16支持，失败后再隔离回退，不全局升级平台环境。
 
 真实加载固定configs/models中的模型/tokenizer/code revision；可使用HF_HOME指向已下载的持久云盘缓存。bitsandbytes仅NF4备选需要，不加入BF16必需环境。NF4 loader会检查Linear4bit确实存在；任何精度都不静默切换到其他模式。
