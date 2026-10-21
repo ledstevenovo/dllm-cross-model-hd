@@ -1,5 +1,5 @@
 {
-  "date": "2026-10-21T18:13:55Z",
+  "date": "2026-10-21T21:53:54Z",
   "scope": "DynHD method-level reproduction on the 32GB host (pilot200, reduced scale, our labels; not a per-table replica of the paper)",
   "environment": {
     "upstream_tests": "Ran 7 tests in 7.445s - OK",

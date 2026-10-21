@@ -6,36 +6,36 @@
   "results": {
     "tre": {
       "observed_auroc": 0.7833673283922693,
-      "permutations_requested": 2000,
-      "permutations_valid": 2000,
+      "permutations_requested": 10000,
+      "permutations_valid": 10000,
       "permutation_mode": "cluster",
-      "p_value_one_sided": 0.0004997501249375312,
-      "null_mean": 0.49988511773998995,
-      "null_p95": 0.5346121712315949,
-      "null_p99": 0.5483824410471825,
-      "null_max": 0.5646276362999912
+      "p_value_one_sided": 9.999000099990002e-05,
+      "null_mean": 0.4997098881757429,
+      "null_p95": 0.5350835739914238,
+      "null_p99": 0.5496911968790359,
+      "null_max": 0.591500562096519
     },
     "tre_effective": {
       "observed_auroc": 0.8269685158632389,
-      "permutations_requested": 2000,
-      "permutations_valid": 2000,
+      "permutations_requested": 10000,
+      "permutations_valid": 10000,
       "permutation_mode": "cluster",
-      "p_value_one_sided": 0.0004997501249375312,
-      "null_mean": 0.4997858667899341,
-      "null_p95": 0.534246151153476,
-      "null_p99": 0.5468892838149861,
-      "null_max": 0.5685522143910172
+      "p_value_one_sided": 9.999000099990002e-05,
+      "null_mean": 0.5001269133612118,
+      "null_p95": 0.5350674179238105,
+      "null_p99": 0.5495621969538967,
+      "null_max": 0.5804605825608713
     },
     "tre_length_normalized": {
       "observed_auroc": 0.8369920094782262,
-      "permutations_requested": 2000,
-      "permutations_valid": 2000,
+      "permutations_requested": 10000,
+      "permutations_valid": 10000,
       "permutation_mode": "cluster",
-      "p_value_one_sided": 0.0004997501249375312,
-      "null_mean": 0.5001052471594486,
-      "null_p95": 0.5362470728279519,
-      "null_p99": 0.5507379773826642,
-      "null_max": 0.5719584519794549
+      "p_value_one_sided": 9.999000099990002e-05,
+      "null_mean": 0.49988268695772714,
+      "null_p95": 0.5346991942161278,
+      "null_p99": 0.5498538436701729,
+      "null_max": 0.5812010689931404
     }
   },
   "notes": [
