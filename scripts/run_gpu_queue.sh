@@ -16,7 +16,7 @@
 set -u
 REPO=/root/autodl-tmp/dllm-cross-model-hd
 LOG=/root/autodl-tmp/tre_r2_logs
-Q=/root/autodl-tmp/tre_repro/llada_hotpotqa_fp16_L128_S64_B128_v1
+Q="$REPO/data/trajectories/tre_repro/llada_hotpotqa_fp16_L128_S64_B128_v1"
 mkdir -p "$LOG" || exit 1
 cd "$REPO" || exit 1
 export HF_HOME=/root/autodl-tmp/hf-cache
@@ -43,10 +43,10 @@ run() {  # run <label> <logfile> <command...>
 }
 
 # --- 1. R2 smoke20 -----------------------------------------------------------
-if [ ! -f data/trajectories/tre_repro/llada_hotpotqa_smoke20_fp16_v1/manifest.json ]; then
+if [ ! -f "$REPO/data/trajectories/tre_repro/llada_hotpotqa_smoke20_fp16_v1/manifest.json" ]; then
   run smoke20_r2 smoke20.log .venv-llada/bin/python scripts/collect_llada.py \
     --questions data/tre_repro/questions/hotpotqa_smoke20.jsonl \
-    --output data/trajectories/tre_repro/llada_hotpotqa_smoke20_fp16_v1 \
+    --output "$REPO/data/trajectories/tre_repro/llada_hotpotqa_smoke20_fp16_v1" \
     --precision float16 --gen-length 128 --steps 64 --block-size 128 --seed 20261021 \
     --resume
 else
@@ -65,10 +65,10 @@ else
 fi
 
 # --- 3. TRE TriviaQA, 64-generation budget ----------------------------------
-if [ ! -f data/trajectories/tre_repro/llada_triviaqa_fp16_L64_S64_B64_v1/manifest.json ]; then
+if [ ! -f "$REPO/data/trajectories/tre_repro/llada_triviaqa_fp16_L64_S64_B64_v1/manifest.json" ]; then
   run tre_triviaqa_L64 triviaqa_L64.log .venv-llada/bin/python scripts/collect_llada.py \
     --questions data/tre_repro/questions/triviaqa_eval800.jsonl \
-    --output data/trajectories/tre_repro/llada_triviaqa_fp16_L64_S64_B64_v1 \
+    --output "$REPO/data/trajectories/tre_repro/llada_triviaqa_fp16_L64_S64_B64_v1" \
     --precision float16 --gen-length 64 --steps 64 --block-size 64 --seed 20261021 \
     --resume
 else
@@ -76,10 +76,10 @@ else
 fi
 
 # --- 4. TRE HotpotQA, 64-generation budget ----------------------------------
-if [ ! -f data/trajectories/tre_repro/llada_hotpotqa_fp16_L64_S64_B64_v1/manifest.json ]; then
+if [ ! -f "$REPO/data/trajectories/tre_repro/llada_hotpotqa_fp16_L64_S64_B64_v1/manifest.json" ]; then
   run tre_hotpotqa_L64 hotpotqa_L64.log .venv-llada/bin/python scripts/collect_llada.py \
     --questions data/tre_repro/questions/hotpotqa_eval800.jsonl \
-    --output data/trajectories/tre_repro/llada_hotpotqa_fp16_L64_S64_B64_v1 \
+    --output "$REPO/data/trajectories/tre_repro/llada_hotpotqa_fp16_L64_S64_B64_v1" \
     --precision float16 --gen-length 64 --steps 64 --block-size 64 --seed 20261021 \
     --resume
 else
@@ -87,10 +87,10 @@ else
 fi
 
 # --- 5. Dream TRE on HotpotQA (BF16; FP16 is blocked by the NaN guard) ------
-if [ ! -f data/trajectories/tre_repro/dream_hotpotqa_bf16_L128_S64_B128_v1/manifest.json ]; then
+if [ ! -f "$REPO/data/trajectories/tre_repro/dream_hotpotqa_bf16_L128_S64_B128_v1/manifest.json" ]; then
   run dream_hotpotqa_bf16 dream_bf16.log .venv-dream/bin/python scripts/collect_dream.py \
     --questions data/tre_repro/questions/hotpotqa_eval800.jsonl \
-    --output data/trajectories/tre_repro/dream_hotpotqa_bf16_L128_S64_B128_v1 \
+    --output "$REPO/data/trajectories/tre_repro/dream_hotpotqa_bf16_L128_S64_B128_v1" \
     --precision bf16 --gen-length 128 --steps 64 --block-size 128 --seed 20261021 \
     --resume
 else

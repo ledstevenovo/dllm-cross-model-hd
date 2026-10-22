@@ -18,8 +18,13 @@ set -u
 REPO=/root/autodl-tmp/dllm-cross-model-hd
 LOG=/root/autodl-tmp/r2_judge_logs
 PY="$REPO/.venv/bin/python"
-RUN=data/trajectories/tre_repro/llada_hotpotqa_fp16_L128_S64_B128_v1
+# The 800-question run was launched with an absolute path that dropped the
+# data/trajectories/tre_repro prefix (a bug in run_gpu_queue.sh, fixed there), so the
+# trajectories live outside the repo.  Accept either location: prefer the repo copy and
+# fall back to the absolute one, then move it into place so every downstream path works.
 QUESTIONS=data/tre_repro/questions/hotpotqa_eval800.jsonl
+STRAY=/root/autodl-tmp/tre_repro/llada_hotpotqa_fp16_L128_S64_B128_v1
+RUN=data/trajectories/tre_repro/llada_hotpotqa_fp16_L128_S64_B128_v1
 mkdir -p "$LOG" || exit 1
 cd "$REPO" || exit 1
 export HF_HOME=/root/autodl-tmp/hf-cache
@@ -37,6 +42,18 @@ while ! grep -qE "END r2_hotpotqa_800 rc=0|SKIP r2_hotpotqa_800" /root/autodl-tm
   sleep 60
 done
 log "R2 collection finished"
+
+# Relocate the run into the repo if it was written to the stray absolute path.
+if [ -d "$STRAY" ] && [ ! -d "$RUN" ]; then
+  mkdir -p "$(dirname "$RUN")"
+  mv "$STRAY" "$RUN" && log "moved $STRAY -> $RUN"
+elif [ -d "$STRAY" ] && [ -d "$RUN" ]; then
+  log "WARNING both $STRAY and $RUN exist; refusing to merge, judging $RUN"
+fi
+if [ ! -d "$RUN" ]; then
+  log "FATAL: no R2 run at $RUN or $STRAY"
+  exit 1
+fi
 
 # 2. 完整性预检：轨迹数、配置一致性、prompt 往返
 "$PY" - <<'PY' >> "$LOG/preflight.log" 2>&1
