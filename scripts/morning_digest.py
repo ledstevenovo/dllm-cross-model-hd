@@ -63,7 +63,24 @@ def git(*args: str) -> str:
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--out", default=str(REPO / "reports/morning_digest.md"))
+    parser.add_argument("--root", default="stage7",
+                        help="which run to summarize: 'stage7' (pilot200) or 'pool2000' (2000 questions). "
+                             "The default stays on stage7 so older invocations keep working; the "
+                             "expanded run must be asked for explicitly rather than silently replacing it.")
     args = parser.parse_args()
+    # Every artifact path below is derived from this, so one switch moves the whole digest.
+    if args.root == "pool2000":
+        MATRIX = REPO / "results/pool2000/main/transfer_matrix.csv"
+        MULTISEED = REPO / "reports/pool2000_multiseed.json"
+        IMPORTANCE = REPO / "reports/pool2000_importance.json"
+        STABILITY = REPO / "reports/pool2000_stability_two_seeds.json"
+        LABEL = "2000 题/模型（pool2000 reviewed，dataset=all）"
+    else:
+        MATRIX = REPO / "results/stage7/main/transfer_matrix.csv"
+        MULTISEED = REPO / "reports/main_project_multiseed.json"
+        IMPORTANCE = REPO / "reports/main_project_importance.json"
+        STABILITY = REPO / "reports/main_project_stability.json"
+        LABEL = "pilot200 reviewed，dataset=all"
     out_path = Path(args.out)
     lines: list[str] = []
     warn: list[str] = []
@@ -92,12 +109,12 @@ def main() -> int:
     w()
 
     # ---------------------------------------------------------------- 1 stage7
-    tm = load_csv(REPO / "results/stage7/main/transfer_matrix.csv")
+    tm = load_csv(MATRIX)
     if tm is None:
-        warn.append("results/stage7/main/transfer_matrix.csv 缺失")
+        warn.append(f"{MATRIX} 缺失")
     else:
         sub = tm[(tm.axis == "model") & (tm.dataset == "all")]
-        w("## 1. 主项目迁移矩阵（pilot200 reviewed，dataset=all）")
+        w(f"## 1. 迁移矩阵（{LABEL}）")
         w()
         rows = []
         for fs in ("relative_normalized", "entropy_raw"):
@@ -127,14 +144,22 @@ def main() -> int:
                        & (tm.kind == "lr") & (tm.source == r.source) & (tm.target == r.target)
                        & (tm.dataset != "all")]
             parts = "；".join(f"{x.dataset} n={int(x.n)} AUROC {x.auroc:.3f}" for x in strat.itertuples())
-            w(f"- 已知异常格 `relative_normalized+LR` Dream→LLaDA: AUROC {r.auroc:.3f} "
-              f"[{r.auroc_low:.2f},{r.auroc_high:.2f}]；分层：{parts}（小样本层驱动，见 initial_observations）")
+            # The verdict text must follow the run: on pilot200 this cell was the anomaly, on
+            # pool2000 it is an ordinary cell and calling it an anomaly would be wrong.
+            if args.root == "pool2000":
+                verdict_path = REPO / "reports/pool2000_verdict.json"
+                verdict = "见 reports/pool2000_verdict.json" if verdict_path.exists() else "未找到判据文件"
+                w(f"- `relative_normalized+LR` Dream→LLaDA: AUROC {r.auroc:.3f} "
+                  f"[{r.auroc_low:.2f},{r.auroc_high:.2f}]；分层：{parts}。预注册判据：{verdict}")
+            else:
+                w(f"- 已知异常格 `relative_normalized+LR` Dream→LLaDA: AUROC {r.auroc:.3f} "
+                  f"[{r.auroc_low:.2f},{r.auroc_high:.2f}]；分层：{parts}（小样本层驱动，见 initial_observations）")
         w()
 
     # ---------------------------------------------------------------- 2 multiseed
-    ms = load_json(REPO / "reports/main_project_multiseed.json")
+    ms = load_json(MULTISEED)
     if ms is None:
-        warn.append("reports/main_project_multiseed.json 缺失")
+        warn.append(f"{MULTISEED} 缺失")
     else:
         w(f"## 2. 多种子稳健性（{len(ms.get('seeds', []))} seeds，bootstrap {ms.get('bootstrap')}）")
         w()
@@ -159,9 +184,9 @@ def main() -> int:
         w()
 
     # ---------------------------------------------------------------- 3 importance
-    im = load_json(REPO / "reports/main_project_importance.json")
+    im = load_json(IMPORTANCE)
     if im is None:
-        warn.append("reports/main_project_importance.json 缺失")
+        warn.append(f"{IMPORTANCE} 缺失")
     else:
         w(f"## 3. 特征重要性（{im.get('kind', '?').upper()}，置换 {im.get('permutations')} 次，dataset=all）")
         w()
@@ -181,34 +206,75 @@ def main() -> int:
         w()
 
     # ---------------------------------------------------------------- 4 stability
-    st = load_json(REPO / "reports/main_project_stability.json")
+    st = load_json(STABILITY)
+    SEED_CELLS = None
+    if st is not None and "n_pooled" in (st["cells"][0] if st.get("cells") else {}):
+        SEED_CELLS = []
+        for path in (REPO / "reports/pool2000_stability.json", REPO / "reports/pool2000_stability_seed2.json"):
+            run = load_json(path)
+            if run:
+                SEED_CELLS.append({(c["source"], c["target"], c["feature_set"], c["kind"]): c
+                                   for c in run["cells"]})
     if st is None:
-        warn.append("reports/main_project_stability.json 缺失")
+        warn.append(f"{STABILITY} 缺失")
     else:
-        w(f"## 4. 稳定性重采样（{st.get('repeats')} repeats，簇级重采样）")
+        repeats = st.get("repeats")
+        if repeats is None:
+            # The two-seed pooled file has no top-level repeats; each cell records its own n.
+            ns = sorted({c.get("n_pooled") for c in st["cells"] if c.get("n_pooled")})
+            repeats = f"{ns[0]}（两种子合并）" if len(ns) == 1 else f"{ns}"
+        w(f"## 4. 稳定性重采样（{repeats} repeats，簇级重采样）")
         w()
         if st.get("stopped_early"):
             warn.append(f"稳定性提前停止（max_seconds={st.get('max_seconds')}），"
                         f"missing_combos={st.get('missing_combos')}")
-        partial = [c for c in st["cells"] if c.get("partial")]
+        # Two shapes exist: a single-seed run stores auroc_mean/auroc_std/p_above_*, while the
+        # two-seed pooled file stores mean_pooled/std_pooled and keeps the tail probabilities
+        # per seed (they cannot be pooled from summaries). Normalise here instead of forking.
+        def cell_stats(c):
+            mean = c.get("auroc_mean", c.get("mean_pooled"))
+            std = c.get("auroc_std", c.get("std_pooled"))
+            # The pooled file keeps quantiles per seed; use the mean of the two when the
+            # per-seed values are present, and say so rather than printing a dash.
+            p05 = c.get("auroc_p05")
+            p95 = c.get("auroc_p95")
+            if p05 is None:
+                # The pooled summary drops quantiles; read them from the per-seed runs and
+                # average, which is what the pooled file says to do for orientation.
+                key = (c["source"], c["target"], c["feature_set"], c["kind"])
+                vals = [(r.get(key, {}).get("auroc_p05"), r.get(key, {}).get("auroc_p95"))
+                        for r in (SEED_CELLS or [])]
+                vals = [(a, b) for a, b in vals if a is not None and b is not None]
+                if vals:
+                    p05 = sum(a for a, _ in vals) / len(vals)
+                    p95 = sum(b for _, b in vals) / len(vals)
+            p5 = c.get("p_above_0_5", c.get("p_above_0_5_seed1"))
+            p7 = c.get("p_above_0_7", c.get("p_above_0_7_seed1"))
+            p8 = c.get("p_above_0_8", c.get("p_above_0_8_seed1"))
+            valid = c.get("repeats_valid", c.get("n_pooled"))
+            requested = c.get("repeats_requested", c.get("n_pooled"))
+            return mean, std, p05, p95, p5, p7, p8, valid, requested
+
         rows = []
         for c in sorted(st["cells"], key=lambda c: (c["feature_set"], c["kind"], c["source"], c["target"])):
             flag = "（partial）" if c.get("partial") else ""
+            mean, std, p05, p95, p5, p7, p8, valid, requested = cell_stats(c)
             rows.append([
                 f"{short(c['source'])} → {short(c['target'])} {c['feature_set']} {c['kind'].upper()}{flag}",
-                f"{c['auroc_mean']:.3f} (σ {c['auroc_std']:.3f})",
-                f"{c['auroc_p05']:.3f}–{c['auroc_p95']:.3f}",
-                f"{c['p_above_0_5']:.2f}/{c['p_above_0_7']:.2f}/{c['p_above_0_8']:.2f}",
-                f"{c['repeats_valid']}/{c['repeats_requested']}",
+                f"{mean:.3f} (σ {std:.3f})",
+                f"{p05:.3f}–{p95:.3f}" if p05 is not None and p95 is not None else "—",
+                f"{p5:.2f}/{p7:.2f}" + (f"/{p8:.2f}" if p8 is not None else ""),
+                f"{valid}/{requested}",
             ])
-        table(rows, ["格", "AUROC 均值（σ）", "5–95% 分位", "P(>0.5/>0.7/>0.8)", "有效/请求"])
+        table(rows, ["格", "AUROC 均值（σ）", "5–95% 分位", "P(>0.5/>0.7)", "有效/请求"])
         key = [c for c in st["cells"] if c["feature_set"] == "relative_normalized"
                and c["kind"] == "lr" and short(c["source"]) == "Dream" and short(c["target"]) == "LLaDA"]
         if key:
             c = key[0]
-            w(f"- **异常格 `relative_normalized+LR` Dream→LLaDA 在重采样下**：均值 {c['auroc_mean']:.3f}，"
-              f"P(>0.5)={c['p_above_0_5']:.2f}（即 P(≤0.5)={1 - c['p_above_0_5']:.2f}），"
-              f"5–95% 分位 {c['auroc_p05']:.3f}–{c['auroc_p95']:.3f}"
+            mean, std, p05, p95, p5, p7, p8, valid, requested = cell_stats(c)
+            w(f"- **`relative_normalized+LR` Dream→LLaDA 在重采样下**：均值 {mean:.3f}，"
+              f"P(>0.5)={p5:.2f}，P(>0.7)={p7:.2f}"
+              + (f"，5–95% 分位 {p05:.3f}–{p95:.3f}" if p05 is not None else "")
               + ("（partial）" if c.get("partial") else ""))
         w("分位是重采样离散度，不是总体置信区间；阈值未在稳定性循环中重新调优。")
         w()
