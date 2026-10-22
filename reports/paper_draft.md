@@ -1,118 +1,157 @@
-# 扩散式语言模型的答案正确性检测：跨模型迁移、稳定性与复现（工作稿 v0.1）
+# 扩散式语言模型的答案正确性检测：跨模型迁移、稳定性与复现（工作稿 v0.3）
 
-> 状态：**工作稿**（2026-10-22）。所有数字来自本仓库可复算产物（见 §7 清单），无占位数据；
-> 稳定性为双种子 300×2 次/格（合并 600），人工抽查与标签证据已完成（§4）。英文投稿版可在此稿基础上翻译并调整篇幅/引用。
+> 状态：**工作稿**（2026-10-23，v0.3）。所有数字来自本仓库可复算产物（见 §7 清单），无占位数据。
+> **v0.3 相对 v0.2 的核心变化**：扩池到 2000 题/模型后，v0.2 的"Dream 源域方向性缺口"**未通过预注册判据**，
+> 被判定为 pilot200（test 每方向 48 条）的抽样假象。v0.2 全文留档于 `reports/paper_draft_v0.2_pilot200.md`。
+> 判决与证据见 `reports/pool2000_verdict.md`、`reports/pool2000_learning_curve.md`、
+> `reports/pool2000_supplementary_checks.md`。
 
 ## 摘要
 
 我们用**仅推理期可获得**的轨迹统计量（掩码扩散过程的熵、揭示进度与时间结构，全部 CPU 可算），预测两个扩散式语言模型
 （LLaDA-8B-Instruct、Dream-v0-Instruct-7B）在开放问答上的答案正确性，并检验该"正确性检测器"能否**跨模型迁移**。
-在 pilot200（每模型 120/30/50 划分，BF16，gen_length=64、steps=64、block=64、温度 0）上：
+最终结论建立在 **2000 题/模型**（BF16，gen_length=64、steps=64、block=64、温度 0，两模型同设备采集）上：
 
-- **域内**检测稳定可用：AUROC 0.70–0.89（LR/MLP × 两个特征集），全部 8 格在 300 次簇级重采样下 `P(AUROC>0.5)=0.98–1.00`；
-- **跨模型迁移出现方向性缺口**：`LLaDA→Dream` 四组合全部稳定迁移（AUROC 0.75–0.82，重采样 `P(>0.5)≥0.94`）；
-  而 `Dream→LLaDA` 仅 `entropy_raw+LR` 稳定迁移（0.838，`P(>0.7)=0.95`），其余三个组合停在随机水平
-  （0.51–0.58，`P(>0.7)≤0.18`）——且**不是负迁移**；
-- **缺口有机制解释**：`relative_normalized` 的失败来自**特征尺度/分位漂移**——仅用未标注的目标模型轨迹做逐特征单调对齐，
-  `rel+LR Dream→LLaDA` 即从 0.494 恢复到 **0.850 [0.72,0.96]**（hotpotqa / triviaqa 两层分别 0.83 / 0.88，故非小样本效应）；
-  `ent+MLP` 的失败与对齐无关（另有机制，开放问题）；
-- 该结论在 **5 个随机种子**、**300×2 次簇级重采样**、**10000 次簇级置换检验**（p=1e-4）下一致。
-- 标签质量有独立证据：第二 judge（LongCat-2.5-Preview，冻结提示词）与 reviewed 标签 **373/373 全覆盖一致率 0.957，Cohen's κ=0.896**。
-- 另附两项复现：TRE 轨迹级指标在 800 题上 AUROC 0.783（CI 0.749–0.817，置换 p=1e-4）；DynHD 方法级复现 22/22 验收断言通过。
+- **域内**检测稳定可用：AUROC 0.77–0.87（LR/MLP × 两个特征集），8/8 格在 10000 次簇级置换检验下 p ≤ 1e-4；
+- **跨模型迁移普遍成立但中度衰减**：16 格**全部** AUROC > 0.5（0.60–0.87），
+  跨模型格（0.60–0.87）低于域内格（0.77–0.87），最弱为 `Dream→LLaDA rel+MLP` 0.600；
+  **没有任何一格表现为失效或负迁移**，也没有方向性断裂；
+- **v0.2 声称的"方向性缺口"是 48 题测试集的抽样假象**：同一检测器、同一特征，在 450–491 条测试样本上
+  `rel+LR Dream→LLaDA` 为 **0.752 [0.70,0.80]**（pilot200 上曾为 0.494），`ent+LR` 为 **0.671 [0.62,0.72]**
+  （曾为 0.830）。在 pilot200 的测试规模下做 2000 次重抽，真实值 0.75 的分布中 0.494 落在**第 0.1 百分位**——
+  旧结论是抽到了极端尾部，不是机制；
+- 因此 v0.2 中"尺度对齐修复异常格"的机制叙事**同时失效**：不做任何对齐该格已是 0.752，对齐后 0.764（几乎无变化）；
+  且分位对齐在多个格上**反而变差**；
+- **唯一经得起扩池检验的具体发现**：单特征 `late_entropy`（`late_only`）在 `Dream→LLaDA` 上 0.766，
+  高于 6 维 `entropy_raw` 的 0.671 与 10 维 `relative_normalized` 的 0.752——加更多特征不一定更好；
+- 该结论在 **5 个随机种子**、**簇级重采样（两种子）**、**10000 次簇级置换检验**（16/16 格 p ≤ 4e-4）下一致。
+- 标签质量有独立证据：第二 judge 与 reviewed 标签全覆盖一致率 0.957（κ=0.896）；
+  R2 的替代 judge（同模型、不同供应商）与 R1 judge 的一致性 0.990（κ=0.979）。
+- 另附复现：TRE 轨迹级指标在 800 题上 AUROC 0.783（CI 0.749–0.817，置换 p=1e-4）；
+  TRE R2（HotpotQA × LLaDA，800 题）另行报告；DynHD 方法级复现 22/22 验收断言通过。
+
+> **方法学要点（本稿最重要的教训）**：v0.2 的结论同时通过了 bootstrap CI、双种子簇级重采样、簇级置换检验、
+> 5 个随机种子，以及一个"机制解释"（尺度对齐）。这五项全部无法发现问题的真正来源——**测试集本身只有 48 条**。
+> CI 宽是警告而不是结论；在固定样本上重采样测的是样本内变异，不是抽样误差；置换检验只说明"这 48 条不像有信号"。
+> 唯一有效的检验是**换一批样本重测**。
 
 ## 1. 研究问题
 
 1. 扩散式 LM 的推理轨迹是否携带**与正确性相关的可观测量**？（域内检测）
-2. 该信号是否**跨模型族迁移**，即在哪些"特征×检测器"组合上迁移成立、哪些失效？（迁移矩阵 + 稳定性）
-3. 迁移失效是**方向性缺口**还是噪声？（稳定性/多种子/置换，以及缺口的分层结构）
+2. 该信号是否**跨模型族迁移**？（迁移矩阵；在哪些"特征×检测器"组合上成立、强度如何）
+3. 迁移的强度差异是**结构性缺口**还是**估计噪声**？（预注册判据 + 扩池 + 学习曲线）
 4. 既有方法（TRE 轨迹指标、DynHD 检测器）能否在本仓库设定下复现？
 
 ## 2. 数据与协议
 
 | 项 | 设定 |
 |---|---|
-| 题集 | pilot200：hotpotqa + triviaqa，按簇（question cluster）全局划分 **120 train / 30 validation / 50 test**（每模型） |
+| 题集 | **pool2000：每模型 2000 题**（hotpotqa + triviaqa），按簇全局划分 **1200 train / 300 validation / 500 test**；pilot200 的 200 题为其中的子集且保持原 split。题单冻结见 `reports/expansion_pack_v2.md` |
 | 模型 | LLaDA-8B-Instruct（rev `08b83a6…`）、Dream-v0-Instruct-7B（rev `05334cb…`） |
-| 采集 | BF16，`gen_length=64`、`requested_steps=64`、`block_size=64`、`temperature=0`，单题原子落盘 + 指纹 |
-| 标签 | 规则签核 reviewed（`human:ledstevenovo:rule-signoff`）；format_failure 不计入指标。可用样本 LLaDA 195 / Dream 178（test 每方向 45–48） |
-| 特征 | `entropy_raw`（6 维）与 `relative_normalized`（10 维：6 个归一化熵 + uncertainty + 揭示进度/比例） |
+| 采集 | BF16，`gen_length=64`、`requested_steps=64`、`block_size=64`、`temperature=0`，单题原子落盘 + 指纹，`--verify-observer` 全通过；**两模型在同一台 4080 SUPER (sm_89) 上采集**（跨设备规则见 `reports/device_migration_5090.md` §4） |
+| 标签 | 规则签核 reviewed（`human:ledstevenovo:rule-signoff`）；format_failure 不计入指标。可用 test 样本：LLaDA 491 / Dream 449 |
+| 特征 | `entropy_raw`（6 维）与 `relative_normalized`（10 维：6 个归一化熵 + uncertainty + 揭示进度/比例）；消融覆盖全部 10 个特征集 |
 | 检测器 | LR 与 MLP（小网格）；**阈值/归一化/超参只在源域 train/validation 拟合**，test 绝不参与 |
-| 统计 | bootstrap 1000（按 question_id 分组）；跨数据集分层报告；多种子 5 个；簇级重采样稳定性 300 次/格（第二种子并行复核）；簇级置换 10000 次 |
+| 统计 | bootstrap 1000（按 question_id 分组）；跨数据集分层报告；多种子 5 个；簇级重采样稳定性 300 次/格 ×2 种子；簇级置换 10000 次 |
+| 预注册判据 | 冻结于任何 2000 题结果出现之前（`docs/NOGPU_WORKPLAN.md` §2d）：`rel+LR Dream→LLaDA` CI 上界 <0.6 且 `ent+LR` CI 下界 >0.7 |
 | 标签质量 | 第二 judge 全覆盖 373 题（冻结提示词 v3，LongCat-2.5-Preview，温度 0）：一致率 0.957、κ=0.896 |
 
 ## 3. 结果
 
-### 3.1 域内检测（AUROC[95% CI]，dataset=all）
+全部数字来自 2000 题/模型（`results/pool2000/main/`，bootstrap 1000 按 question_id 分组）。
 
-| 特征集 | 模型 | LR | MLP |
+### 3.1 域内检测
+
+| 特征集 | 模型 | LR（95% CI） | MLP（95% CI） |
 |---|---|---|---|
-| entropy_raw | LLaDA | 0.848 [0.72,0.95] | 0.703 [0.55,0.85] |
-| entropy_raw | Dream | 0.803 [0.60,0.97] | 0.803 [0.62,0.95] |
-| relative_normalized | LLaDA | **0.887** [0.77,0.97] | 0.750 [0.60,0.88] |
-| relative_normalized | Dream | 0.800 [0.59,0.97] | 0.782 [0.61,0.93] |
+| entropy_raw | LLaDA | 0.799 [0.76,0.84] | 0.765 [0.72,0.81] |
+| entropy_raw | Dream | 0.853 [0.81,0.89] | 0.807 [0.76,0.85] |
+| relative_normalized | LLaDA | 0.813 [0.77,0.85] | 0.773 [0.73,0.82] |
+| relative_normalized | Dream | **0.871** [0.84,0.91] | 0.794 [0.75,0.84] |
 
-### 3.2 跨模型迁移矩阵与稳定性缺口
+域内 8/8 格稳定可用，区间宽度仅 0.05–0.08（pilot200 时为 0.19–0.38）。
+
+### 3.2 跨模型迁移矩阵
 
 | 方向 | ent+LR | ent+MLP | rel+LR | rel+MLP |
 |---|---|---|---|---|
-| LLaDA → Dream | 0.820 ✅ | 0.756 ✅ | 0.779 ✅ | 0.732 ✅ |
-| Dream → LLaDA | **0.838** ✅ | 0.579 ⚠️ | 0.494 ⚠️ | 0.502 ⚠️ |
+| LLaDA → Dream | 0.854 [0.82,0.89] | 0.839 [0.80,0.88] | 0.865 [0.83,0.90] | 0.739 [0.69,0.78] |
+| Dream → LLaDA | 0.671 [0.62,0.72] | 0.680 [0.63,0.73] | **0.752** [0.70,0.80] | 0.600 [0.55,0.65] |
 
-- ✅ = 簇级重采样 300 次下 `P(>0.5)≥0.94` 且 `P(>0.7)≥0.72`；⚠️ = 停在随机（`P(>0.7)≤0.18`）。
-- 迁移代价（目标域监督 − 迁移）：LLaDA→Dream 四格 ≤ +0.05（几乎无损）；Dream→LLaDA 除 ent+LR(+0.018) 外为
-  +0.124 / **+0.393** / +0.248 —— 目标域监督显著更高，与缺口方向一致。
-- **双种子重采样汇总（seed 20261021 + 20261023，每格 600 次）**：
+- **16/16 格 AUROC > 0.5**，且 16/16 格在 10000 次簇级置换检验下 **p ≤ 4e-4**（零分布 p95 ≈ 0.548）；
+- **没有失效格，也没有方向性断裂**。跨模型格（0.60–0.87）整体低于域内格（0.77–0.87），呈**中度衰减**；
+- 迁移代价（目标域监督 − 迁移）：`LLaDA→Dream` −0.02～+0.06；`Dream→LLaDA` +0.06～+0.21，最弱格为目标域监督明显更优，但仍显著高于随机；
+- 跨数据集轴（同一 backbone 内 hotpotqa ↔ triviaqa，32 格）0.663–0.886，**无低于 0.5 的格**。
 
-| 跨模型格 | 均值 ± σ（600） | P(>0.5) s1/s2 | P(>0.7) s1/s2 |
-|---|---|---|---|
-| Dream→LLaDA ent+LR | **0.839 ± 0.077** | 1.00/1.00 | 0.95/0.96 |
-| Dream→LLaDA ent+MLP | 0.557 ± 0.151 | 0.63/0.65 | 0.18/0.19 |
-| Dream→LLaDA rel+LR | **0.507 ± 0.143** | 0.55/0.46 | 0.08/0.09 |
-| Dream→LLaDA rel+MLP | 0.520 ± 0.153 | 0.50/0.53 | 0.14/0.13 |
-| LLaDA→Dream ent+LR | 0.803 ± 0.087 | 1.00/1.00 | 0.88/0.86 |
-| LLaDA→Dream ent+MLP | 0.773 ± 0.088 | 1.00/1.00 | 0.79/0.79 |
-| LLaDA→Dream rel+LR | 0.785 ± 0.094 | 0.98/1.00 | 0.81/0.85 |
-| LLaDA→Dream rel+MLP | 0.758 ± 0.125 | 0.94/0.96 | 0.72/0.78 |
+### 3.3 预注册判据：未复现，且推翻旧结论
 
-  两个种子间最大 |Δ均值| = 0.014（均值 0.006）→ 结论与种子无关。
-- **异常格的分层**：`rel+LR Dream→LLaDA`；600 次重采样 mean **0.507 ± 0.143**、`P(≤0.5)≈0.50`、单种子 5–95% 分位 0.30–0.76
-  ⇒ 判决为"**无可检测迁移信号**"而非"负迁移"。分层：hotpotqa 层 n=20（**仅 4 个负例**）AUROC 0.141、triviaqa 层 n=28 AUROC 0.583
-  —— 异常几乎完全由该小层驱动，属小样本噪声（该层也是上游数据缺陷的所在，见 §6）。
+判据冻结于任何 2000 题结果出现之前：
 
-### 3.3 稳健性
+| 检查项 | 观测 | 阈值 | 结果 |
+|---|---:|---:|---|
+| `rel+LR Dream→LLaDA` CI 上界 < 0.6 | **0.798** | 0.6 | ❌ |
+| `ent+LR Dream→LLaDA` CI 下界 > 0.7 | **0.620** | 0.7 | ❌ |
 
-- **多种子**（5 seeds）：跨模型 LR 格种子间 σ=0.000（逐样本确定性训练），MLP 格 σ≤0.047；缺口方向不随种子变化。
-- **置换检验**（TRE，10000 次簇级）：tre / tre_effective / tre_length_normalized 均 p=1.0e-4（null mean≈0.500，p95≈0.535）。
-- **重采样稳定性**：双种子各 300 次、每格合并 600 次（`reports/stability_two_seeds.json`），种子间最大 |Δ均值| 0.014；
-  域内 8/8、LLaDA→Dream 4/4 稳定，Dream→LLaDA 仅 ent+LR 稳定（§3.2）。
+两条不仅未通过，方向还相反：旧"异常格"从 0.494 升至 **0.752**，旧"唯一稳定迁移格"从 0.830 降至 **0.671**。
 
-### 3.4 特征重要性（LR，置换 20 次，dataset=all）
+**这不是 bug，有三条独立核对**：
 
-- `revealing_entropy` 在 LLaDA 源格上至关重要（置换剔除后 AUROC 下降 +0.44/+0.46；LOO 同向）；
-- `relative_normalized` 下最重要者为 `reveal_progress_entropy_vocab_normalized`（LLaDA 域内 +0.046）与 `revealing_entropy_vocab_normalized`；
-- Dream→LLaDA 的 `rel` 格无显著重要特征（最大置换降幅 +0.079 且方差大）——与"无信号"判决一致。
+1. 把 2000 题表**限制回 pilot200 的 200 题**，16 格逐位复现旧数字（0.494 / 0.830 / 0.803 / 0.579 …）；
+2. 绕开本项目流水线，手写 `StandardScaler+LogisticRegression` 独立复算：0.7519（流水线 0.7519）；
+3. 数据结构核对：2000 题 / 4000 行，1200-300-500，配对 test 集，无重复 sample_id、无跨 split 簇、标签全 reviewed。
 
-### 3.5 尺度对齐诊断：异常格的机制
+**学习曲线给出机制**（`reports/pool2000_learning_curve.md`）：检测器只拟合一次、仅改评分子集，
+`rel+LR` 从 n=96 起稳定在 0.71–0.77（全量 0.752），说明真实值一直是 ~0.75。在 n=48 下重抽 2000 次，
+均值 0.750（sd 0.075），**pilot200 观测到的 0.494 落在第 0.1 百分位**；同样的程序把 `ent+LR` 的 0.830
+放在以 0.669 为中心的分布的第 98.4 百分位。pilot200 从一个 48 点测试集里同时抽到一个极端低值和一个极端高值，
+二者的反差成了 v0.2 的主线。
 
-对跨模型格做三种特征处理对照（`scripts/alignment_diagnostic.py`；后两种仅用**未标注**的目标域 train 轨迹，属诊断，不进入主表）：
+### 3.4 稳健性
 
-| 格 | source-scale（冻结流水线） | target-scale（目标域 z-score） | **quantile-map（逐特征分位对齐）** |
-|---|---|---|---|
-| Dream→LLaDA rel+LR | 0.494 | 0.705 | **0.850 [0.72,0.96]** |
-| Dream→LLaDA rel+MLP | 0.502 | 0.344 | **0.744 [0.61,0.87]** |
-| Dream→LLaDA ent+LR | 0.830 | 0.879 | 0.852 [0.73,0.97] |
-| Dream→LLaDA ent+MLP | 0.579 | 0.588 | 0.439 [0.31,0.59] |
-| LLaDA→Dream rel+LR | 0.779 | 0.767 | 0.743 [0.54,0.90] |
-| LLaDA→Dream rel+MLP | 0.732 | 0.673 | 0.675 [0.48,0.83] |
-| LLaDA→Dream ent+LR | 0.820 | 0.810 | 0.719 [0.52,0.89] |
-| LLaDA→Dream ent+MLP | 0.756 | 0.820 | 0.698 [0.52,0.86] |
+- **多种子**（5 seeds）：LR 格种子间 σ=0.000（逐样本确定性训练），MLP 格 σ≤0.047；
+- **簇级重采样**：两种子各 300 次/格；域内 8/8、`LLaDA→Dream` 4/4、`Dream→LLaDA` 4/4 全部 `P(>0.5)=1.00`；
+- **置换检验**：16/16 格 p ≤ 4e-4（下界 1e-4），零分布 p95 = 0.548；
+- **稳定性结论的性质**：以上三项在 v0.2 时也全部做过且全部"通过"，但都没能发现问题——它们测的是
+  固定样本内的变异与随机标签，**不测抽样误差**。本稿因此把"换一批样本重测"列为必要检验（§3.3）。
 
-- **异常格的信号其实存在**：`rel+LR Dream→LLaDA` 在分位对齐后 0.494 → **0.850**，且**两层都恢复**（hotpotqa n=20：0.141 → 0.828；triviaqa n=28：0.583 → 0.875）——不是小样本效应；
-- `rel+MLP` 同方向也恢复（0.502 → 0.744），但 target-scale 反而更差（0.344）→ 失配主要是**分布形状/分位**而非单纯位置尺度；
-- **`ent+MLP` 的失败与对齐无关**（0.579 → 0.439），属另一机制，留作开放问题；
-- LLaDA→Dream（本就可迁移）不因对齐获益，说明该诊断不是"万能增益"。
+### 3.5 特征集消融：单特征 `late_entropy` 最优
 
-### 3.6 TRE R1 复现（800 题：507 incorrect / 293 correct）
+`Dream→LLaDA`，10 个特征集（LR / MLP）：
+
+| 特征集 | 维度 | LR | MLP |
+|---|---:|---:|---:|
+| `early_only` | 1 | 0.702 | 0.660 |
+| `middle_only` | 1 | 0.718 | 0.706 |
+| **`late_only`** | **1** | **0.766** | **0.765** |
+| `entropy_raw` | 6 | 0.671 | 0.680 |
+| `entropy_confidence` | 7 | 0.682 | 0.655 |
+| `absolute_time` | 9 | 0.700 | 0.594 |
+| `relative_time` | 10 | 0.752 | 0.651 |
+| `relative_normalized` | 10 | 0.752 | 0.600 |
+| `with_stability` | 11 | 0.753 | 0.630 |
+
+- **单特征 `late_entropy` 优于所有多维组合**（0.766 vs 0.671–0.753），是本文唯一经得起扩池检验的具体发现；
+- v0.2 曾报告"加入进度/长度特征会崩盘"（0.83 → 0.47），扩池后**整体反转**：含进度/长度特征的集合全部上升
+  （+0.21～+0.29），纯熵类全部下降（−0.05～−0.16）。旧消融结论作废，见 `reports/pool2000_featureset_ablation.md`；
+- 机制假设：进度类特征在 48 题上方差估计不稳，450 题后分布估计稳定，标准化便能吸收跨模型差异。
+
+### 3.6 尺度对齐诊断：前提消失
+
+| 格 | 原尺度 | 目标域标准化 | 分位对齐 |
+|---|---:|---:|---:|
+| `rel+LR Dream→LLaDA` | **0.752** | 0.751 | 0.764 |
+| `rel+MLP Dream→LLaDA` | 0.600 | 0.601 | 0.726 |
+| `ent+LR Dream→LLaDA` | 0.671 | 0.667 | 0.763 |
+| `ent+MLP Dream→LLaDA` | 0.680 | 0.537 | 0.753 |
+| `rel+MLP LLaDA→Dream` | 0.739 | 0.813 | **0.600** |
+| `ent+MLP LLaDA→Dream` | 0.839 | 0.828 | **0.710** |
+
+v0.2 的机制叙事建立在"对齐把 0.494 修复到 0.850"上。扩池后该格本就 0.752，对齐只到 0.764——
+**没有问题需要修复**。且分位对齐在多个格上**反而变差**（`rel+MLP LLaDA→Dream` 0.739 → 0.600），
+因为它用目标域 train 的分位重排目标域 test，样本充足后引入的扭曲超过其修正的漂移。
+「尺度对齐是异常格的机制」这一结论撤回。
+
+### 3.7 TRE R1 复现（800 题：507 incorrect / 293 correct）
 
 | 指标 | AUROC [95% CI] |
 |---|---|
@@ -124,7 +163,7 @@
 
 29 个分数族、按答案类型/终止方式分层与校准诊断见 `reports/tre_repro/offline_analysis.json`；协议差异见 `protocol_diff.md`。
 
-### 3.7 DynHD 方法级复现
+### 3.8 DynHD 方法级复现
 
 - CPU 验收断言 **22/22** 通过；LLaDA test AUROC 0.8824（3 seeds）、Dream 0.8093；
 - 共同测试集（n=44）：LLaDA 0.8757 / Dream 0.8180；
@@ -147,16 +186,20 @@
 
 ## 5. 讨论
 
-1. **迁移缺口是方向性的，不是全局的**：同一特征、同一检测器下，缺口只出现在 Dream 源域；LLaDA 源域几乎无损。
-   这提示"检测器可迁移性"应作为**逐方向**结论报告，而非"跨模型迁移是否可行"的二元判断。§3.5 进一步表明，Dream 源域缺口里的两个组合
-   可由**未标注目标轨迹的逐特征单调对齐**修复（0.494→0.850），即"不可迁移"与"预处理未对齐"是两回事。
-2. **模型类别与特征集的交互**：Dream→LLaDA 中，熵特征的 LR 有效而 MLP 失效（0.838 vs 0.579），
-   同时 `relative_normalized` 两类都失效——失效模式更像"该方向的可分性在特征空间中被压缩"而非"检测器容量不足"。
-3. **标准化特征的跨模型风险（已证实）**：`relative_normalized` 依赖词表归一化熵与揭示比例；源域 fit 的标准化器遇到目标域的漂移分布时，
-   跨模型评分失真——§3.5 的分位对齐诊断把 `rel+LR Dream→LLaDA` 从 0.494 恢复到 0.850，且两层皆然。**可部署含义**：仅凭目标模型的
-   *未标注* 轨迹即可做逐特征单调对齐，把"缺口"变成"可通过对齐修复的预处理问题"；但主表仍报告冻结流水线（不做此对齐）的结果，避免把诊断步骤混入主结论。
-4. **限制**：test 每方向仅 45–48 条（CI 宽）；hotpotqa 层小（n≈20，个别仅 4 个负例）；judge 提示词的严格度会影响分歧率；
-   上游数据存在个别错误答案（§6）。**单次矩阵不作为检测器优劣结论**；本稿所有结论均以重采样分布为准。
+1. **迁移普遍成立，只是有损**：16 格全部显著高于随机，没有失效格，也没有方向性断裂。跨模型格（0.60–0.87）整体低于
+   域内格（0.77–0.87），这是"有损但可用"的迁移，而非"某些方向不可迁移"。检测器可迁移性因此应作为**连续的强度问题**
+   报告，而不是"可行/不可行"的二元判断。
+2. **最弱的组合是 MLP × 进度类特征**：`Dream→LLaDA rel+MLP` 0.600 为全表最低，但仍在 CI 下界 0.55 之上。
+   同一方向的 LR 是 0.752——差距更像 MLP 在域偏移下的容量不匹配，而非特征本身不可用。
+3. **单特征胜过组合**：`late_entropy` 一个量就达到 0.766，高于任何多维集合。这与"更多特征更好"的直觉相反，
+   可部署含义明确：**跨模型部署优先用揭示末期熵，不要堆特征**。多维集合在扩池后才追上（0.75 左右），且 MLP 上仍更差。
+4. **小样本能给多强的假信号（本稿最重要的方法学教训）**：v0.2 的"方向性缺口 + 尺度对齐机制"通过了 bootstrap CI、
+   双种子簇级重采样（600 次/格）、簇级置换检验、5 个随机种子、以及一次独立的机制诊断。这些**全部**没能发现问题，
+   因为问题不在估计的稳定性，而在测试集只有 48 条。48 题测试集在 2000 次重抽里能让真实值 0.75 的格子显示 0.494
+   （第 0.1 百分位）。复现这类研究时，**换一批样本重测**应当与 CI 并列为必做项。
+5. **限制**：test 每方向 449–491 条（区间宽度 0.05–0.10，仍不足以区分 0.02 量级差异）；hotpotqa 与 triviaqa 难度不同
+   （正类率 0.57–0.89），跨数据集轴只用于解释、不作主结论；judge 提示词的严格度会影响分歧率；上游数据存在个别错误答案（§6）。
+   本稿所有结论以簇级置换与 bootstrap 区间为准，不以单格点估计下判断。
 
 ## 6. 数据质量附录（可核查）
 
@@ -170,20 +213,26 @@
 
 | 内容 | 文件 |
 |---|---|
-| 迁移矩阵（主/消融） | `results/stage7/{main,ablations}/`（manifest 含输入/代码哈希） |
-| 多种子 / 重要性 / 稳定性 | `reports/main_project_{multiseed,importance,stability}.json(.csv)`（+`_seed2`） |
+| **迁移矩阵（主表，2000 题）** | `results/pool2000/main/`（manifest 含输入/代码哈希）、`reports/pool2000_verdict.{md,json}` |
+| **预注册判据与学习曲线** | `reports/pool2000_verdict.json`、`reports/pool2000_learning_curve{,_entropy}.json` + `.md` |
+| **补充检验（置换/对齐/跨数据集）** | `reports/pool2000_{permutation,alignment_diagnostic}.json`、`reports/pool2000_supplementary_checks.md`、`results/pool2000/{strata,featuresets}/` |
+| 扩池题单（冻结） | `data/manifests/pool2000_v1.json`、`reports/expansion_pack_v2.md` |
+| pilot200 旧版（留档，已被 §3.3 推翻） | `results/stage7/{main,ablations}/`、`reports/paper_draft_v0.2_pilot200.md`、`reports/featureset_ablation.md`、`reports/main_project_{multiseed,importance,stability}.*` |
 | TRE R1 | `reports/tre_repro/{offline_analysis,permutation_test,protocol_diff,reproduction_report}.*` |
+| TRE R2（HotpotQA） | `data/tre_repro/questions/hotpotqa_eval800.jsonl`、`data/tre_repro/questions_manifest_r2.json`、`results/tre_repro/llada_hotpotqa_*` |
 | DynHD | `reports/dynhd_reproduction_summary.{md,json}` |
-| 标签证据 | `reports/{main_label_consistency,main_label_consistency_full,dynhd_label_consistency,label_quality_evidence}.*` |
+| 标签证据 | `reports/{main_label_consistency,main_label_consistency_full,dynhd_label_consistency,label_quality_evidence}.*`、`reports/tre_repro/judge_crosscheck.json` |
 | 人工抽查 | `reports/label_spotcheck_sheet.{md,csv,_review50.csv}` |
-| 复算入口 | `scripts/offline.py extract|evaluate`、`scripts/multiseed_transfer.py`、`scripts/feature_importance.py`、`scripts/stability_study.py`、`scripts/tre_repro/*`、`scripts/dynhd_repro/*` |
-| 夜间一键 | `scripts/overnight_nogpu.sh`（12 步，断点续跑/降级/看门狗）+ `scripts/morning_digest.py` |
+| 设备与跨设备一致性 | `reports/device_migration_5090.md`、`reports/device_consistency_pilot200.json` |
+| 复算入口 | `scripts/offline.py extract|evaluate`、`scripts/pool2000_verdict.py`、`scripts/pool2000_learning_curve.py`、`scripts/main_permutation.py`、`scripts/alignment_diagnostic.py`、`scripts/{multiseed_transfer,feature_importance,stability_study}.py`、`scripts/tre_repro/*` |
+| 夜间一键 | `scripts/run_overnight_gpu.sh`（17 步，断点续跑）+ `scripts/morning_digest.py` |
 
 ## 8. 后续工作
 
-1. **扩池决策门（主方案 §8）**：条件已满足（标签可靠 + 稳定缺口），规模由统计精度与标签成本决定——
-   建议每模型 800 题起（test≈200/方向，CI 宽度约减半），优先补 Dream 源域与 hotpotqa 层；
-2. 人工抽查完成后，将"人工 vs 规则"一致率写入 §4；
-3. TRE R2（题单/prompt 冻结 → 采集）与 DynHD 扩池；
-4. 尺度对齐诊断实验：验证 `relative_normalized` 跨模型的分布漂移假设；
-5. 英文投稿版整理（图表清单见 §3，全部可由 §7 脚本一键重算）。
+1. ~~扩池决策门~~ **已完成（2000 题/模型），结论为"未复现旧缺口"**；主表改用 2000 题；
+2. **TRE R2（HotpotQA × LLaDA 800 题）**：题单与 prompt 已冻结（v4 上下文版），轨迹采集中；标签用同模型不同供应商的 judge，跨 judge 一致性 0.990/κ 0.979 已量化；
+3. **TRE 第二个预算列**（L64）与 Dream 的 BF16 变体：已在 GPU 队列中；
+4. **DynHD 扩池**（可选）：pilot200 的 test 仅 47/45，CI 宽；
+5. **英文投稿版整理**：§3 表格全部可由 §7 脚本一键重算；
+6. **方法学附录**：把 pilot200→pool2000 的这次反转写成"小样本假信号"案例（§3.3、§5.4），包含 bootstrap 不保护、重采样不保护、
+   置换不保护的具体数字——这是本稿对复现研究最有借鉴价值的部分。
