@@ -44,11 +44,12 @@
 
 ## 5. 稳定性重采样：结论（2026-10-22 05:53 完成）
 
-产物：`reports/main_project_stability.json` / `.csv`。配置：簇级重采样（question cluster，冻结 split 内），每格 **300** 次重复，8 个组合 × 2 目标 = 16 格全部完成（`stopped_early=false`，无 partial）；每组合独立确定性 RNG；比原计划的 800 次低（本机实测 1.4–1.6 s/次重拟合，800 次要 5+ 小时），但完整表格优于一半表格的高重复数。
+产物：`reports/main_project_stability.json`（种子 1）+ `reports/main_project_stability_seed2.json`（种子 2）+ `reports/stability_two_seeds.json`（合并）。配置：簇级重采样（question cluster，冻结 split 内），每格 **300 次 × 2 个种子 = 600 次**，8 个组合 × 2 目标 = 16 格全部完成（`stopped_early=false`，无 partial）；两种子间最大 |Δ均值| 0.014（均值 0.006）→ 结论与种子无关。原计划的 800 次因本机实测 1.4–1.6 s/次重拟合需 5+ 小时而调整为 300×2。
 
 **结论 1（异常格的判决）**：`relative_normalized + LR` Dream → LLaDA 在重采样下 **mean 0.514 ± 0.136，P(>0.5)=0.55，5–95% 分位 0.301–0.757**。即：
 - 它**不是"稳定低于随机"**，而是**与随机无异**——该特征×模型组合在跨模型时**没有可检测的迁移信号**（同方向 entropy_raw+LR 为 0.838，P(>0.7)=0.95）；
-- §3 中 hotpotqa 层的 0.141 由该层仅 4 个负例驱动，属小样本噪声，不作为"负迁移"证据。
+  - **补充（10-22 尺度对齐诊断）**：该"无信号"是**预处理尺度/分位失配**造成的：仅用未标注的目标域轨迹做逐特征单调对齐后，该格恢复到 **0.850 [0.72,0.96]**，且 hotpotqa（0.141→0.828）与 triviaqa（0.583→0.875）两层都恢复——信号一直在特征里。主表仍报告冻结流水线（不做对齐）的结果，诊断见 `reports/alignment_diagnostic.json` 与论文稿 §3.5；
+  - §3 中 hotpotqa 层的 0.141 由该层仅 4 个负例驱动，属小样本噪声，不作为"负迁移"证据。
 
 **结论 2（Dream → LLaDA 的稳定迁移缺口）**：四个组合中只有 `entropy_raw + LR` 稳定迁移（0.838，P(>0.5)=1.00，P(>0.7)=0.95）；另外三个——`entropy_raw+MLP` 0.555（P(>0.7)=0.18）、`relative_normalized+LR` 0.514（0.08）、`relative_normalized+MLP` 0.514（0.14）——**在重采样下都不可靠**。这与"模型类别的差异大于特征集差异"的初判一致，并给出了量化阈值。
 
