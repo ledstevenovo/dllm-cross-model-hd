@@ -1,0 +1,12 @@
+| 格 | n | source-scale (现状) | target-scale | quantile-map | 恢复? |
+|---|---|---|---|---|---|
+| Dream-v0-I->LLaDA-8B-I entropy_ lr | 491 | 0.671 | 0.667 | 0.763 [0.72,0.81] | — 未恢复 |
+| LLaDA-8B-I->Dream-v0-I entropy_ lr | 449 | 0.854 | 0.854 | 0.837 [0.80,0.87] | — 未恢复 |
+| Dream-v0-I->LLaDA-8B-I entropy_ mlp | 491 | 0.680 | 0.537 | 0.753 [0.71,0.79] | — 未恢复 |
+| LLaDA-8B-I->Dream-v0-I entropy_ mlp | 449 | 0.839 | 0.828 | 0.710 [0.66,0.76] | — 未恢复 |
+| Dream-v0-I->LLaDA-8B-I relative lr | 491 | 0.752 | 0.751 | 0.764 [0.71,0.81] | — 未恢复 |
+| LLaDA-8B-I->Dream-v0-I relative lr | 449 | 0.865 | 0.865 | 0.842 [0.80,0.88] | — 未恢复 |
+| Dream-v0-I->LLaDA-8B-I relative mlp | 491 | 0.600 | 0.601 | 0.726 [0.68,0.77] | — 未恢复 |
+| LLaDA-8B-I->Dream-v0-I relative mlp | 449 | 0.739 | 0.813 | 0.600 [0.55,0.65] | ~ 小幅 |
+
+wrote reports/pool2000_alignment_diagnostic.json

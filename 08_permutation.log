@@ -11,3 +11,7 @@ LLaDA- -> Dream- entropy_raw        mlp AUROC 0.839 | null mean 0.500 p95 0.549 
 LLaDA- -> Dream- relative_normalized lr  AUROC 0.865 | null mean 0.500 p95 0.549 | p = 9.999e-05
 LLaDA- -> Dream- relative_normalized mlp AUROC 0.739 | null mean 0.500 p95 0.548 | p = 9.999e-05
 LLaDA- -> LLaDA- entropy_raw        lr  AUROC 0.799 | null mean 0.500 p95 0.548 | p = 9.999e-05
+LLaDA- -> LLaDA- entropy_raw        mlp AUROC 0.765 | null mean 0.500 p95 0.547 | p = 9.999e-05
+LLaDA- -> LLaDA- relative_normalized lr  AUROC 0.813 | null mean 0.500 p95 0.548 | p = 9.999e-05
+LLaDA- -> LLaDA- relative_normalized mlp AUROC 0.773 | null mean 0.500 p95 0.548 | p = 9.999e-05
+wrote reports/pool2000_permutation.json (16 cells)

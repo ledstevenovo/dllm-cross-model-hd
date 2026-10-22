@@ -1,0 +1,295 @@
+{
+  "features": "results/pool2000/features_combined.parquet",
+  "seed": 42,
+  "note": "diagnostic only; target-scale/quantile-map use target-train statistics and are never used in headline numbers",
+  "cells": [
+    {
+      "source": "Dream-org/Dream-v0-Instruct-7B",
+      "target": "GSAI-ML/LLaDA-8B-Instruct",
+      "feature_set": "relative_normalized",
+      "kind": "lr",
+      "n_test": 491,
+      "source_scale": 0.7518726591760299,
+      "target_scale": 0.7513108614232209,
+      "quantile_map": 0.7641281731169371,
+      "by_dataset": {
+        "hotpotqa": {
+          "n": 238,
+          "source_scale": 0.6976600222855021,
+          "quantile_map": 0.7413643679584003
+        },
+        "triviaqa": {
+          "n": 253,
+          "source_scale": 0.7689013782951961,
+          "quantile_map": 0.7838217583299879
+        }
+      },
+      "ci": {
+        "source_scale": [
+          0.7065770300976623,
+          0.8042785462178691
+        ],
+        "target_scale": [
+          0.7024565336462192,
+          0.7901885226434491
+        ],
+        "quantile_map": [
+          0.7142989761697666,
+          0.8061322024567461
+        ]
+      }
+    },
+    {
+      "source": "GSAI-ML/LLaDA-8B-Instruct",
+      "target": "Dream-org/Dream-v0-Instruct-7B",
+      "feature_set": "relative_normalized",
+      "kind": "lr",
+      "n_test": 449,
+      "source_scale": 0.8654177734283982,
+      "target_scale": 0.8653944731814157,
+      "quantile_map": 0.8416049210121627,
+      "by_dataset": {
+        "hotpotqa": {
+          "n": 210,
+          "source_scale": 0.8469101123595505,
+          "quantile_map": 0.8477879213483147
+        },
+        "triviaqa": {
+          "n": 239,
+          "source_scale": 0.8887076181018584,
+          "quantile_map": 0.8317491842814584
+        }
+      },
+      "ci": {
+        "source_scale": [
+          0.826341364942397,
+          0.8976551882392576
+        ],
+        "target_scale": [
+          0.8320753122662675,
+          0.8955356398162793
+        ],
+        "quantile_map": [
+          0.8031022245284822,
+          0.8801766784604617
+        ]
+      }
+    },
+    {
+      "source": "Dream-org/Dream-v0-Instruct-7B",
+      "target": "GSAI-ML/LLaDA-8B-Instruct",
+      "feature_set": "relative_normalized",
+      "kind": "mlp",
+      "n_test": 491,
+      "source_scale": 0.6003745318352061,
+      "target_scale": 0.6009987515605493,
+      "quantile_map": 0.7255513940907199,
+      "by_dataset": {
+        "hotpotqa": {
+          "n": 238,
+          "source_scale": 0.6217655069951715,
+          "quantile_map": 0.6649746192893401
+        },
+        "triviaqa": {
+          "n": 253,
+          "source_scale": 0.5918640438913422,
+          "quantile_map": 0.7608724742405995
+        }
+      },
+      "ci": {
+        "source_scale": [
+          0.54478878480901,
+          0.6608041954801543
+        ],
+        "target_scale": [
+          0.5471156359573383,
+          0.6489423504530628
+        ],
+        "quantile_map": [
+          0.6758948082549485,
+          0.7744854548255142
+        ]
+      }
+    },
+    {
+      "source": "GSAI-ML/LLaDA-8B-Instruct",
+      "target": "Dream-org/Dream-v0-Instruct-7B",
+      "feature_set": "relative_normalized",
+      "kind": "mlp",
+      "n_test": 449,
+      "source_scale": 0.7387110303369216,
+      "target_scale": 0.8130038678409991,
+      "quantile_map": 0.5995619553567267,
+      "by_dataset": {
+        "hotpotqa": {
+          "n": 210,
+          "source_scale": 0.7347261235955056,
+          "quantile_map": 0.6255266853932585
+        },
+        "triviaqa": {
+          "n": 239,
+          "source_scale": 0.733862959285005,
+          "quantile_map": 0.5902255639097745
+        }
+      },
+      "ci": {
+        "source_scale": [
+          0.6877906631688258,
+          0.7837965095829877
+        ],
+        "target_scale": [
+          0.7663775745588665,
+          0.8536674780814322
+        ],
+        "quantile_map": [
+          0.5494824764531537,
+          0.6506612708398916
+        ]
+      }
+    },
+    {
+      "source": "Dream-org/Dream-v0-Instruct-7B",
+      "target": "GSAI-ML/LLaDA-8B-Instruct",
+      "feature_set": "entropy_raw",
+      "kind": "lr",
+      "n_test": 491,
+      "source_scale": 0.6710986267166043,
+      "target_scale": 0.6666042446941323,
+      "quantile_map": 0.7625260091552226,
+      "by_dataset": {
+        "hotpotqa": {
+          "n": 238,
+          "source_scale": 0.6160703231397796,
+          "quantile_map": 0.7162312739878668
+        },
+        "triviaqa": {
+          "n": 253,
+          "source_scale": 0.696172889067309,
+          "quantile_map": 0.7868325973504617
+        }
+      },
+      "ci": {
+        "source_scale": [
+          0.6159940344903653,
+          0.7156670497741072
+        ],
+        "target_scale": [
+          0.6135761992197819,
+          0.7202318306131005
+        ],
+        "quantile_map": [
+          0.7214199037284356,
+          0.8066722668058546
+        ]
+      }
+    },
+    {
+      "source": "GSAI-ML/LLaDA-8B-Instruct",
+      "target": "Dream-org/Dream-v0-Instruct-7B",
+      "feature_set": "entropy_raw",
+      "kind": "lr",
+      "n_test": 449,
+      "source_scale": 0.8537676499370893,
+      "target_scale": 0.8537676499370894,
+      "quantile_map": 0.8367351693927956,
+      "by_dataset": {
+        "hotpotqa": {
+          "n": 210,
+          "source_scale": 0.8223314606741573,
+          "quantile_map": 0.8186446629213483
+        },
+        "triviaqa": {
+          "n": 239,
+          "source_scale": 0.8808341608738828,
+          "quantile_map": 0.8632430131933608
+        }
+      },
+      "ci": {
+        "source_scale": [
+          0.8127633132748212,
+          0.8917397716224839
+        ],
+        "target_scale": [
+          0.8146911835457064,
+          0.8870665878537027
+        ],
+        "quantile_map": [
+          0.7955283747003623,
+          0.8738644277675605
+        ]
+      }
+    },
+    {
+      "source": "Dream-org/Dream-v0-Instruct-7B",
+      "target": "GSAI-ML/LLaDA-8B-Instruct",
+      "feature_set": "entropy_raw",
+      "kind": "mlp",
+      "n_test": 491,
+      "source_scale": 0.6796088223054516,
+      "target_scale": 0.5369330004161464,
+      "quantile_map": 0.7534124011652101,
+      "by_dataset": {
+        "hotpotqa": {
+          "n": 238,
+          "source_scale": 0.6315463662250835,
+          "quantile_map": 0.6757459452767116
+        },
+        "triviaqa": {
+          "n": 253,
+          "source_scale": 0.7117623444399839,
+          "quantile_map": 0.7986752308309916
+        }
+      },
+      "ci": {
+        "source_scale": [
+          0.6337194129534607,
+          0.7257087852047326
+        ],
+        "target_scale": [
+          0.47824106206673,
+          0.5879142130761059
+        ],
+        "quantile_map": [
+          0.7102171335001861,
+          0.7946957167090755
+        ]
+      }
+    },
+    {
+      "source": "GSAI-ML/LLaDA-8B-Instruct",
+      "target": "Dream-org/Dream-v0-Instruct-7B",
+      "feature_set": "entropy_raw",
+      "kind": "mlp",
+      "n_test": 449,
+      "source_scale": 0.8391117945850226,
+      "target_scale": 0.8276131226991007,
+      "quantile_map": 0.710377930006058,
+      "by_dataset": {
+        "hotpotqa": {
+          "n": 210,
+          "source_scale": 0.8300561797752808,
+          "quantile_map": 0.7115519662921349
+        },
+        "triviaqa": {
+          "n": 239,
+          "source_scale": 0.8551567598240886,
+          "quantile_map": 0.6949921974748192
+        }
+      },
+      "ci": {
+        "source_scale": [
+          0.7991365225445803,
+          0.8750800102133256
+        ],
+        "target_scale": [
+          0.7814109127868497,
+          0.8672354699498156
+        ],
+        "quantile_map": [
+          0.659206447877205,
+          0.7564859576641781
+        ]
+      }
+    }
+  ]
+}
