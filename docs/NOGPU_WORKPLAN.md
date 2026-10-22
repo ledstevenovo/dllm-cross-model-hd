@@ -51,7 +51,7 @@ screen -dmS guard bash scripts/overnight_guard.sh     # 独立守护，每 5 分
 
 | 优先级 | 任务 | 需要 GPU？ | 说明 |
 |---|---|---|---|
-| 1 | **阶段 7 结果解读与报告** | 否 | 看迁移缺口是否稳定，决定是否扩池（主方案 §8 决策门） |
+| 1 | ~~**阶段 7 结果解读与报告**~~ ✅ **已完成（10-22 05:53）** | 否 | 稳定性判决：迁移缺口 = **Dream 源域的方向性缺失**（同方向仅 `entropy_raw+LR` 稳定迁移 0.838；`rel+LR` 0.514 ≈ 随机，非负迁移）。证据：`reports/stage7_initial_observations.md` §5、`reports/main_project_stability.json`、`reports/morning_digest.md`。是否扩池待你决策 |
 | 2 | **标签质量证据** | 否（第二 judge 需 API） | ≥50 题人工抽查；第二 judge 100 题一致性（补充，不改主表） |
 | 3 | **DynHD 可选扩池准备** | 题单冻结无卡，采集需卡 | `pick_longest` / 题单冻结 / split 脚本都已就绪 |
 | 4 | **TRE R2 准备** | 题单/prompt 冻结无卡，采集需卡 | HotpotQA / CSQA 格式与 prompt 需先冻结并登记 |
