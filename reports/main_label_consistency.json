@@ -1,0 +1,94 @@
+{
+  "date": "2026-10-22",
+  "scope": "main project reviewed pilot200 labels",
+  "judge_model": "LongCat-2.5-Preview",
+  "judge_endpoint": "https://api.longcat.chat/openai/v1/chat/completions",
+  "judge_prompt_sha256": "2d125bea4f6a5d5a5f97cbb48666c1c872f093d9356a00b09283dc88e5bd46cd",
+  "plan": {
+    "models": {
+      "llada": {
+        "eligible": 195,
+        "chosen": 50,
+        "reviewed_label_counts": {
+          "correct": 16,
+          "incorrect": 34
+        }
+      },
+      "dream": {
+        "eligible": 178,
+        "chosen": 50,
+        "reviewed_label_counts": {
+          "correct": 16,
+          "incorrect": 34
+        }
+      }
+    },
+    "seed": 20261021,
+    "samples_per_model": 50
+  },
+  "samples_requested": 100,
+  "samples_resolved": 100,
+  "agreement": 0.96,
+  "cohens_kappa": 0.9080882352941175,
+  "per_model": {
+    "llada": {
+      "n": 50,
+      "agreement": 0.96,
+      "rule_incorrect": 0.68,
+      "judge_incorrect": 0.68
+    },
+    "dream": {
+      "n": 50,
+      "agreement": 0.96,
+      "rule_incorrect": 0.68,
+      "judge_incorrect": 0.68
+    }
+  },
+  "disagreements": [
+    {
+      "model": "llada",
+      "sample_id": "hotpotqa__5adc2f53554299438c868d6d__seed20261020",
+      "rule_label": 0,
+      "answer": "No, Triumph of the Will and The End of America were not made in the same year. Triumph of the Will was released in 1955, while The End of America was released in 1956.",
+      "question": "Were Triumph of the Will and The End of America both made in the same year?",
+      "judge_label": 1,
+      "judge_verdict": "incorrect",
+      "judge_reason": "The proposed answer states Triumph of the Will was released in 1955, but it was actually released in 1935. This is a material factual error.",
+      "agree": false
+    },
+    {
+      "model": "llada",
+      "sample_id": "triviaqa__qw_15432__seed20261020",
+      "rule_label": 1,
+      "answer": "Duke.",
+      "question": "The actor John Wayne was known by what nickname?",
+      "judge_label": 0,
+      "judge_verdict": "correct",
+      "judge_reason": "John Wayne's nickname was 'The Duke'; 'Duke' is a semantically equivalent short form matching the reference answer.",
+      "agree": false
+    },
+    {
+      "model": "dream",
+      "sample_id": "hotpotqa__5a876f785542993e715abf42__seed20261020",
+      "rule_label": 1,
+      "answer": "John Carpenter",
+      "question": "Which person, William Blake Herron or John Carpenter, held more diverse roles in the movie industry?",
+      "judge_label": 0,
+      "judge_verdict": "correct",
+      "judge_reason": "The proposed answer 'John Carpenter' correctly identifies the person who held more diverse roles in the movie industry. The reference answer lists roles (musician, editor, composer) that describe Carpenter's multifaceted career as director, composer, editor, and producer, confirming he is the correct choice over William Blake Herron, who is primarily known as a screenwriter/director.",
+      "agree": false
+    },
+    {
+      "model": "dream",
+      "sample_id": "triviaqa__qw_4069__seed20261020",
+      "rule_label": 0,
+      "answer": "Prince Albert II",
+      "question": "Who succeeded Prince Rainier of Monaco?",
+      "judge_label": 1,
+      "judge_verdict": "incorrect",
+      "judge_reason": "The proposed answer 'Prince Albert II' refers to Albert II of Monaco who succeeded Rainier III. However, all reference answers refer to Prince Albert, Prince Consort of Queen Victoria (of Saxe-Coburg and Gotha), a completely different historical figure from the 19th century. The proposed answer does not semantically match any of the reference answers.",
+      "agree": false
+    }
+  ],
+  "note": "supplementary label-quality evidence; the main labels stay the reviewed rule sign-off"
+}

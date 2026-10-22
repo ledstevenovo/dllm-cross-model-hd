@@ -1,0 +1,55 @@
+{
+  "date": "2026-10-22",
+  "judge_model": "LongCat-2.5-Preview",
+  "judge_endpoint": "https://api.longcat.chat/openai/v1/chat/completions",
+  "judge_prompt_sha256": "2d125bea4f6a5d5a5f97cbb48666c1c872f093d9356a00b09283dc88e5bd46cd",
+  "plan": {
+    "models": {
+      "llada": 50,
+      "dream": 50
+    },
+    "seed": 20261021,
+    "samples_per_model": 50
+  },
+  "seed": 20261021,
+  "samples_requested": 100,
+  "samples_resolved": 100,
+  "agreement": 0.97,
+  "cohens_kappa": 0.9327354260089685,
+  "disagreements": [
+    {
+      "model": "llada",
+      "sample_id": "hotpotqa__5adc0d2955429947ff1738e6",
+      "rule_label": 0,
+      "answer": "Yes, both Roger Waters and Tom Johnston are musicians. Roger Waters is a drummer, and Tom Johnston is a guitarist.",
+      "question": "Are Roger Waters and Tom Johnston both musicians?",
+      "judge_label": 1,
+      "judge_verdict": "incorrect",
+      "judge_reason": "While it correctly answers yes to the question, it adds a material factual error: Roger Waters is a bassist/vocalist, not a drummer.",
+      "agree": false
+    },
+    {
+      "model": "llada",
+      "sample_id": "hotpotqa__5a8b78775542997f31a41d3d",
+      "rule_label": 0,
+      "answer": "Chimaja Appawas was the younger brother of Chimaji Appa, a general of the Maratha Empire in India. Chimaja Appawas served as the Peshwa (prime minister) to the fifth Maratha Chhatrapati Shahu from 1720 until his death.",
+      "question": "Chimaja Appawas the younger brother of a general of the Maratha Empire in India, who served as what to the fifth Maratha Chhatrapati Shahu from 1720 until his death?",
+      "judge_label": 1,
+      "judge_verdict": "incorrect",
+      "judge_reason": "The answer correctly names 'Peshwa (prime minister)' but misattributes the role to Chimaja Appa. Historically, the Peshwa to Chhatrapati Shahu from 1720 until his death (1740) was Bajirao I (Chimaji Appa's brother), not Chimaja Appa. This is a material factual error, so the answer is incorrect despite containing the right title.",
+      "agree": false
+    },
+    {
+      "model": "dream",
+      "sample_id": "triviaqa__qw_4069",
+      "rule_label": 0,
+      "answer": "Prince Albert II",
+      "question": "Who succeeded Prince Rainier of Monaco?",
+      "judge_label": 1,
+      "judge_verdict": "incorrect",
+      "judge_reason": "The proposed answer 'Prince Albert II' does not match any of the supplied reference answers. All reference answers refer to Prince Albert, the 19th-century Prince Consort of the United Kingdom (of Saxe-Coburg-Gotha), not Albert II of Monaco who succeeded Rainier III. Since the answer is not semantically equivalent to any valid reference answer, it is incorrect.",
+      "agree": false
+    }
+  ],
+  "note": "supplementary label-quality evidence; the main labels stay the reviewed rule sign-off"
+}
