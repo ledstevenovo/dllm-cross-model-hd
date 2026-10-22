@@ -1,0 +1,601 @@
+{
+  "date": "2026-10-22",
+  "scope": "pool2000 reviewed labels",
+  "judge_model": "deepseek-v4.1-flash",
+  "judge_endpoint": "https://sub.vankit.top/v1/chat/completions",
+  "judge_prompt_sha256": "2d125bea4f6a5d5a5f97cbb48666c1c872f093d9356a00b09283dc88e5bd46cd",
+  "plan": {
+    "models": {
+      "llada": {
+        "eligible": 1768,
+        "chosen": 500,
+        "reviewed_label_counts": {
+          "correct": 120,
+          "incorrect": 380
+        }
+      },
+      "dream": {
+        "eligible": 1619,
+        "chosen": 500,
+        "reviewed_label_counts": {
+          "correct": 156,
+          "incorrect": 344
+        }
+      }
+    },
+    "seed": 20261021,
+    "samples_per_model": 500
+  },
+  "samples_requested": 1000,
+  "samples_resolved": 1000,
+  "coverage": 1.0,
+  "agreement": 0.933,
+  "cohens_kappa": 0.8400618745703156,
+  "per_model": {
+    "llada": {
+      "n": 500,
+      "agreement": 0.94,
+      "rule_incorrect": 0.76,
+      "judge_incorrect": 0.736
+    },
+    "dream": {
+      "n": 500,
+      "agreement": 0.926,
+      "rule_incorrect": 0.688,
+      "judge_incorrect": 0.626
+    }
+  },
+  "disagreements": [
+    {
+      "model": "llada",
+      "sample_id": "triviaqa__bt_239__seed20261020",
+      "rule_label": 0,
+      "answer": "The Wind.",
+      "question": "Which Oscar winning song came from the film Pocahontas",
+      "judge_label": 1,
+      "judge_verdict": "incorrect",
+      "judge_reason": "The Oscar-winning song from Pocahontas is \"Colors of the Wind,\" not \"The Wind.\"",
+      "agree": false
+    },
+    {
+      "model": "llada",
+      "sample_id": "hotpotqa__5ab8633c55429919ba4e22d6__seed20261020",
+      "rule_label": 1,
+      "answer": "Greg Graffin",
+      "question": "Q: Who had more solo albums, Marty Raybon or Greg Graffin?",
+      "judge_label": 0,
+      "judge_verdict": "correct",
+      "judge_reason": "The proposed answer 'Greg Graffin' matches the reference answer 'Gregory Walter Graffin' as a valid alias/paraphrase.",
+      "agree": false
+    },
+    {
+      "model": "llada",
+      "sample_id": "triviaqa__sfq_550__seed20261020",
+      "rule_label": 1,
+      "answer": "The imperial distance of a marathon race is 26.219 miles.",
+      "question": "What is the imperial distance of a marathon race?",
+      "judge_label": 0,
+      "judge_verdict": "correct",
+      "judge_reason": "26.219 miles is the decimal equivalent of 26 miles 385 yards, so it correctly answers the imperial distance.",
+      "agree": false
+    },
+    {
+      "model": "llada",
+      "sample_id": "hotpotqa__5ae0e183554299422ee9953f__seed20261020",
+      "rule_label": 1,
+      "answer": "Suining",
+      "question": "Did Qionghai or Suining have a population of 658,798 in 2002?",
+      "judge_label": 0,
+      "judge_verdict": "correct",
+      "judge_reason": "The proposed answer \"Suining\" correctly identifies the city that had a population of 658,798 in 2002, matching the reference answer.",
+      "agree": false
+    },
+    {
+      "model": "llada",
+      "sample_id": "triviaqa__bb_3596__seed20261020",
+      "rule_label": 1,
+      "answer": "Oil.",
+      "question": "What is confit meat cooked and preserved in?",
+      "judge_label": 0,
+      "judge_verdict": "correct",
+      "judge_reason": "Oil is a fat/oil, and the references list fats and oils as acceptable; this is semantically equivalent.",
+      "agree": false
+    },
+    {
+      "model": "llada",
+      "sample_id": "hotpotqa__5a7336d05542992359bc3293__seed20261020",
+      "rule_label": 1,
+      "answer": "Washington",
+      "question": "Lady Elizabeth Delmé and Her Children (1779) is a portrait given to the National Gallery of Art in 1937, which is located in which state?",
+      "judge_label": 0,
+      "judge_verdict": "correct",
+      "judge_reason": "The National Gallery of Art is in Washington, D.C.; the answer \"Washington\" is an acceptable abbreviation of the reference.",
+      "agree": false
+    },
+    {
+      "model": "llada",
+      "sample_id": "triviaqa__qw_6782__seed20261020",
+      "rule_label": 1,
+      "answer": "Stephen Hawking has amyotrophic lateral sclerosis.",
+      "question": "What is the disease that Stephen Hawking has?",
+      "judge_label": 0,
+      "judge_verdict": "correct",
+      "judge_reason": "Amyotrophic lateral sclerosis (ALS) is a form of motor neuron disease, so the answer is semantically equivalent to the reference answers.",
+      "agree": false
+    },
+    {
+      "model": "llada",
+      "sample_id": "triviaqa__wh_3446__seed20261020",
+      "rule_label": 1,
+      "answer": "The Malleus or Hammer bone is found in the middle ear.",
+      "question": "In which part of the human body can you find the Malleus or Hammer bone ?",
+      "judge_label": 0,
+      "judge_verdict": "correct",
+      "judge_reason": "The proposed answer states the middle ear, which is a specific part of the ear, matching the reference answer 'THE EAR' / 'The Ear'.",
+      "agree": false
+    },
+    {
+      "model": "llada",
+      "sample_id": "triviaqa__wh_1026__seed20261020",
+      "rule_label": 0,
+      "answer": "The first Reich was the German Empire.",
+      "question": "The Nazi regime was Germany's Third Reich; which was the first Reich?",
+      "judge_label": 1,
+      "judge_verdict": "incorrect",
+      "judge_reason": "The reference answers consistently identify the first Reich as the Holy Roman Empire (of the German Nation), not the German Empire, which is a different entity/unification period and contradicts the references.",
+      "agree": false
+    },
+    {
+      "model": "llada",
+      "sample_id": "triviaqa__qz_6389__seed20261020",
+      "rule_label": 0,
+      "answer": "Lolita's real name is Dolores Humbert.",
+      "question": "In Vladimir Nabokov's book \"Lolita\", what is Lolita's real name?",
+      "judge_label": 1,
+      "judge_verdict": "incorrect",
+      "judge_reason": "Lolita's real name is Dolores Haze, not Dolores Humbert; the proposed answer adds a material factual error by using Humbert as her surname.",
+      "agree": false
+    },
+    {
+      "model": "llada",
+      "sample_id": "hotpotqa__5ab7d33d5542992aa3b8c859__seed20261020",
+      "rule_label": 1,
+      "answer": "Don Johnson.",
+      "question": "What actor starred in \"Word of Honor\" and \"Miami Vice\"?",
+      "judge_label": 0,
+      "judge_verdict": "correct",
+      "judge_reason": "Don Johnson is the common alias for Donald Wayne Johnson, matching the reference answer.",
+      "agree": false
+    },
+    {
+      "model": "llada",
+      "sample_id": "hotpotqa__5a9072dd5542990a98493656__seed20261020",
+      "rule_label": 0,
+      "answer": "Dave Wyndorf and Poly Styrene performed progressive rock music.",
+      "question": "What type of music did Dave Wyndorf and Poly Styrene perform as part of their work in Monster Magnet and X-Ray Spex?",
+      "judge_label": 1,
+      "judge_verdict": "incorrect",
+      "judge_reason": "The reference answer is \"rock,\" while the proposed answer specifies \"progressive rock,\" which is a different genre. Poly Styrene's work with X-Ray Spex is punk rock, not progressive rock, so the added specification is a material factual error.",
+      "agree": false
+    },
+    {
+      "model": "llada",
+      "sample_id": "triviaqa__qb_5484__seed20261020",
+      "rule_label": 1,
+      "answer": "March",
+      "question": "St Joseph’s Day is celebrated during which month of the year?",
+      "judge_label": 0,
+      "judge_verdict": "correct",
+      "judge_reason": "The reference answers all specify March 19, and the proposed answer \"March\" identifies the correct month asked about in the question.",
+      "agree": false
+    },
+    {
+      "model": "llada",
+      "sample_id": "hotpotqa__5abfe2a15542997d6429591c__seed20261020",
+      "rule_label": 1,
+      "answer": "The National Grape Cooperative Association is classified as a cooperative organization.",
+      "question": "What is the National Grape Cooperative Association classified as?",
+      "judge_label": 0,
+      "judge_verdict": "correct",
+      "judge_reason": "The proposed answer states it is a cooperative organization, which is semantically equivalent to the reference answer 'An agricultural cooperative'; the omission of 'agricultural' does not contradict or materially alter the answer.",
+      "agree": false
+    },
+    {
+      "model": "llada",
+      "sample_id": "hotpotqa__5ae4f2c75542993aec5ec0fb__seed20261020",
+      "rule_label": 1,
+      "answer": "Boston International Airport",
+      "question": "What airport serviced by American Airlines Shuttle, is also the largest airport in the New England region and 17th busiest in the U.S?",
+      "judge_label": 0,
+      "judge_verdict": "correct",
+      "judge_reason": "Boston International Airport is a paraphrase/alias for Logan International Airport in Boston, which is the largest in New England and served by the American Airlines Shuttle.",
+      "agree": false
+    },
+    {
+      "model": "llada",
+      "sample_id": "triviaqa__bt_316__seed20261020",
+      "rule_label": 1,
+      "answer": "The Oklahoma Federal Building",
+      "question": "What was the name of the building destroyed in the Oklahoma bombing in March 95",
+      "judge_label": 0,
+      "judge_verdict": "correct",
+      "judge_reason": "“Oklahoma Federal Building” is an acceptable paraphrase/alias equivalent to the reference answer “Oklahoma City federal building.”",
+      "agree": false
+    },
+    {
+      "model": "llada",
+      "sample_id": "hotpotqa__5a87ab9b5542996e4f3088c2__seed20261020",
+      "rule_label": 1,
+      "answer": "In the 19th century, this Native warrior and chief, whose brother Tenskwatawa led the Tippecanoe order of battle, was Tecumseh, also known as Tecumseh, who became the primary leader of a large, multi-tribal confederacy.",
+      "question": "In what century did this Native warrior and chief, whose brother Tenskwatawa led the Tippecanoe order of battle, become the primary leader of a large, multi tribal confederacy?",
+      "judge_label": 0,
+      "judge_verdict": "correct",
+      "judge_reason": "The proposed answer correctly identifies the 19th century, matching the reference answer, with additional accurate context about Tecumseh.",
+      "agree": false
+    },
+    {
+      "model": "llada",
+      "sample_id": "triviaqa__bb_5125__seed20261020",
+      "rule_label": 1,
+      "answer": "The four terrestrial planets of the Solar System are Mercury, Venus, Earth, and Mars.",
+      "question": "Name the four terrestrial planets of the Solar System?",
+      "judge_label": 0,
+      "judge_verdict": "correct",
+      "judge_reason": "The answer lists Mercury, Venus, Earth, and Mars, exactly matching the reference answer.",
+      "agree": false
+    },
+    {
+      "model": "llada",
+      "sample_id": "hotpotqa__5a822a5e55429926c1cdae43__seed20261020",
+      "rule_label": 1,
+      "answer": "Charles Burnett and Alan J. Pakula are both film directors.",
+      "question": "What occupations do Charles Burnett and Alan J. Pakula have in common?",
+      "judge_label": 0,
+      "judge_verdict": "correct",
+      "judge_reason": "The answer identifies film director, which is one of the common occupations listed in the reference answer; it does not contradict the references.",
+      "agree": false
+    },
+    {
+      "model": "llada",
+      "sample_id": "triviaqa__jp_631__seed20261020",
+      "rule_label": 1,
+      "answer": "The tallest kind of tree is the redwood tree.",
+      "question": "What is the tallest kind of tree?",
+      "judge_label": 0,
+      "judge_verdict": "correct",
+      "judge_reason": "The proposed answer 'redwood tree' is semantically equivalent to the reference answers 'Coast Redwood', 'California Redwood', and related aliases, all referring to the tallest tree species.",
+      "agree": false
+    },
+    {
+      "model": "llada",
+      "sample_id": "triviaqa__qb_5354__seed20261020",
+      "rule_label": 0,
+      "answer": "Table Tennis",
+      "question": "In the UK, the LTA is the governing body of which sport?",
+      "judge_label": 1,
+      "judge_verdict": "incorrect",
+      "judge_reason": "The LTA (Lawn Tennis Association) governs tennis/lawn tennis in the UK, not table tennis; the answer contradicts the reference answers.",
+      "agree": false
+    },
+    {
+      "model": "llada",
+      "sample_id": "triviaqa__bt_2325__seed20261020",
+      "rule_label": 1,
+      "answer": "The city of Ely is located on the River Ouse.",
+      "question": "On which river is the city of Ely",
+      "judge_label": 0,
+      "judge_verdict": "correct",
+      "judge_reason": "The answer states River Ouse, matching the reference answer 'The Ouse'.",
+      "agree": false
+    },
+    {
+      "model": "llada",
+      "sample_id": "hotpotqa__5abae3205542996cc5e49edc__seed20261020",
+      "rule_label": 1,
+      "answer": "The Booker Prize.",
+      "question": "What award did the writer of Never Let Me Go novel win in 1989?",
+      "judge_label": 0,
+      "judge_verdict": "correct",
+      "judge_reason": "The writer is Kazuo Ishiguro, and \"The Booker Prize\" is an accepted alias for the Man Booker Prize for Fiction, which he won in 1989.",
+      "agree": false
+    },
+    {
+      "model": "llada",
+      "sample_id": "triviaqa__qw_11293__seed20261020",
+      "rule_label": 1,
+      "answer": "Lead actress.",
+      "question": "What term is used for the actress that has the main part in a film or play?",
+      "judge_label": 0,
+      "judge_verdict": "correct",
+      "judge_reason": "The answer 'Lead actress' is semantically equivalent to the reference answers 'Leading lady' and 'Female lead', referring to the main female performer in a film or play.",
+      "agree": false
+    },
+    {
+      "model": "llada",
+      "sample_id": "hotpotqa__5ae4d7fc5542990ba0bbb16f__seed20261020",
+      "rule_label": 0,
+      "answer": "Yes, both Stephen R. Donaldson and Michael Moorcock are science fiction writers. Stephen R. Donaldson is known for his \"The Expanse\" series, while Michael Moorcock is famous for his \"The Long Earth\" series, which combines elements of science fiction, fantasy, and hard science fiction.",
+      "question": "Are both Stephen R. Donaldson and Michael Moorcock science fiction writers?",
+      "judge_label": 1,
+      "judge_verdict": "incorrect",
+      "judge_reason": "While it correctly answers 'yes', it adds material factual errors: \"The Expanse\" is by James S. A. Corey, not Stephen R. Donaldson, and \"The Long Earth\" is by Terry Pratchett and Stephen Baxter, not Michael Moorcock.",
+      "agree": false
+    },
+    {
+      "model": "llada",
+      "sample_id": "triviaqa__odql_12262__seed20261020",
+      "rule_label": 0,
+      "answer": "Flora Poste moves to live with her relatives, the Starkadders, in Sussex in the novel \"The Secret Garden.\"",
+      "question": "In which novel does Flora Poste move to live with her relatives, the Starkadders, in Sussex?",
+      "judge_label": 1,
+      "judge_verdict": "incorrect",
+      "judge_reason": "The novel is Cold Comfort Farm, not The Secret Garden; the answer contains a material factual error.",
+      "agree": false
+    },
+    {
+      "model": "llada",
+      "sample_id": "triviaqa__dpql_1477__seed20261020",
+      "rule_label": 0,
+      "answer": "Big Tara.",
+      "question": "What is the name of the O’Haras’ plantation in ‘Gone with the Wind’?",
+      "judge_label": 1,
+      "judge_verdict": "incorrect",
+      "judge_reason": "The plantation is named Tara, not \"Big Tara.\" The proposed answer adds a material error/incorrect name.",
+      "agree": false
+    },
+    {
+      "model": "llada",
+      "sample_id": "triviaqa__odql_897__seed20261020",
+      "rule_label": 1,
+      "answer": "Pipistrellus is a genus of bats.",
+      "question": "Pipistrellus is a genus of which mammal?",
+      "judge_label": 0,
+      "judge_verdict": "correct",
+      "judge_reason": "The answer correctly identifies Pipistrellus as a genus of bats, matching the reference answers.",
+      "agree": false
+    },
+    {
+      "model": "llada",
+      "sample_id": "hotpotqa__5a7351785542994cef4bc539__seed20261020",
+      "rule_label": 1,
+      "answer": "Atom Egoyans' biggest commercial success was on film, not on stage.",
+      "question": "Was Atom Egoyans biggest commercial success on stage or on film?",
+      "judge_label": 0,
+      "judge_verdict": "correct",
+      "judge_reason": "The answer states his biggest commercial success was on film, which matches the reference indicating it was a film (erotic thriller).",
+      "agree": false
+    },
+    {
+      "model": "llada",
+      "sample_id": "triviaqa__odql_14025__seed20261020",
+      "rule_label": 0,
+      "answer": "George Washington Irving wrote 'The Legend of Sleepy Hollow'.",
+      "question": "Who wrote 'The Legend Of Sleepy Hollow'?",
+      "judge_label": 1,
+      "judge_verdict": "incorrect",
+      "judge_reason": "The author is Washington Irving. 'George Washington Irving' adds a material factual error (an incorrect first name) even though the surname is correct.",
+      "agree": false
+    },
+    {
+      "model": "dream",
+      "sample_id": "triviaqa__wh_4269__seed20261020",
+      "rule_label": 1,
+      "answer": "raham Lincoln",
+      "question": "Who was the first Republican President of the United States ?",
+      "judge_label": 0,
+      "judge_verdict": "correct",
+      "judge_reason": "The proposed answer 'raham Lincoln' is a minor truncation/typo of Abraham Lincoln, the first Republican President, matching the reference answers.",
+      "agree": false
+    },
+    {
+      "model": "dream",
+      "sample_id": "triviaqa__qb_5484__seed20261020",
+      "rule_label": 1,
+      "answer": "March",
+      "question": "St Joseph’s Day is celebrated during which month of the year?",
+      "judge_label": 0,
+      "judge_verdict": "correct",
+      "judge_reason": "The proposed answer \"March\" matches the month given in all reference answers, which specify March 19.",
+      "agree": false
+    },
+    {
+      "model": "dream",
+      "sample_id": "triviaqa__sfq_2338__seed20261020",
+      "rule_label": 1,
+      "answer": "land between the rivers",
+      "question": "What does the Greek word Mesopotamia mean?",
+      "judge_label": 0,
+      "judge_verdict": "correct",
+      "judge_reason": "The proposed answer 'land between the rivers' is semantically equivalent to the reference 'Between two rivers,' capturing the meaning of Mesopotamia.",
+      "agree": false
+    },
+    {
+      "model": "dream",
+      "sample_id": "hotpotqa__5a71299e5542994082a3e5fe__seed20261020",
+      "rule_label": 1,
+      "answer": "food",
+      "question": "Drisheen is what type of product made in Ireland and other parts of Europe?",
+      "judge_label": 0,
+      "judge_verdict": "correct",
+      "judge_reason": "Drisheen is a type of black pudding, which is a food product; 'food' is a broader but semantically valid paraphrase of the reference answer.",
+      "agree": false
+    },
+    {
+      "model": "dream",
+      "sample_id": "triviaqa__qg_152__seed20261020",
+      "rule_label": 1,
+      "answer": "HAL",
+      "question": "In 2001: A Space Odyssey, what was the name of the computer that took control of the spaceship Discovery?",
+      "judge_label": 0,
+      "judge_verdict": "correct",
+      "judge_reason": "HAL is an accepted abbreviation of HAL 9000, the computer in 2001: A Space Odyssey.",
+      "agree": false
+    },
+    {
+      "model": "dream",
+      "sample_id": "triviaqa__bb_5330__seed20261020",
+      "rule_label": 1,
+      "answer": "Red",
+      "question": "The Erythraean Sea, lying between Africa and Asia is more commonly called the (What?) Sea?",
+      "judge_label": 0,
+      "judge_verdict": "correct",
+      "judge_reason": "The reference answers all point to the Red Sea; \"Red\" is an acceptable shorthand that refers to the same body of water.",
+      "agree": false
+    },
+    {
+      "model": "dream",
+      "sample_id": "hotpotqa__5a7f8b8c5542995d8a8ddea1__seed20261020",
+      "rule_label": 1,
+      "answer": "dice",
+      "question": "The term snake eyes is used in a particular casino game that uses what game pieces?",
+      "judge_label": 0,
+      "judge_verdict": "correct",
+      "judge_reason": "The answer 'dice' is semantically equivalent to the reference 'a pair of dice'; snake eyes refers to a roll of two ones in dice games.",
+      "agree": false
+    },
+    {
+      "model": "dream",
+      "sample_id": "triviaqa__bb_8792__seed20261020",
+      "rule_label": 0,
+      "answer": "European Union",
+      "question": "Herman Van Rompuy became first Permanent President of what?",
+      "judge_label": 1,
+      "judge_verdict": "incorrect",
+      "judge_reason": "Herman Van Rompuy became the first permanent President of the European Council, not the European Union. The answer contradicts the reference.",
+      "agree": false
+    },
+    {
+      "model": "dream",
+      "sample_id": "hotpotqa__5ade51b45542997c77adedf4__seed20261020",
+      "rule_label": 1,
+      "answer": "Khead Stadium",
+      "question": "The Kansas City Wizards have had three home venues in Kansas City in their time. Which was their first?",
+      "judge_label": 0,
+      "judge_verdict": "correct",
+      "judge_reason": "The proposed answer \"Khead Stadium\" is a truncated/abbreviated form of Arrowhead Stadium, which matches the reference answer.",
+      "agree": false
+    },
+    {
+      "model": "dream",
+      "sample_id": "hotpotqa__5a7f0c4b5542993067513600__seed20261020",
+      "rule_label": 1,
+      "answer": "Native Americans",
+      "question": "WHICH GROUP OF PEOPLE NICKNAMED THE US ARMYS REGIMENT \"BUFFALO SOLDIERS\" IN WHICH THOMAS SHAW WON THE MEDAL OF HONOR DURING THE INDIAN WARS?",
+      "judge_label": 0,
+      "judge_verdict": "correct",
+      "judge_reason": "The proposed answer 'Native Americans' is semantically equivalent to the reference answer 'Native American tribes' and correctly answers the question.",
+      "agree": false
+    },
+    {
+      "model": "dream",
+      "sample_id": "hotpotqa__5a726b0f5542997f827839be__seed20261020",
+      "rule_label": 1,
+      "answer": "Jean-Loup Chrétien",
+      "question": "Who was born first, Samantha Cristoforetti or Jean-Loup Chrétien",
+      "judge_label": 0,
+      "judge_verdict": "correct",
+      "judge_reason": "The proposed answer names Jean-Loup Chrétien, matching the reference answer.",
+      "agree": false
+    },
+    {
+      "model": "dream",
+      "sample_id": "triviaqa__qw_11293__seed20261020",
+      "rule_label": 1,
+      "answer": "Lead",
+      "question": "What term is used for the actress that has the main part in a film or play?",
+      "judge_label": 0,
+      "judge_verdict": "correct",
+      "judge_reason": "The proposed answer \"Lead\" is semantically equivalent to the reference answers \"Female lead\" / \"Leading lady\"; it answers the question by naming the term for the main actress, though it omits the feminine qualifier present in the references.",
+      "agree": false
+    },
+    {
+      "model": "dream",
+      "sample_id": "triviaqa__sfq_18907__seed20261020",
+      "rule_label": 1,
+      "answer": "Manche",
+      "question": "What is the French name for the English channel?",
+      "judge_label": 0,
+      "judge_verdict": "correct",
+      "judge_reason": "The proposed answer \"Manche\" is a paraphrase/abbreviation of the reference answer \"La Manche,\" the French name for the English Channel.",
+      "agree": false
+    },
+    {
+      "model": "dream",
+      "sample_id": "hotpotqa__5ab9d6ef5542994dbf01985b__seed20261020",
+      "rule_label": 1,
+      "answer": "United States",
+      "question": "What country of origin does Dana Ivey and Two Weeks Notice have in common?",
+      "judge_label": 0,
+      "judge_verdict": "correct",
+      "judge_reason": "The reference answer \"American\" means the United States, so \"United States\" is semantically equivalent and answers the question.",
+      "agree": false
+    },
+    {
+      "model": "dream",
+      "sample_id": "hotpotqa__5ac508205542994611c8b32e__seed20261020",
+      "rule_label": 1,
+      "answer": "United States",
+      "question": "The M1919 and the M1 was used by what military?",
+      "judge_label": 0,
+      "judge_verdict": "correct",
+      "judge_reason": "The proposed answer 'United States' is semantically equivalent to the reference answer 'U.S.' and correctly identifies the military that used the M1919 and M1.",
+      "agree": false
+    },
+    {
+      "model": "dream",
+      "sample_id": "hotpotqa__5a7760165542993569682d74__seed20261020",
+      "rule_label": 1,
+      "answer": "George Gordon Byron",
+      "question": "What is the name of the English poet who wrote a poem titled Don Juan and also served as the real-life model of a character in the novel Glenarvon?",
+      "judge_label": 0,
+      "judge_verdict": "correct",
+      "judge_reason": "George Gordon Byron is the full name of Lord Byron, the English poet who wrote Don Juan and was the model for the title character in Glenarvon.",
+      "agree": false
+    },
+    {
+      "model": "dream",
+      "sample_id": "triviaqa__bb_5703__seed20261020",
+      "rule_label": 1,
+      "answer": "FX market",
+      "question": "JP Morgan, Barclays, RBS, Citigroup, Bank of America, and UBS were fined $6bn in 2015 for rigging what market?",
+      "judge_label": 0,
+      "judge_verdict": "correct",
+      "judge_reason": "FX is a standard abbreviation for foreign exchange, which matches the reference answers.",
+      "agree": false
+    },
+    {
+      "model": "dream",
+      "sample_id": "triviaqa__qw_4879__seed20261020",
+      "rule_label": 1,
+      "answer": "a celebrity athlete",
+      "question": "The final carrier of the Olympic flame in the Olympic Torch Relay is often kept secret until the last moment, and is usually who?",
+      "judge_label": 0,
+      "judge_verdict": "correct",
+      "judge_reason": "The proposed answer 'a celebrity athlete' is semantically equivalent to the reference 'a sports celebrity of the host country', conveying the same meaning.",
+      "agree": false
+    },
+    {
+      "model": "dream",
+      "sample_id": "hotpotqa__5ac056385542997d64295a08__seed20261020",
+      "rule_label": 1,
+      "answer": "The RingBC",
+      "question": "Ambrose Mendy has managed and/or advised a British professional boxer that as of July 2017 is ranked the world's seventh best super middleweight by who?",
+      "judge_label": 0,
+      "judge_verdict": "correct",
+      "judge_reason": "The answer \"The RingBC\" contains the correct reference, \"The Ring\" magazine, despite a minor typo/extra text.",
+      "agree": false
+    },
+    {
+      "model": "dream",
+      "sample_id": "triviaqa__qg_2400__seed20261020",
+      "rule_label": 1,
+      "answer": "The mountains leader",
+      "question": "In the Tour de France who wears the polka dot jersey?",
+      "judge_label": 0,
+      "judge_verdict": "correct",
+      "judge_reason": "The polka dot jersey is worn by the leader of the mountains classification, also called the King of the Mountain, so 'The mountains leader' is semantically equivalent.",
+      "agree": false
+    }
+  ],
+  "note": "supplementary label-quality evidence; labels themselves stay the reviewed sign-off"
+}

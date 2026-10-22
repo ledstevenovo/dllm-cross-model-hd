@@ -5,3 +5,29 @@ to judge: 1000 / 1000 with 4 workers
   judged 400/1000
   judged 500/1000
   judged 600/1000
+  judged 700/1000
+  judged 800/1000
+  judged 900/1000
+  judged 1000/1000
+{
+  "samples_requested": 1000,
+  "samples_resolved": 1000,
+  "coverage": 1.0,
+  "agreement": 0.933,
+  "cohens_kappa": 0.8400618745703156,
+  "per_model": {
+    "llada": {
+      "n": 500,
+      "agreement": 0.94,
+      "rule_incorrect": 0.76,
+      "judge_incorrect": 0.736
+    },
+    "dream": {
+      "n": 500,
+      "agreement": 0.926,
+      "rule_incorrect": 0.688,
+      "judge_incorrect": 0.626
+    }
+  }
+}
+wrote reports/pool2000_label_consistency.json
