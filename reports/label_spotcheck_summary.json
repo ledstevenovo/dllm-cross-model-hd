@@ -1,0 +1,180 @@
+{
+  "date": "2026-10-22",
+  "items_reviewed": 50,
+  "source_mix": {
+    "dynhd": 25,
+    "main": 25
+  },
+  "human_vs_rule": {
+    "n": 50,
+    "agree": 45,
+    "agreement": 0.9,
+    "kappa": 0.7334754797441365,
+    "agreement_ci95": [
+      0.7863950966521162,
+      0.9565248760084288
+    ]
+  },
+  "human_vs_judge": {
+    "n": 50,
+    "agree": 48,
+    "agreement": 0.96,
+    "kappa": 0.883720930232558,
+    "agreement_ci95": [
+      0.8653966212204532,
+      0.9889613473391734
+    ]
+  },
+  "rule_vs_judge": {
+    "n": 50,
+    "agree": 43,
+    "agreement": 0.86,
+    "kappa": 0.6067415730337079,
+    "agreement_ci95": [
+      0.7381354280147191,
+      0.9304925473797714
+    ]
+  },
+  "rule_error_rate_vs_human": {
+    "errors": 5,
+    "n": 50,
+    "rate": 0.1,
+    "ci95": [
+      0.0434751239915711,
+      0.21360490334788393
+    ]
+  },
+  "judge_error_rate_vs_human": {
+    "errors": 2,
+    "n": 50,
+    "rate": 0.04,
+    "ci95": [
+      0.011038652660826579,
+      0.13460337877954667
+    ]
+  },
+  "disagreement_resolution": [
+    {
+      "source": "dynhd",
+      "model": "dream",
+      "sample_id": "triviaqa__qw_4069",
+      "rule_label": 0,
+      "judge_label": 1,
+      "human_label": 0,
+      "human_sides_with": "rule",
+      "human_note": "Correct: Prince Albert II succeeded Rainier III; the supplied reference answers appear mismatched to Prince Consort Albert."
+    },
+    {
+      "source": "dynhd",
+      "model": "llada",
+      "sample_id": "hotpotqa__5a8b78775542997f31a41d3d",
+      "rule_label": 0,
+      "judge_label": 1,
+      "human_label": 1,
+      "human_sides_with": "judge",
+      "human_note": "It names the Peshwa office but assigns it to the wrong person; Bajirao I held the office under Shahu."
+    },
+    {
+      "source": "dynhd",
+      "model": "llada",
+      "sample_id": "hotpotqa__5adc0d2955429947ff1738e6",
+      "rule_label": 0,
+      "judge_label": 1,
+      "human_label": 1,
+      "human_sides_with": "judge",
+      "human_note": "The yes answer is correct"
+    },
+    {
+      "source": "main",
+      "model": "dream",
+      "sample_id": "hotpotqa__5a876f785542993e715abf42__seed20261020",
+      "rule_label": 1,
+      "judge_label": 0,
+      "human_label": 0,
+      "human_sides_with": "judge",
+      "human_note": "John Carpenter is the correct choice; the reference describes his roles rather than naming him."
+    },
+    {
+      "source": "main",
+      "model": "dream",
+      "sample_id": "triviaqa__qw_4069__seed20261020",
+      "rule_label": 0,
+      "judge_label": 1,
+      "human_label": 0,
+      "human_sides_with": "rule",
+      "human_note": "Correct: Prince Albert II succeeded Rainier III; the supplied reference answers appear mismatched to Prince Consort Albert."
+    },
+    {
+      "source": "main",
+      "model": "llada",
+      "sample_id": "hotpotqa__5adc2f53554299438c868d6d__seed20261020",
+      "rule_label": 0,
+      "judge_label": 1,
+      "human_label": 1,
+      "human_sides_with": "judge",
+      "human_note": "The no answer is right"
+    },
+    {
+      "source": "main",
+      "model": "llada",
+      "sample_id": "triviaqa__qw_15432__seed20261020",
+      "rule_label": 1,
+      "judge_label": 0,
+      "human_label": 0,
+      "human_sides_with": "judge",
+      "human_note": "Duke is an accepted short form of John Wayne's nickname"
+    }
+  ],
+  "disagreement_tally": {
+    "rule": 2,
+    "judge": 5
+  },
+  "per_source": {
+    "dynhd": {
+      "n": 25,
+      "human_vs_rule": {
+        "n": 25,
+        "agree": 23,
+        "agreement": 0.92,
+        "kappa": 0.8175182481751826,
+        "agreement_ci95": [
+          0.7503348787704218,
+          0.977780066308908
+        ]
+      },
+      "human_vs_judge": {
+        "n": 25,
+        "agree": 24,
+        "agreement": 0.96,
+        "kappa": 0.896265560165975,
+        "agreement_ci95": [
+          0.8045552759497747,
+          0.9929039496133009
+        ]
+      }
+    },
+    "main": {
+      "n": 25,
+      "human_vs_rule": {
+        "n": 25,
+        "agree": 22,
+        "agreement": 0.88,
+        "kappa": 0.5945945945945945,
+        "agreement_ci95": [
+          0.7004380781662651,
+          0.9583325864293191
+        ]
+      },
+      "human_vs_judge": {
+        "n": 25,
+        "agree": 24,
+        "agreement": 0.96,
+        "kappa": 0.8648648648648647,
+        "agreement_ci95": [
+          0.8045552759497747,
+          0.9929039496133009
+        ]
+      }
+    }
+  }
+}

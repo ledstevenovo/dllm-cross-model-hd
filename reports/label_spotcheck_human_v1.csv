@@ -1,0 +1,51 @@
+source,model,sample_id,human_label,human_note
+dynhd,dream,triviaqa__qw_4069,0,Correct: Prince Albert II succeeded Rainier III; the supplied reference answers appear mismatched to Prince Consort Albert.
+dynhd,llada,hotpotqa__5a8b78775542997f31a41d3d,1,It names the Peshwa office but assigns it to the wrong person; Bajirao I held the office under Shahu.
+dynhd,llada,hotpotqa__5adc0d2955429947ff1738e6,1,The yes answer is correct, but the added claim that Roger Waters is a drummer is false; he is a bassist and vocalist.
+main,dream,hotpotqa__5a876f785542993e715abf42__seed20261020,0,John Carpenter is the correct choice; the reference describes his roles rather than naming him.
+main,dream,triviaqa__qw_4069__seed20261020,0,Correct: Prince Albert II succeeded Rainier III; the supplied reference answers appear mismatched to Prince Consort Albert.
+main,llada,hotpotqa__5adc2f53554299438c868d6d__seed20261020,1,The no answer is right, but the added release years are false: Triumph of the Will was released in 1935.
+main,llada,triviaqa__qw_15432__seed20261020,0,Duke is an accepted short form of John Wayne's nickname, The Duke.
+dynhd,dream,hotpotqa__5a72f74a55429901807daf59,1,Rosie O'Donnell matches the birth date and film; Billy Crystal does not.
+dynhd,dream,hotpotqa__5a7b3b4f5542992d025e67ac,1,The reference is Edward of Angouleme, not Henry.
+dynhd,dream,hotpotqa__5a7ccb3655429909bec7680b,1,Muramasa made the blade; Hideyoshi was the person who bestowed it.
+dynhd,dream,hotpotqa__5a8242c155429940e5e1a81d,1,The author Leo Strauss was born in Germany; Florence is incorrect.
+dynhd,dream,hotpotqa__5a84d2775542994c784dda5f,1,The reference identifies dementia, not cancer.
+dynhd,dream,hotpotqa__5a8b78775542997f31a41d3d,0,Prime Minister is semantically equivalent to Peshwa.
+dynhd,dream,hotpotqa__5a906f9f5542995b442420b3,1,The venue is the London Coliseum; The Opera Theatre is not equivalent.
+dynhd,dream,hotpotqa__5ab43179554299233955004d,1,The reference is The Secret World of Alex Mack; com does not answer the question.
+dynhd,dream,hotpotqa__5ab9668c55429970cfb8eaba,1,Mel does not match the stated location, the City of Onkaparinga.
+dynhd,dream,hotpotqa__5abdba405542993f32c2a023,1,The sitcom was a spin-off of Perfect Strangers, not Family House.
+dynhd,dream,hotpotqa__5ac372195542995ef918c194,0,The answer exactly identifies Indooroopilly Shopping Centre.
+dynhd,dream,hotpotqa__5adbf81a554299438c868cfd,1,Vintage Life is UK-based, so the magazines are not both US-based.
+dynhd,dream,hotpotqa__5adc0d2955429947ff1738e6,0,The answer correctly states that both Roger Waters and Tom Johnston are musicians.
+dynhd,dream,hotpotqa__5adc2f53554299438c868d6d,0,No is correct; the films were not released in the same year.
+dynhd,dream,hotpotqa__5adcf3e35542994ed6169c3a,1,The reference town is Rivington Moor; Dean Mills repeats part of the reservoir name.
+dynhd,dream,hotpotqa__5ae088525542993d6555eba1,1,Mark Helprin is a novelist, not a comic-book writer, so yes is incorrect.
+dynhd,dream,triviaqa__bb_4464,0,.tr is Turkey's country-code top-level domain.
+dynhd,dream,triviaqa__bb_5094,1,The site is Sadler's Wells; The Garden is incorrect.
+dynhd,dream,triviaqa__bt_1,1,David James is not the Stylistics lead singer; the references name Russell Thompkins and Airrion Love.
+dynhd,dream,triviaqa__bt_3007,0,Leo Tolstoy is the correct author; the extra article does not change the answer.
+dynhd,dream,triviaqa__bt_3768,1,Sagittarius begins and ends with S; Aries does not.
+dynhd,dream,triviaqa__dpql_5449,1,Penrod Pooch's secret identity is Hong Kong Phooey, not Pen.
+main,dream,hotpotqa__5a70f1685542994082a3e40f__seed20261020,1,Moonlight Sonata is dedicated to Giulietta Guicciardi; the reference Symphony No. 7 also conflicts with the 1801 clue.
+main,dream,hotpotqa__5a77dadd5542997042120b59__seed20261020,1,The Dallas Cowboys quarterback was Roger Staubach, not Jerry Carter.
+main,dream,hotpotqa__5a796c805542990784727805__seed20261020,1,The referenced post is Chief of the Operations Staff; Fielder does not answer the question.
+main,dream,hotpotqa__5a7b493855429931da12ca58__seed20261020,1,The Canadian-born New Zealand actress is Anna Paquin, not Elisabeth Moss.
+main,dream,hotpotqa__5a81b43d5542995ce29dcc39__seed20261020,1,The magazine's focus is aging issues; pol does not answer.
+main,dream,hotpotqa__5a88d7875542993b751ca876__seed20261020,1,Rick Mears won the 1981 CART championship; John Jones is incorrect.
+main,dream,hotpotqa__5a8b3c0055429949d91db4f8__seed20261020,0,No is consistent with the reference and the comparison in the question.
+main,dream,hotpotqa__5a8b78775542997f31a41d3d__seed20261020,0,Prime Minister is semantically equivalent to Peshwa.
+main,dream,hotpotqa__5a8ec55f5542995a26add50c__seed20261020,1,The reference gives 4145 ft; sea level is incorrect.
+main,dream,hotpotqa__5ab8397155429919ba4e2272__seed20261020,1,The reference names the XXIV Summer Universiade; high jump is a discipline, not the event.
+main,dream,hotpotqa__5ac3044f5542990b17b154dc__seed20261020,1,The shared role is vocalist; musingers is not an equivalent term.
+main,dream,hotpotqa__5adbf81a554299438c868cfd__seed20261020,1,Vintage Life is UK-based, so the two magazines are not both US-based.
+main,dream,hotpotqa__5ae27f22554299495565da8d__seed20261020,1,The reference year is 1926, not 1910.
+main,dream,hotpotqa__5ae326e95542990afbd1e0b6__seed20261020,1,The AHL operates in the United States and Canada; Canadaario is not a valid location.
+main,dream,hotpotqa__5ae675245542991bbc9760dc__seed20261020,1,The reference gives Merovech as Childericus's father; Childvis is incorrect.
+main,dream,hotpotqa__5ae7a9765542994a481bbdbc__seed20261020,1,The act's long title is An Act to provide for the better government of Ireland; Northern is incomplete.
+main,dream,triviaqa__bb_436__seed20261020,1,The expected marker is glow-in-the-dark fluorescence, not green eyes.
+main,dream,triviaqa__bb_5094__seed20261020,1,The reference site is Sadler's Wells; The Garden is incorrect.
+main,dream,triviaqa__bb_7225__seed20261020,1,A salpingectomy removes fallopian tube(s), not ovaries; ovary removal is an oophorectomy.
+main,dream,triviaqa__bt_1__seed20261020,1,The references name Russell Thompkins or Airrion Love, not David James.
+main,dream,triviaqa__dpql_5449__seed20261020,1,The secret identity is Hong Kong Phooey; Pen is only part of the character's name.

@@ -101,6 +101,21 @@ def main() -> int:
               "- 本证据是**补充**：正式指标仍使用 reviewed 规则签核标签，第二 judge 不改任何标签；",
               "- 两套判分使用同一冻结提示词与同一 judge 模型/端点，可与 TRE R1 的 judge 口径直接对照；",
               "- 人工抽查表按“全部不一致 + 一致中补齐至 ≥50 条”生成，供人工独立复核后填写判定。", ""]
+
+    human = load_json(REPO / "reports/label_spotcheck_summary.json")
+    if human:
+        tally = human.get("disagreement_tally", {})
+        lines += ["## 人工抽查（disagreement-enriched 的 50 条）", "",
+                  f"- 复核条数 {human['items_reviewed']}（{', '.join(f'{k} {v}' for k, v in human['source_mix'].items())}）："
+                  f"全部 7 条规则×judge 分歧 + 43 条一致抽样",
+                  f"- **人工 vs 规则：{human['human_vs_rule']['agree']}/{human['human_vs_rule']['n']} = "
+                  f"{human['human_vs_rule']['agreement']:.3f}**（κ {human['human_vs_rule']['kappa']:.3f}）；"
+                  f"**人工 vs judge：{human['human_vs_judge']['agree']}/{human['human_vs_judge']['n']} = "
+                  f"{human['human_vs_judge']['agreement']:.3f}**（κ {human['human_vs_judge']['kappa']:.3f}）",
+                  f"- 7 条分歧的裁决：{tally.get('judge', 0)} 条站在 judge、{tally.get('rule', 0)} 条站在规则；"
+                  f"judge 的 2 次失利均来自上游缺陷题 `triviaqa__qw_4069`（参考答案错配 19 世纪 Prince Consort Albert，见数据质量附录）",
+                  f"- 该抽样按设计富集分歧，不能当总体错误率；按分层抽样外推（全量 200 行中分歧 7 条全部复核 + 一致层 0/43）："
+                  f"规则标签误差 ≈2.5% [1.1%, 5.7%]、judge ≈1.0% [0.3%, 3.6%]（人工裁判为参照）", ""]
     out = Path(args.out)
     out.write_text("\n".join(lines) + "\n", encoding="utf-8")
     print("\n".join(lines))
