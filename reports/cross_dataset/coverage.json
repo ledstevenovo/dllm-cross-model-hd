@@ -1,0 +1,143 @@
+[
+  {
+    "model_id": "Dream-org/Dream-v0-Instruct-7B",
+    "dataset": "hotpotqa",
+    "split": "test",
+    "total": 20,
+    "eligible": 18,
+    "label_counts": {
+      "incorrect": 15,
+      "correct": 3,
+      "format_failure": 2
+    }
+  },
+  {
+    "model_id": "Dream-org/Dream-v0-Instruct-7B",
+    "dataset": "hotpotqa",
+    "split": "train",
+    "total": 49,
+    "eligible": 42,
+    "label_counts": {
+      "incorrect": 37,
+      "correct": 5,
+      "format_failure": 7
+    }
+  },
+  {
+    "model_id": "Dream-org/Dream-v0-Instruct-7B",
+    "dataset": "hotpotqa",
+    "split": "validation",
+    "total": 12,
+    "eligible": 9,
+    "label_counts": {
+      "format_failure": 3,
+      "incorrect": 8,
+      "correct": 1
+    }
+  },
+  {
+    "model_id": "Dream-org/Dream-v0-Instruct-7B",
+    "dataset": "triviaqa",
+    "split": "test",
+    "total": 30,
+    "eligible": 27,
+    "label_counts": {
+      "correct": 10,
+      "incorrect": 17,
+      "format_failure": 3
+    }
+  },
+  {
+    "model_id": "Dream-org/Dream-v0-Instruct-7B",
+    "dataset": "triviaqa",
+    "split": "train",
+    "total": 71,
+    "eligible": 66,
+    "label_counts": {
+      "incorrect": 41,
+      "correct": 25,
+      "format_failure": 5
+    }
+  },
+  {
+    "model_id": "Dream-org/Dream-v0-Instruct-7B",
+    "dataset": "triviaqa",
+    "split": "validation",
+    "total": 18,
+    "eligible": 16,
+    "label_counts": {
+      "correct": 10,
+      "format_failure": 2,
+      "incorrect": 6
+    }
+  },
+  {
+    "model_id": "GSAI-ML/LLaDA-8B-Instruct",
+    "dataset": "hotpotqa",
+    "split": "test",
+    "total": 20,
+    "eligible": 20,
+    "label_counts": {
+      "incorrect": 16,
+      "correct": 4
+    }
+  },
+  {
+    "model_id": "GSAI-ML/LLaDA-8B-Instruct",
+    "dataset": "hotpotqa",
+    "split": "train",
+    "total": 49,
+    "eligible": 49,
+    "label_counts": {
+      "incorrect": 45,
+      "correct": 4
+    }
+  },
+  {
+    "model_id": "GSAI-ML/LLaDA-8B-Instruct",
+    "dataset": "hotpotqa",
+    "split": "validation",
+    "total": 12,
+    "eligible": 12,
+    "label_counts": {
+      "incorrect": 10,
+      "correct": 2
+    }
+  },
+  {
+    "model_id": "GSAI-ML/LLaDA-8B-Instruct",
+    "dataset": "triviaqa",
+    "split": "test",
+    "total": 30,
+    "eligible": 28,
+    "label_counts": {
+      "incorrect": 16,
+      "correct": 12,
+      "format_failure": 2
+    }
+  },
+  {
+    "model_id": "GSAI-ML/LLaDA-8B-Instruct",
+    "dataset": "triviaqa",
+    "split": "train",
+    "total": 71,
+    "eligible": 69,
+    "label_counts": {
+      "incorrect": 45,
+      "correct": 24,
+      "format_failure": 2
+    }
+  },
+  {
+    "model_id": "GSAI-ML/LLaDA-8B-Instruct",
+    "dataset": "triviaqa",
+    "split": "validation",
+    "total": 18,
+    "eligible": 17,
+    "label_counts": {
+      "correct": 7,
+      "incorrect": 10,
+      "format_failure": 1
+    }
+  }
+]
