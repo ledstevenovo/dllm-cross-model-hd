@@ -1,0 +1,85 @@
+{
+  "matrix": "results/pool2000/main/transfer_matrix.csv",
+  "rule": {
+    "frozen_at": "2026-10-22 (docs/NOGPU_WORKPLAN.md section 2d)",
+    "states": "rel+LR Dream->LLaDA 95% CI upper < 0.6 AND ent+LR Dream->LLaDA 95% CI lower > 0.7",
+    "verdict_field": "directional_gap_holds"
+  },
+  "cells": {
+    "relative_normalized_lr": {
+      "source": "Dream-org/Dream-v0-Instruct-7B",
+      "target": "GSAI-ML/LLaDA-8B-Instruct",
+      "feature_set": "relative_normalized",
+      "kind": "lr",
+      "n": 491,
+      "positive": 356,
+      "negative": 135,
+      "auroc": 0.7518726591760299,
+      "auroc_low": 0.7045606873863591,
+      "auroc_high": 0.7981623664413151
+    },
+    "entropy_raw_lr": {
+      "source": "Dream-org/Dream-v0-Instruct-7B",
+      "target": "GSAI-ML/LLaDA-8B-Instruct",
+      "feature_set": "entropy_raw",
+      "kind": "lr",
+      "n": 491,
+      "positive": 356,
+      "negative": 135,
+      "auroc": 0.6710986267166043,
+      "auroc_low": 0.6196983672603902,
+      "auroc_high": 0.7200028000814062
+    }
+  },
+  "checks": {
+    "rel_upper_below_0_6": {
+      "value": 0.7981623664413151,
+      "threshold": 0.6,
+      "passes": false
+    },
+    "ent_lower_above_0_7": {
+      "value": 0.6196983672603902,
+      "threshold": 0.7,
+      "passes": false
+    }
+  },
+  "directional_gap_holds": false,
+  "verdict": "not reproduced",
+  "context_only_not_part_of_the_decision": {
+    "ci_widths": {
+      "relative_normalized_lr": 0.0936,
+      "entropy_raw_lr": 0.1003
+    },
+    "pre_expansion": {
+      "relative_normalized_lr_dream_to_llada": {
+        "source": "Dream-org/Dream-v0-Instruct-7B",
+        "target": "GSAI-ML/LLaDA-8B-Instruct",
+        "feature_set": "relative_normalized",
+        "kind": "lr",
+        "n": 48,
+        "positive": 32,
+        "negative": 16,
+        "auroc": 0.494140625,
+        "auroc_low": 0.296963036963037,
+        "auroc_high": 0.6954065393518518
+      },
+      "entropy_raw_lr_dream_to_llada": {
+        "source": "Dream-org/Dream-v0-Instruct-7B",
+        "target": "GSAI-ML/LLaDA-8B-Instruct",
+        "feature_set": "entropy_raw",
+        "kind": "lr",
+        "n": 48,
+        "positive": 32,
+        "negative": 16,
+        "auroc": 0.830078125,
+        "auroc_low": 0.6944576719576718,
+        "auroc_high": 0.939480782888986
+      }
+    },
+    "note": "reported so a reader can see how far each cell sat from its threshold; the verdict above uses only the two CI bounds"
+  },
+  "notes": [
+    "test set is ~450 per direction, so CI width should be about 0.08-0.13 for the reference cells",
+    "if either cell is missing the script exits non-zero instead of answering false"
+  ]
+}

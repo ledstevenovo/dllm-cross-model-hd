@@ -1,0 +1,13 @@
+Dream- -> Dream- entropy_raw        lr  AUROC 0.853 | null mean 0.500 p95 0.547 | p = 9.999e-05
+Dream- -> Dream- entropy_raw        mlp AUROC 0.807 | null mean 0.501 p95 0.549 | p = 9.999e-05
+Dream- -> Dream- relative_normalized lr  AUROC 0.871 | null mean 0.500 p95 0.548 | p = 9.999e-05
+Dream- -> Dream- relative_normalized mlp AUROC 0.794 | null mean 0.500 p95 0.548 | p = 9.999e-05
+Dream- -> LLaDA- entropy_raw        lr  AUROC 0.671 | null mean 0.500 p95 0.548 | p = 9.999e-05
+Dream- -> LLaDA- entropy_raw        mlp AUROC 0.680 | null mean 0.500 p95 0.548 | p = 9.999e-05
+Dream- -> LLaDA- relative_normalized lr  AUROC 0.752 | null mean 0.500 p95 0.547 | p = 9.999e-05
+Dream- -> LLaDA- relative_normalized mlp AUROC 0.600 | null mean 0.500 p95 0.548 | p = 0.0004
+LLaDA- -> Dream- entropy_raw        lr  AUROC 0.854 | null mean 0.500 p95 0.548 | p = 9.999e-05
+LLaDA- -> Dream- entropy_raw        mlp AUROC 0.839 | null mean 0.500 p95 0.549 | p = 9.999e-05
+LLaDA- -> Dream- relative_normalized lr  AUROC 0.865 | null mean 0.500 p95 0.549 | p = 9.999e-05
+LLaDA- -> Dream- relative_normalized mlp AUROC 0.739 | null mean 0.500 p95 0.548 | p = 9.999e-05
+LLaDA- -> LLaDA- entropy_raw        lr  AUROC 0.799 | null mean 0.500 p95 0.548 | p = 9.999e-05

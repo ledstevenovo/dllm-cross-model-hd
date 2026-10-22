@@ -1,0 +1,3 @@
+dream: 1800 rows {'correct': 521, 'incorrect': 1098, 'format_failure': 180, 'refusal_empty': 1} -> /root/autodl-tmp/dllm-cross-model-hd/data/labels/pool2000_dream.draft_review.jsonl
+sheet -> reports/pool2000_draft_review.md
+manifest -> /root/autodl-tmp/dllm-cross-model-hd/data/labels/pool2000_draft_manifest.json

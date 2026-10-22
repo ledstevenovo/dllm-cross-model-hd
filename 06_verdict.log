@@ -1,0 +1,4 @@
+rel+LR Dream->LLaDA  0.752 [0.705, 0.798] n=491  upper<0.6: False
+ent+LR Dream->LLaDA  0.671 [0.620, 0.720] n=491  lower>0.7: False
+VERDICT: not reproduced  (directional_gap_holds=False)
+wrote reports/pool2000_verdict.json

@@ -1,0 +1,2 @@
+{"input": "data/labels/pool2000_llada.draft_review.jsonl", "out": "data/labels/pool2000_llada.reviewed.jsonl", "rows": 1800, "labels": {"incorrect": 1281, "correct": 487, "format_failure": 32}, "reviewer": "ledstevenovo"}
+{"input": "data/labels/pool2000_dream.draft_review.jsonl", "out": "data/labels/pool2000_dream.reviewed.jsonl", "rows": 1800, "labels": {"correct": 521, "incorrect": 1098, "format_failure": 180, "refusal_empty": 1}, "reviewer": "ledstevenovo"}

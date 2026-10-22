@@ -1,0 +1,108 @@
+{
+  "features": "/root/autodl-tmp/dllm-cross-model-hd/results/pool2000/features_combined.parquet",
+  "cell": {
+    "source": "Dream-org/Dream-v0-Instruct-7B",
+    "target": "GSAI-ML/LLaDA-8B-Instruct",
+    "feature_set": "relative_normalized",
+    "kind": "lr"
+  },
+  "seed": 42,
+  "full": {
+    "n": 491,
+    "auroc": 0.7518726591760299,
+    "positive": 356,
+    "negative": 135
+  },
+  "sweep": [
+    {
+      "requested": 24,
+      "n": 24,
+      "clusters": 24,
+      "positive": 16,
+      "negative": 8,
+      "auroc": 0.9375,
+      "auroc_low": 0.8147883597883597,
+      "auroc_high": 1.0
+    },
+    {
+      "requested": 48,
+      "n": 48,
+      "clusters": 48,
+      "positive": 36,
+      "negative": 12,
+      "auroc": 0.7337962962962964,
+      "auroc_low": 0.5524671969524911,
+      "auroc_high": 0.9097678644553644
+    },
+    {
+      "requested": 96,
+      "n": 96,
+      "clusters": 96,
+      "positive": 74,
+      "negative": 22,
+      "auroc": 0.7082309582309583,
+      "auroc_low": 0.5741588128306879,
+      "auroc_high": 0.8191793320974087
+    },
+    {
+      "requested": 192,
+      "n": 192,
+      "clusters": 192,
+      "positive": 142,
+      "negative": 50,
+      "auroc": 0.7554929577464788,
+      "auroc_low": 0.6783066239316238,
+      "auroc_high": 0.8316987230508357
+    },
+    {
+      "requested": 288,
+      "n": 288,
+      "clusters": 288,
+      "positive": 206,
+      "negative": 82,
+      "auroc": 0.7690622780014207,
+      "auroc_low": 0.7109742663357261,
+      "auroc_high": 0.8210151689012913
+    },
+    {
+      "requested": 384,
+      "n": 384,
+      "clusters": 384,
+      "positive": 275,
+      "negative": 109,
+      "auroc": 0.7564970809007505,
+      "auroc_low": 0.7042275380410946,
+      "auroc_high": 0.8022096842252275
+    },
+    {
+      "requested": 491,
+      "n": 491,
+      "clusters": 491,
+      "positive": 356,
+      "negative": 135,
+      "auroc": 0.7518726591760299,
+      "auroc_low": 0.7045606873863591,
+      "auroc_high": 0.7981623664413151
+    }
+  ],
+  "pilot_size_distribution": {
+    "n_per_draw": 48,
+    "resamples": 2000,
+    "mean": 0.7504723930248792,
+    "std": 0.0753986018415669,
+    "p05": 0.6197482400412087,
+    "p25": 0.6982205895868134,
+    "median": 0.7537208017676768,
+    "p75": 0.8021978021978021,
+    "p95": 0.871892666157372,
+    "min": 0.453125,
+    "max": 0.9659090909090909,
+    "observed_pilot200": 0.4941,
+    "observed_percentile": 0.0005
+  },
+  "notes": [
+    "the detector is fitted once and never refitted, so only the scoring subset changes",
+    "clusters are drawn whole, matching the resampling unit used everywhere else",
+    "the pilot-size distribution answers: how often would a 48-question test set have shown 0.494?"
+  ]
+}
