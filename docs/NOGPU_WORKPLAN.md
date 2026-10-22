@@ -53,6 +53,7 @@ screen -dmS guard bash scripts/overnight_guard.sh     # 独立守护，每 5 分
 |---|---|---|---|
 | 1 | ~~**阶段 7 结果解读与报告**~~ ✅ **已完成（10-22 05:53）** | 否 | 稳定性判决：迁移缺口 = **Dream 源域的方向性缺失**（同方向仅 `entropy_raw+LR` 稳定迁移 0.838；`rel+LR` 0.514 ≈ 随机，非负迁移）。证据：`reports/stage7_initial_observations.md` §5、`reports/main_project_stability.json`、`reports/morning_digest.md`。是否扩池待你决策 |
 | 2 | **标签质量证据** | 否（第二 judge 用 LongCat API） | ✅ **已完成（10-22）**：第二 judge 覆盖率 373/373、一致率 0.957/κ 0.896（DynHD 0.970/κ 0.933）；**人工抽查 50 条已完成**：人工 vs 规则 0.900（κ 0.733）、人工 vs judge 0.960（κ 0.884），7 条分歧人工裁决 5:2 站 judge（judge 的 2 次失利均为上游缺陷题）。证据页 `reports/label_quality_evidence.md`，明细 `reports/label_spotcheck_summary.json` |
+| 2b | **主项目扩池准备（§8 决策门）** | 否（冻结可在无卡完成） | ✅ **题单已冻结（10-22）**：`data/manifests/pool800_v1.json` + `reports/expansion_pack_v1.md`（规则、排除 1192 簇、480/120/200 按簇全局划分、哈希、精度测算：test 200/方向使 AUROC 区间宽度约减半）。采集需卡：600 新题 × 2 模型 = 1200 条 |
 | 3 | **DynHD 可选扩池准备** | 题单冻结无卡，采集需卡 | `pick_longest` / 题单冻结 / split 脚本都已就绪 |
 | 4 | **TRE R2 准备** | 题单/prompt 冻结无卡，采集需卡 | HotpotQA / CSQA 格式与 prompt 需先冻结并登记 |
 | 5 | **论文级整理** | 否 | 把 TRE R1（78.34%，CI 74.92–81.72）、阶段 7 矩阵、DynHD 域内结果整理成可发表报告 |
