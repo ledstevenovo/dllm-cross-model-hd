@@ -1,0 +1,55 @@
+{
+  "measured_utc": "2026-10-22T09:17:41.375663+00:00",
+  "python": "3.12.3",
+  "platform": "Linux-5.15.0-94-generic-x86_64-with-glibc2.35",
+  "torch": "2.8.0+cu128",
+  "torch_cuda_runtime": "12.8",
+  "cuda_available": true,
+  "driver_version": "595.80",
+  "cuda_arch_list": [
+    "sm_70",
+    "sm_75",
+    "sm_80",
+    "sm_86",
+    "sm_90",
+    "sm_100",
+    "sm_120"
+  ],
+  "device_name": "NVIDIA GeForce RTX 5090",
+  "capability": [
+    12,
+    0
+  ],
+  "capability_tag": "sm_120",
+  "bf16_supported": true,
+  "fp16_supported": null,
+  "free_bytes": 16083451904,
+  "total_bytes": 33670758400,
+  "total_gib": 31.36,
+  "capability_in_wheel_arch_list": true,
+  "checks": {
+    "bf16_matmul": {
+      "ok": true,
+      "mean": -0.03113
+    },
+    "fp32_reference_mean": -0.031106,
+    "bf16_sdpa": {
+      "ok": true,
+      "shape": [
+        1,
+        4,
+        64,
+        64
+      ]
+    },
+    "sdpa_backends": {
+      "flash": true,
+      "mem_efficient": true,
+      "math": true
+    },
+    "peak_memory_gib": 0.086
+  },
+  "ok": true,
+  "transformers": "4.46.3",
+  "numpy": "2.3.2"
+}

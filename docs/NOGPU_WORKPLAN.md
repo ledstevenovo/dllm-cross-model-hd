@@ -59,12 +59,22 @@ screen -dmS guard bash scripts/overnight_guard.sh     # 独立守护，每 5 分
 | 5 | **论文级整理** | 否 | 把 TRE R1（78.34%，CI 74.92–81.72）、阶段 7 矩阵、DynHD 域内结果整理成可发表报告 |
 | 6 | **备份策略固化** | 否 | 每次大采集后重新打包并核对 `MANIFEST.sha256` |
 
+## 2c. 5090 迁移（2026-10-22 有卡）
+
+实例从 RTX 4080 SUPER（sm_89）迁到 RTX 5090（sm_120）。有卡资格与设备一致性结论：
+
+- **环境资格通过**（`reports/gpu_env_probe_{llada,dream}.json`）：torch 2.8.0+cu128 的 wheel 架构表含 sm_120；BF16 原生支持，BF16 matmul 与 FP32 参考一致；SDPA flash/mem-efficient 可用；31.36 GiB。
+- **真实加载与 smoke20 通过**：LLaDA 5.0 s / 15.0 GiB，Dream 4.8 s / 14.3 GiB；两模型各 20/20，`--verify-observer` 全过；单题 1.34 s / 1.36 s（4080S 为 2.27 / 2.09 s）。
+- **BF16 跨架构不逐位可复现**（`reports/device_consistency_pilot200.json`）：pilot200 LLaDA 上 token 全同 87.5%、答案文本变化 10.5%、规则标签翻转 2.0%；同机重跑 10/10 全同、熵差 0.0，说明差异来自架构内核而非不确定性。
+- **采集设备规则（新增，必须遵守）**：扩池的新增轨迹，**两个模型必须在同一设备上采集**。禁止把 5090 的新 LLaDA 轨迹与 4080S 的旧 Dream 轨迹拼进同一张迁移矩阵——跨设备差异会与"跨模型缺口"混淆。pilot200 既有轨迹原样保留（其内部同设备、自洽），不重采、不替换。
+- pool800 题单预检通过：LLaDA 最长 102 token / Dream 最长 105 token（上下文 4096、生成预算 64），无截断风险，题单不动。
+
 ## 3. 需要 GPU 时才开卡的清单（备查）
 
-- 主项目扩池 800–2000：`scripts/collect_llada.py` / `collect_dream.py`，新题单与新输出目录；
+- 主项目扩池 800–2000：`scripts/collect_llada.py` / `collect_dream.py`，新题单与新输出目录；**两模型同设备**（见 §2c）；
 - TRE R2：每格 800 题，`--precision float16 --gen-length 128 --steps 64 --block-size 128`；
 - DynHD 扩池：`scripts/dynhd_repro/collect_local.py`，`traces/<model>/.../raw/<new_run_id>`；
-- 开卡后先跑一次设备/BF16 探针（`docs/VGPU_32GB_完整实验方案.md` 第 3 节），再开始采集。
+- 开卡后先跑一次设备/BF16 探针（`scripts/gpu_env_probe.py`），再开始采集。
 
 ## 4. 早上验收 3 步
 
