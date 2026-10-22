@@ -77,6 +77,8 @@ def main() -> int:
                         help="where to read <prefix>_<model>.proposals.jsonl from")
     parser.add_argument("--sheet", default=None, help="optional Markdown review sheet")
     parser.add_argument("--max-rows", type=int, default=0, help="limit sheet rows (0 = all)")
+    parser.add_argument("--models", nargs="+", default=list(MODELS), choices=list(MODELS),
+                        help="models to review (default: both); useful while one collection is still running")
     args = parser.parse_args()
 
     check_rule_against_pilot200()
@@ -88,7 +90,7 @@ def main() -> int:
              f"规则：`src/signoff_rule.py`（已对 pilot200 400/400 复现）；题单：`{args.questions}`", ""]
     summary: dict = {"rule": "src/signoff_rule.py", "questions": args.questions, "models": {}}
 
-    for model in MODELS:
+    for model in args.models:
         run = Path(args.run_root) / model
         generations = read_jsonl(run / "generations.jsonl")
         prefix = args.proposals_prefix or args.prefix
