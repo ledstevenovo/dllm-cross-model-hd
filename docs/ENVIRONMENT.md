@@ -7,3 +7,8 @@ Python 3.12/3.13、uv、项目内 .venv；pyproject.toml 与 uv.lock 是唯一�
 在PowerShell可用 `.venv/Scripts/python.exe` 运行README命令。需要时将 UV_CACHE_DIR 指向项目 .uvcache。绘图脚本已将 MPLCONFIGDIR 指向 .tmp/matplotlib；pytest临时文件定向 .tmp/pytest。旧 scripts/env.sh 和 _pyfix 是历史沙箱辅助，不是安装的必需依赖。
 
 数据原文为UTF-8；JSONL/JSON/ID文件在.gitattributes中禁止行尾转换，以保持manifest哈希。无需保存API密钥。模型权重、原始下载、轨迹、特征与结果均由.gitignore保护（冻结QA研究划分已由原工程纳入版本控制）。
+
+云端容器（AutoDL 等）：GitHub 的 **HTTPS 在本机不可达**（TLS 连接被中途断开），`origin` 必须用 SSH 地址：
+`git remote set-url origin git@github.com:ledstevenovo/dllm-cross-model-hd.git`（SSH 推送/拉取实测可用）。
+注意：用显式 URL 推送（`git push git@github.com:...`）不会更新 `refs/remotes/origin/main`，需要时用 `git fetch origin` 校正。
+API 密钥只存放在仓库外的 `/root/autodl-tmp/.env.<provider>`（chmod 600），不进仓库、不进镜像。
