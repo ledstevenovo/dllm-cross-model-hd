@@ -69,9 +69,39 @@ screen -dmS guard bash scripts/overnight_guard.sh     # 独立守护，每 5 分
 - **采集设备规则（新增，必须遵守）**：扩池的新增轨迹，**两个模型必须在同一设备上采集**。禁止把 5090 的新 LLaDA 轨迹与 4080S 的旧 Dream 轨迹拼进同一张迁移矩阵——跨设备差异会与"跨模型缺口"混淆。pilot200 既有轨迹原样保留（其内部同设备、自洽），不重采、不替换。
 - **pool2000 题单预检通过**：1800 道新题，LLaDA 最长 108 token / Dream 最长 106 token（上下文 4096、生成预算 64），与 pilot 无重复题干、无空 gold、无跨 split 簇；同 `--name` 复算 sha256 一致，题单不动。
 
+## 2d. pool2000 扩池采集与后续队列（2026-10-22 起）
+
+规模已由用户定为 **2000/模型**（`reports/expansion_pack_v2.md`）。采集在 screen `pool2000` 中后台运行：
+
+```bash
+screen -dmS pool2000 bash scripts/run_pool2000_collect.sh   # 已在 18:09 启动
+screen -ls                                                   # 确认存活
+tail -f /root/autodl-tmp/pool2000_logs/driver.log             # 看每步 rc
+```
+
+- 输出：`data/trajectories/bf16_pool2000/{llada,dream}`（1800 题 × 2 模型，bf16/64-64-64/seed 20261020/`--verify-observer`）；
+- 设备资格在采集**之前**写入 `pool2000_logs/gpu_env_probe_*.json`，两模型均确认 RTX 5090 / sm_120（同设备规则见 §2c）；
+- 预计 1.5–2 小时；中断后加 `--resume` 续采（若留 `.collection.lock`，先核实锁内 PID 已不存在再删）；
+- 失败处理按 §5 的升级规则执行，不重复询问。
+
+采集完成后的顺序（每步产物都可复算）：
+
+| 步 | 命令 | 说明 |
+|---|---|---|
+| 1 | `scripts/offline.py label --questions data/raw_qa/subsets/pool2000_v1.jsonl --generations .../pool2000/<model>/generations.jsonl --output data/labels/pool2000_<model>.proposals.jsonl` | 工具提案 |
+| 2 | `scripts/draft_signoff_review.py --questions data/raw_qa/subsets/pool2000_v1.jsonl --run-root data/trajectories/bf16_pool2000 --prefix pool2000 --sheet reports/pool2000_draft_review.md` | 签核规则（脚本自带 400/400 回归自检，规则漂移即拒跑） |
+| 3 | `scripts/finalize_reviewed_labels.py --input data/labels/pool2000_<model>.draft_review.jsonl --out data/labels/pool2000_<model>.reviewed.jsonl --reviewer ledstevenovo` | 人工签核后晋升 |
+| 4 | `scripts/offline.py extract --questions ... --traces ... --labels ... --output data/features/pool2000_<model>.parquet` | 特征 |
+| 5 | `scripts/judge_consistency_parallel.py --subset data/raw_qa/subsets/pool2000_v1.jsonl --trajectories data/trajectories/bf16_pool2000 --labels data/labels --prefix pool2000 --samples-per-model 0 --out reports/pool2000_label_consistency.json --workers 8` | 第二 judge 全覆盖（8 并发实测 373 条约数分钟；必须报告 coverage） |
+| 6 | `scripts/offline.py evaluate --features <combined> --feature-sets entropy_raw relative_normalized --kinds lr mlp --bootstrap 1000 --axis model` | 迁移矩阵（另跑 `--axis dataset` 分层） |
+| 7 | `scripts/stability_study.py --repeats 300`（两个 seed）→ `scripts/multiseed_transfer.py` | 稳定性与多种子 |
+| 8 | 更新 `reports/paper_draft.md` §3 表格与 `reports/stage7_initial_observations.md` | 按预注册判据（§6.7）下结论 |
+
+**预注册判据（先写死，不得事后调整）**：`rel+LR Dream→LLaDA` 的 95% CI 上界 <0.6 且 `ent+LR` 同方向 CI 下界 >0.7 → "Dream 源域方向性缺口"成立；否则按"未复现"报告。
+
 ## 3. 需要 GPU 时才开卡的清单（备查）
 
-- 主项目扩池 800–2000：`scripts/collect_llada.py` / `collect_dream.py`，新题单与新输出目录；**两模型同设备**（见 §2c）；
+- 主项目扩池 2000：`scripts/collect_llada.py` / `collect_dream.py`，题单 `data/raw_qa/subsets/pool2000_v1_new.jsonl`，输出 `data/trajectories/bf16_pool2000/`；**两模型同设备**（见 §2c），一键脚本 `scripts/run_pool2000_collect.sh`；
 - TRE R2：每格 800 题，`--precision float16 --gen-length 128 --steps 64 --block-size 128`；
 - DynHD 扩池：`scripts/dynhd_repro/collect_local.py`，`traces/<model>/.../raw/<new_run_id>`；
 - 开卡后先跑一次设备/BF16 探针（`scripts/gpu_env_probe.py`），再开始采集。
