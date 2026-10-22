@@ -1,0 +1,226 @@
+{
+  "date": "2026-10-22",
+  "scope": "main project reviewed pilot200 labels",
+  "judge_model": "LongCat-2.5-Preview",
+  "judge_endpoint": "https://api.longcat.chat/openai/v1/chat/completions",
+  "judge_prompt_sha256": "2d125bea4f6a5d5a5f97cbb48666c1c872f093d9356a00b09283dc88e5bd46cd",
+  "plan": {
+    "models": {
+      "llada": {
+        "eligible": 195,
+        "chosen": 195,
+        "reviewed_label_counts": {
+          "correct": 53,
+          "incorrect": 142
+        }
+      },
+      "dream": {
+        "eligible": 178,
+        "chosen": 178,
+        "reviewed_label_counts": {
+          "correct": 54,
+          "incorrect": 124
+        }
+      }
+    },
+    "seed": 20261021,
+    "samples_per_model": 200
+  },
+  "samples_requested": 373,
+  "samples_resolved": 373,
+  "agreement": 0.9571045576407506,
+  "cohens_kappa": 0.8963168867268936,
+  "per_model": {
+    "llada": {
+      "n": 195,
+      "agreement": 0.958974358974359,
+      "rule_incorrect": 0.7282051282051282,
+      "judge_incorrect": 0.7282051282051282
+    },
+    "dream": {
+      "n": 178,
+      "agreement": 0.9550561797752809,
+      "rule_incorrect": 0.6966292134831461,
+      "judge_incorrect": 0.6741573033707865
+    }
+  },
+  "disagreements": [
+    {
+      "model": "llada",
+      "sample_id": "hotpotqa__5adc2f53554299438c868d6d__seed20261020",
+      "rule_label": 0,
+      "answer": "No, Triumph of the Will and The End of America were not made in the same year. Triumph of the Will was released in 1955, while The End of America was released in 1956.",
+      "question": "Were Triumph of the Will and The End of America both made in the same year?",
+      "judge_label": 1,
+      "judge_verdict": "incorrect",
+      "judge_reason": "While the 'no' matches the reference, the answer adds materially false details: Triumph of the Will was released in 1935 (not 1955) and The End of America in 2008 (not 1956).",
+      "agree": false
+    },
+    {
+      "model": "llada",
+      "sample_id": "triviaqa__qw_15432__seed20261020",
+      "rule_label": 1,
+      "answer": "Duke.",
+      "question": "The actor John Wayne was known by what nickname?",
+      "judge_label": 0,
+      "judge_verdict": "correct",
+      "judge_reason": "The proposed answer 'Duke' is a valid alias for John Wayne's nickname 'The Duke', which matches the reference answers.",
+      "agree": false
+    },
+    {
+      "model": "llada",
+      "sample_id": "triviaqa__qb_3878__seed20261020",
+      "rule_label": 1,
+      "answer": "Niccolò Machiavel",
+      "question": "Who wrote the political treatise ‘The Prince’, published in 1532?",
+      "judge_label": 0,
+      "judge_verdict": "correct",
+      "judge_reason": "The answer is a variant spelling of Niccolò Machiavelli, the author of The Prince, and is consistent with the many alternative spellings provided in the reference answers.",
+      "agree": false
+    },
+    {
+      "model": "llada",
+      "sample_id": "triviaqa__qw_4069__seed20261020",
+      "rule_label": 0,
+      "answer": "Prince Albert II",
+      "question": "Who succeeded Prince Rainier of Monaco?",
+      "judge_label": 1,
+      "judge_verdict": "incorrect",
+      "judge_reason": "The proposed answer Prince Albert II refers to the Monegasque prince who actually succeeded Rainier III, but all reference answers refer to the 19th-century British Prince Consort (Albert of Saxe-Coburg-Gotha), not the Prince of Monaco. The proposed answer is not semantically equivalent to any reference answer.",
+      "agree": false
+    },
+    {
+      "model": "llada",
+      "sample_id": "triviaqa__qw_9664__seed20261020",
+      "rule_label": 1,
+      "answer": "New York",
+      "question": "Under the Treaty of Breda (31 July 1667), negotiated to end the Second Anglo-Dutch War, the Dutch kept the colony of Suriname conquered from the English, and left the English with what area of land?",
+      "judge_label": 0,
+      "judge_verdict": "correct",
+      "judge_reason": "New York is the English name for New Amsterdam, the same area of land the English retained under the treaty.",
+      "agree": false
+    },
+    {
+      "model": "llada",
+      "sample_id": "hotpotqa__5a8b78775542997f31a41d3d__seed20261020",
+      "rule_label": 0,
+      "answer": "Chimaja Appawas was the younger brother of Chimaji Appa, a general of the Maratha Empire in India. Chimaja Appawas served as the Peshwa (prime minister) to the fifth Maratha Chhatrapati Shahu from 1720 until his death.",
+      "question": "Chimaja Appawas the younger brother of a general of the Maratha Empire in India, who served as what to the fifth Maratha Chhatrapati Shahu from 1720 until his death?",
+      "judge_label": 1,
+      "judge_verdict": "incorrect",
+      "judge_reason": "The answer misattributes the role of Peshwa to Chimaja Appawas himself, whereas the question asks what his brother (the general) served as, and the reference answer refers to the brother's role. This introduces a material factual error.",
+      "agree": false
+    },
+    {
+      "model": "llada",
+      "sample_id": "hotpotqa__5a74655b55429974ef308bf0__seed20261020",
+      "rule_label": 1,
+      "answer": "Russian",
+      "question": "Which film industry would have films in which Ilya Khrzhanovsky would be the director?",
+      "judge_label": 0,
+      "judge_verdict": "correct",
+      "judge_reason": "The proposed answer \"Russian\" is semantically equivalent to the reference answer \"The cinema of Russia\" — both identify the Russian film industry, of which Ilya Khrzhanovsky is a director.",
+      "agree": false
+    },
+    {
+      "model": "llada",
+      "sample_id": "triviaqa__qw_15117__seed20261020",
+      "rule_label": 0,
+      "answer": "The 11th and 12th century ruler of Georgia, celebrated by Georgians as their most successful, was King David IV of Georgia, also known as David the Great. He led Georgia out from Turkish domination, reunited the country, and was subsequently canonized by the Georgian Orthodox Church.",
+      "question": "Who was the 11th and 12th century ruler of Georgia, celebrated by Georgians as their most successful, leading them out from Turkish domination, reuniting the country, and subsequently being canonised by the Georgian Orthodox Church?",
+      "judge_label": 1,
+      "judge_verdict": "incorrect",
+      "judge_reason": "While the answer correctly names David IV of Georgia, it adds a material factual error by claiming he was 'also known as David the Great.' The historical epithet is 'David the Builder' (Aghmashenebeli); 'David the Great' is not a recognized alias and contradicts the reference answers.",
+      "agree": false
+    },
+    {
+      "model": "dream",
+      "sample_id": "hotpotqa__5a876f785542993e715abf42__seed20261020",
+      "rule_label": 1,
+      "answer": "John Carpenter",
+      "question": "Which person, William Blake Herron or John Carpenter, held more diverse roles in the movie industry?",
+      "judge_label": 0,
+      "judge_verdict": "correct",
+      "judge_reason": "The reference answer lists musician, editor and composer, which are John Carpenter's roles, confirming he held more diverse roles than William Blake Herron. The proposed answer correctly identifies John Carpenter.",
+      "agree": false
+    },
+    {
+      "model": "dream",
+      "sample_id": "triviaqa__qw_4069__seed20261020",
+      "rule_label": 0,
+      "answer": "Prince Albert II",
+      "question": "Who succeeded Prince Rainier of Monaco?",
+      "judge_label": 1,
+      "judge_verdict": "incorrect",
+      "judge_reason": "The reference answers all refer to Prince Albert, Prince Consort of the United Kingdom (husband of Queen Victoria), not to Albert II of Monaco who actually succeeded Prince Rainier III. 'Prince Albert II' names a different person than any of the reference answers describe.",
+      "agree": false
+    },
+    {
+      "model": "dream",
+      "sample_id": "triviaqa__dpql_3621__seed20261020",
+      "rule_label": 1,
+      "answer": "P Pangloss",
+      "question": "Which doctor - an eternal optimist – features in Voltaire’s Candide?",
+      "judge_label": 0,
+      "judge_verdict": "correct",
+      "judge_reason": "The doctor who is an eternal optimist in Candide is Dr. Pangloss. 'P Pangloss' is a typographical variant of 'Pangloss', which matches the reference answers (including similar variants like 'Pan gloss'), so it is semantically equivalent.",
+      "agree": false
+    },
+    {
+      "model": "dream",
+      "sample_id": "triviaqa__qw_15544__seed20261020",
+      "rule_label": 0,
+      "answer": "The Godfather",
+      "question": "What is the only sequel to win an Academy Award for Best Picture?",
+      "judge_label": 1,
+      "judge_verdict": "incorrect",
+      "judge_reason": "The proposed answer 'The Godfather' refers to the original film, not the sequel. All reference answers identify 'The Godfather Part II' as the only sequel to win Best Picture.",
+      "agree": false
+    },
+    {
+      "model": "dream",
+      "sample_id": "triviaqa__qz_347__seed20261020",
+      "rule_label": 1,
+      "answer": "Yes",
+      "question": "Thomas Edison, who invented the lightbulb, was afraid of the dark?",
+      "judge_label": 0,
+      "judge_verdict": "correct",
+      "judge_reason": "The proposed answer 'Yes' is semantically equivalent to the reference answers, which all affirm the statement as true.",
+      "agree": false
+    },
+    {
+      "model": "dream",
+      "sample_id": "hotpotqa__5a74655b55429974ef308bf0__seed20261020",
+      "rule_label": 1,
+      "answer": "Russian",
+      "question": "Which film industry would have films in which Ilya Khrzhanovsky would be the director?",
+      "judge_label": 0,
+      "judge_verdict": "correct",
+      "judge_reason": "The proposed answer 'Russian' refers to the Russian film industry, which is semantically equivalent to the reference answer 'The cinema of Russia'.",
+      "agree": false
+    },
+    {
+      "model": "dream",
+      "sample_id": "triviaqa__sfq_6889__seed20261020",
+      "rule_label": 1,
+      "answer": "Li Lo",
+      "question": "Which actress and singer is known as Li Lo?",
+      "judge_label": 0,
+      "judge_verdict": "correct",
+      "judge_reason": "The proposed answer 'Li Lo' is semantically equivalent to the reference answer 'LiLo (actress)', which identifies the person the question is asking about.",
+      "agree": false
+    },
+    {
+      "model": "dream",
+      "sample_id": "triviaqa__qg_2404__seed20261020",
+      "rule_label": 1,
+      "answer": "The Time Machine, H.G. Wells",
+      "question": "Name the book and the author: 'The Time Traveler (for so it will be convenient to speak of him) was expounding a recondite matter to us.'",
+      "judge_label": 0,
+      "judge_verdict": "correct",
+      "judge_reason": "The proposed answer identifies the book as The Time Machine and the author as H.G. Wells, which is semantically equivalent to the reference answers despite omitting 'by'.",
+      "agree": false
+    }
+  ],
+  "note": "supplementary label-quality evidence; the main labels stay the reviewed rule sign-off"
+}

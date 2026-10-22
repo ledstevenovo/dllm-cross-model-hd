@@ -1,6 +1,6 @@
 # 标签质量证据：第二 judge 一致性（2026-10-22）
 
-## 主项目（迁移矩阵/稳定性所用 reviewed 标签）
+## 主项目（迁移矩阵/稳定性所用 reviewed 标签）· 100 题抽样
 
 - judge：`LongCat-2.5-Preview`，冻结提示词 `judge_prompt_v3` （sha256 2d125bea4f6a…），温度 0
 - 抽样：100 条，完成 100 条（seed 20261021）
@@ -22,7 +22,30 @@
 | dream | Which person, William Blake Herron or John Carpenter, held more diverse roles in the movie | incorrect | correct | The proposed answer 'John Carpenter' correctly identifies the person who held more diverse roles in the movie industry. The reference answer |
 | dream | Who succeeded Prince Rainier of Monaco? | correct | incorrect | The proposed answer 'Prince Albert II' refers to Albert II of Monaco who succeeded Rainier III. However, all reference answers refer to Prin |
 
-## DynHD 复现（规则标签）
+## 主项目 · 全量覆盖复核（全部可用样本）
+
+- judge：`LongCat-2.5-Preview`，冻结提示词 `judge_prompt_v3` （sha256 2d125bea4f6a…），温度 0
+- 抽样：373 条，完成 373 条（seed 20261021）
+- **总体一致率 0.957**，**Cohen's κ = 0.896**
+
+| 模型 | n | 一致率 | 规则标签 incorrect 占比 | judge incorrect 占比 |
+|---|---|---|---|---|
+| dream | 178 | 0.955 | 0.70 | 0.67 |
+| llada | 195 | 0.959 | 0.73 | 0.73 |
+
+- 不一致 16 条；明细见 `main_label_consistency_full.json`（disagreements 字段）与 `main_label_consistency_full.rows.jsonl`，并已全部进入人工抽查表（`reports/label_spotcheck_sheet.md/.csv`）。
+
+### 分歧示例（最多 5 条，完整清单见 `label_spotcheck_sheet.md`）
+
+| 模型 | 问题（截断） | 规则 | judge | judge 理由（截断） |
+|---|---|---|---|---|
+| llada | Were Triumph of the Will and The End of America both made in the same year? | correct | incorrect | While the 'no' matches the reference, the answer adds materially false details: Triumph of the Will was released in 1935 (not 1955) and The  |
+| llada | The actor John Wayne was known by what nickname? | incorrect | correct | The proposed answer 'Duke' is a valid alias for John Wayne's nickname 'The Duke', which matches the reference answers. |
+| llada | Who wrote the political treatise ‘The Prince’, published in 1532? | incorrect | correct | The answer is a variant spelling of Niccolò Machiavelli, the author of The Prince, and is consistent with the many alternative spellings pro |
+| llada | Who succeeded Prince Rainier of Monaco? | correct | incorrect | The proposed answer Prince Albert II refers to the Monegasque prince who actually succeeded Rainier III, but all reference answers refer to  |
+| llada | Under the Treaty of Breda (31 July 1667), negotiated to end the Second Anglo-Dutch War, th | incorrect | correct | New York is the English name for New Amsterdam, the same area of land the English retained under the treaty. |
+
+## DynHD 复现（规则标签）· 100 题抽样
 
 - judge：`LongCat-2.5-Preview`，冻结提示词 `judge_prompt_v3` （sha256 2d125bea4f6a…），温度 0
 - 抽样：100 条，完成 100 条（seed 20261021）

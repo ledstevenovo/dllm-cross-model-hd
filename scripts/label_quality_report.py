@@ -47,12 +47,16 @@ def main() -> int:
     parser.add_argument("--dynhd", default=str(REPO / "reports/dynhd_label_consistency.json"))
     parser.add_argument("--main", dest="main_report",
                         default=str(REPO / "reports/main_label_consistency.json"))
+    parser.add_argument("--main-full", dest="main_full",
+                        default=str(REPO / "reports/main_label_consistency_full.json"))
     parser.add_argument("--out", default=str(REPO / "reports/label_quality_evidence.md"))
     args = parser.parse_args()
 
-    sets = [("主项目（迁移矩阵/稳定性所用 reviewed 标签）",
+    sets = [("主项目（迁移矩阵/稳定性所用 reviewed 标签）· 100 题抽样",
              Path(args.main_report), Path(args.main_report).with_name(Path(args.main_report).stem + ".rows.jsonl")),
-            ("DynHD 复现（规则标签）",
+            ("主项目 · 全量覆盖复核（全部可用样本）",
+             Path(args.main_full), Path(args.main_full).with_name(Path(args.main_full).stem + ".rows.jsonl")),
+            ("DynHD 复现（规则标签）· 100 题抽样",
              Path(args.dynhd), Path(args.dynhd).with_name(Path(args.dynhd).stem + ".rows.jsonl"))]
     lines = ["# 标签质量证据：第二 judge 一致性（2026-10-22）", ""]
     summary = []
