@@ -52,7 +52,7 @@ screen -dmS guard bash scripts/overnight_guard.sh     # 独立守护，每 5 分
 | 优先级 | 任务 | 需要 GPU？ | 说明 |
 |---|---|---|---|
 | 1 | ~~**阶段 7 结果解读与报告**~~ ✅ **已完成（10-22 05:53）** | 否 | 稳定性判决：迁移缺口 = **Dream 源域的方向性缺失**（同方向仅 `entropy_raw+LR` 稳定迁移 0.838；`rel+LR` 0.514 ≈ 随机，非负迁移）。证据：`reports/stage7_initial_observations.md` §5、`reports/main_project_stability.json`、`reports/morning_digest.md`。是否扩池待你决策 |
-| 2 | **标签质量证据** | 否（第二 judge 需 API） | ≥50 题人工抽查；第二 judge 100 题一致性（补充，不改主表） |
+| 2 | **标签质量证据** | 否（第二 judge 用 LongCat API） | ✅ **第二 judge 一致性已完成（10-22）**：主项目 reviewed 标签 100 题 agreement 0.96 / κ 0.908；DynHD 规则标签 100 题 0.97 / κ 0.933（冻结提示词 v3，`LongCat-2.5-Preview`，温度 0）。见 `reports/label_quality_evidence.md`。⏳ **待你人工抽查 ≥50 题**：填 `reports/label_spotcheck_sheet.csv` 的 `your_verdict`/`your_notes`（已标记 50 条：7 条全部分歧 + 43 条均衡抽样） |
 | 3 | **DynHD 可选扩池准备** | 题单冻结无卡，采集需卡 | `pick_longest` / 题单冻结 / split 脚本都已就绪 |
 | 4 | **TRE R2 准备** | 题单/prompt 冻结无卡，采集需卡 | HotpotQA / CSQA 格式与 prompt 需先冻结并登记 |
 | 5 | **论文级整理** | 否 | 把 TRE R1（78.34%，CI 74.92–81.72）、阶段 7 矩阵、DynHD 域内结果整理成可发表报告 |
