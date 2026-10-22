@@ -53,7 +53,7 @@ screen -dmS guard bash scripts/overnight_guard.sh     # 独立守护，每 5 分
 |---|---|---|---|
 | 1 | ~~**阶段 7 结果解读与报告**~~ ✅ **已完成（10-22 05:53）** | 否 | 稳定性判决：迁移缺口 = **Dream 源域的方向性缺失**（同方向仅 `entropy_raw+LR` 稳定迁移 0.838；`rel+LR` 0.514 ≈ 随机，非负迁移）。证据：`reports/stage7_initial_observations.md` §5、`reports/main_project_stability.json`、`reports/morning_digest.md`。是否扩池待你决策 |
 | 2 | **标签质量证据** | 否（第二 judge 用 LongCat API） | ✅ **已完成（10-22）**：第二 judge 覆盖率 373/373、一致率 0.957/κ 0.896（DynHD 0.970/κ 0.933）；**人工抽查 50 条已完成**：人工 vs 规则 0.900（κ 0.733）、人工 vs judge 0.960（κ 0.884），7 条分歧人工裁决 5:2 站 judge（judge 的 2 次失利均为上游缺陷题）。证据页 `reports/label_quality_evidence.md`，明细 `reports/label_spotcheck_summary.json` |
-| 2b | **主项目扩池准备（§8 决策门）** | 否（冻结可在无卡完成） | ✅ **题单已冻结（10-22）**：`data/manifests/pool800_v1.json` + `reports/expansion_pack_v1.md`（规则、排除 1192 簇、480/120/200 按簇全局划分、哈希、精度测算：test 200/方向使 AUROC 区间宽度约减半）。采集需卡：600 新题 × 2 模型 = 1200 条 |
+| 2b | **主项目扩池准备（§8 决策门）** | 否（冻结可在无卡完成） | ✅ **题单已冻结（10-22，规模 2000）**：`data/manifests/pool2000_v1.json` + `reports/expansion_pack_v2.md`（规则、排除 1192 簇、1200/300/500 按簇全局划分、哈希、精度测算：test ≈450/方向使异常格 CI 宽度降到 ≈0.12）。采集需卡：1800 新题 × 2 模型 = 3600 条（5090 实测约 1.5–2 h）。**v1 的 800 规模题单已作废并删除** |
 | 3 | **DynHD 可选扩池准备** | 题单冻结无卡，采集需卡 | `pick_longest` / 题单冻结 / split 脚本都已就绪 |
 | 4 | **TRE R2 准备** | 题单/prompt 冻结无卡，采集需卡 | HotpotQA / CSQA 格式与 prompt 需先冻结并登记 |
 | 5 | **论文级整理** | 否 | 把 TRE R1（78.34%，CI 74.92–81.72）、阶段 7 矩阵、DynHD 域内结果整理成可发表报告 |
@@ -67,7 +67,7 @@ screen -dmS guard bash scripts/overnight_guard.sh     # 独立守护，每 5 分
 - **真实加载与 smoke20 通过**：LLaDA 5.0 s / 15.0 GiB，Dream 4.8 s / 14.3 GiB；两模型各 20/20，`--verify-observer` 全过；单题 1.34 s / 1.36 s（4080S 为 2.27 / 2.09 s）。
 - **BF16 跨架构不逐位可复现**（`reports/device_consistency_pilot200.json`）：pilot200 LLaDA 上 token 全同 87.5%、答案文本变化 10.5%、规则标签翻转 2.0%；同机重跑 10/10 全同、熵差 0.0，说明差异来自架构内核而非不确定性。
 - **采集设备规则（新增，必须遵守）**：扩池的新增轨迹，**两个模型必须在同一设备上采集**。禁止把 5090 的新 LLaDA 轨迹与 4080S 的旧 Dream 轨迹拼进同一张迁移矩阵——跨设备差异会与"跨模型缺口"混淆。pilot200 既有轨迹原样保留（其内部同设备、自洽），不重采、不替换。
-- pool800 题单预检通过：LLaDA 最长 102 token / Dream 最长 105 token（上下文 4096、生成预算 64），无截断风险，题单不动。
+- **pool2000 题单预检通过**：1800 道新题，LLaDA 最长 108 token / Dream 最长 106 token（上下文 4096、生成预算 64），与 pilot 无重复题干、无空 gold、无跨 split 簇；同 `--name` 复算 sha256 一致，题单不动。
 
 ## 3. 需要 GPU 时才开卡的清单（备查）
 

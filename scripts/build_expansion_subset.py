@@ -14,12 +14,14 @@ Pre-registered rules (do not change after new results are seen):
 4. Exclusions: every cluster already used by any existing experiment is removed from the pool
    -- pilot200 (which is also what the DynHD reproduction collected), small200, smoke20
    (main), and the TRE R1 eval800 + TRE smoke20 question lists.
-5. Determinism: seed 20261022, salt ``pool800-v1-<split>``; selection is hash-ranked, so it
-   does not depend on labels, scores or any result.
+5. Determinism: seed 20261022, salt ``<name>-<split>``; selection is hash-ranked, so it
+   does not depend on labels, scores or any result.  ``--name`` is part of the salt, so a
+   rerun must pass the same ``--name`` to reproduce a frozen list; a different name yields a
+   different (not nested) selection.
 6. Freeze artefacts: full list (pilot + new), the new-only collection list, and a manifest
    with counts, per-stratum tables, cluster-disjointness assertions and sha256 hashes.
 
-Run: .venv/bin/python scripts/build_expansion_subset.py [--total 800]
+Run: .venv/bin/python scripts/build_expansion_subset.py --total 2000 --name pool2000_v1
 """
 from __future__ import annotations
 

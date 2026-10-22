@@ -15,10 +15,10 @@ that guarantee is broken, so expansion cannot silently use a drifted rule.
 
 Usage:
   .venv/bin/python scripts/draft_signoff_review.py \
-      --questions data/raw_qa/subsets/pool800_v1_new.jsonl \
-      --run-root data/trajectories/bf16_pool800 \
-      --prefix pool800 \
-      --sheet reports/pool800_draft_review.md
+      --questions data/raw_qa/subsets/pool2000_v1_new.jsonl \
+      --run-root data/trajectories/bf16_pool2000 \
+      --prefix pool2000 \
+      --sheet reports/pool2000_draft_review.md
 """
 from __future__ import annotations
 
@@ -69,7 +69,7 @@ def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--questions", required=True)
     parser.add_argument("--run-root", required=True, help="directory with <model>/generations.jsonl")
-    parser.add_argument("--prefix", required=True, help="output label file prefix, e.g. pool800")
+    parser.add_argument("--prefix", required=True, help="output label file prefix, e.g. pool2000")
     parser.add_argument("--proposals-prefix", default=None,
                         help="prefix of the existing <prefix>_<model>.proposals.jsonl (default: same as --prefix)")
     parser.add_argument("--labels-dir", default=str(ROOT / "data/labels"), help="where to write labels")
