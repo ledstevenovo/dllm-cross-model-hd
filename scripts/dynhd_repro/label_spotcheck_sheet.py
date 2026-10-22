@@ -125,19 +125,32 @@ def main() -> int:
         ]
     Path(args.out_md).write_text("\n".join(lines) + "\n", encoding="utf-8")
 
+    header = ["review_priority", "source", "model", "sample_id", "question",
+              "reference_answers", "answer", "rule_label", "judge_label", "agree",
+              "judge_reason", "your_verdict", "your_notes"]
+
+    def csv_row(row):
+        return [row["review_priority"], row["source"], row["model"], row["sample_id"],
+                row["question"].strip(), " | ".join(str(x) for x in row["references"]),
+                row["answer"].strip(), row["rule_label"], row["judge_label"],
+                row["agree"], (row.get("judge_reason") or "").strip(), "", ""]
+
     with Path(args.out_csv).open("w", newline="", encoding="utf-8-sig") as fh:
         writer = csv.writer(fh)
-        writer.writerow(["review_priority", "source", "model", "sample_id", "question",
-                         "reference_answers", "answer", "rule_label", "judge_label", "agree",
-                         "judge_reason", "your_verdict", "your_notes"])
+        writer.writerow(header)
         for row in order:
-            writer.writerow([row["review_priority"], row["source"], row["model"], row["sample_id"],
-                             row["question"].strip(), " | ".join(str(x) for x in row["references"]),
-                             row["answer"].strip(), row["rule_label"], row["judge_label"],
-                             row["agree"], (row.get("judge_reason") or "").strip(), "", ""])
+            writer.writerow(csv_row(row))
+    review_out = Path(args.out_csv).with_name(Path(args.out_csv).stem + "_review50.csv")
+    with review_out.open("w", newline="", encoding="utf-8-sig") as fh:
+        writer = csv.writer(fh)
+        writer.writerow(header)
+        for row in order:
+            if row["review_priority"]:
+                writer.writerow(csv_row(row))
     print(json.dumps({"rows": total, "disagreements": len(disagreements),
                       "sampled_agreements": len(sampled), "review_priority": len(priority_keys),
-                      "md": args.out_md, "csv": args.out_csv}, indent=2, ensure_ascii=False))
+                      "md": args.out_md, "csv": args.out_csv, "review_csv": str(review_out)},
+                     indent=2, ensure_ascii=False))
     return 0
 
 
