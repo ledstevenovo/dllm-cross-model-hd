@@ -31,6 +31,8 @@ from pathlib import Path
 
 import torch
 
+from gpu_arch import arch_covered
+
 
 def driver_version() -> str | None:
     try:
@@ -74,6 +76,9 @@ def main() -> int:
             "total_gib": round(total_bytes / 2 ** 30, 2),
         })
         result["capability_in_wheel_arch_list"] = result["capability_tag"] in result["cuda_arch_list"]
+        covered, how = arch_covered(capability, result["cuda_arch_list"])
+        result["capability_covered"] = covered
+        result["capability_covered_by"] = how
 
         checks: dict = {}
         try:
@@ -110,7 +115,7 @@ def main() -> int:
 
         result["ok"] = bool(
             result["bf16_supported"]
-            and result["capability_in_wheel_arch_list"]
+            and result["capability_covered"]
             and checks.get("bf16_matmul", {}).get("ok")
             and checks.get("bf16_sdpa", {}).get("ok")
         )

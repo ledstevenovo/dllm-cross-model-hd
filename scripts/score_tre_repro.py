@@ -7,11 +7,13 @@ training-free metric.
 
 What it enforces before any number is printed (all failures are hard errors):
 
-* question file passes :func:`src.tre_repro.load_questions` (schema, bare prompt,
-  ``sample_id`` contract, unique IDs);
-* every trace matches the frozen question (id, prompt), carries the frozen
-  generation seed and one single decoding configuration across the run, and is
-  real FP16 unless ``--allow-synthetic`` is given;
+* question file passes :func:`src.tre_repro.load_questions` (schema, prompt
+  round-trip, ``sample_id`` contract, unique IDs);
+* every trace matches the frozen question (id, prompt -- for R2 the prompt is the
+  context-grounded form, so it is compared against ``question.prompt``, not the
+  question text), carries the frozen generation seed and one single decoding
+  configuration across the run, and is real FP16 unless ``--allow-synthetic`` is
+  given;
 * every judgment is bound to the *judged text* through ``generated_text_sha256``,
   so a re-generation cannot silently reuse stale labels;
 * coverage of questions / traces / judgments is complete for the main table.
@@ -139,7 +141,7 @@ def collect_rows(run: Path, questions_path: Path, judgments_path: Path, *,
             meta, arrays = trace
             if meta["question_id"] != question.question_id:
                 raise ValueError(f"question_id mismatch for {sample_id}")
-            if meta.get("prompt") != question.question:
+            if meta.get("prompt") != question.prompt:
                 raise ValueError(f"prompt mismatch for {sample_id}")
             if meta.get("seed") != GENERATION_SEED:
                 raise ValueError(f"generation seed mismatch for {sample_id}: {meta.get('seed')!r}")

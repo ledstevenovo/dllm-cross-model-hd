@@ -8,11 +8,14 @@ import pytest
 from src.trace_schema import REQUIRED, save_trace
 from src.tre_repro import (
     GENERATION_SEED,
+    TRE_PROMPT_VERSION_CONTEXT,
     TRE_REPRO_SCHEMA_VERSION,
     bare_prompt,
     build_record,
+    context_prompt,
     load_questions,
     prompt_fingerprint,
+    render_context,
     sample_id_for,
     validate_questions,
 )
@@ -68,9 +71,62 @@ def test_record_rejects_copyable_gold_and_bad_sample_id():
     record = build_record(pool_row(question="In which year did the War of 1812 start?"), split="test",
                           provenance=PROVENANCE)
     copyable = replace(record, gold_answer="1812")
-    assert any("appears in the bare prompt" in issue for issue in copyable.problems())
+    assert any("appears in the question" in issue for issue in copyable.problems())
     broken = replace(record, gold_answer="Paris", sample_id="triviaqa__q1__seed1")
     assert any("collector contract" in issue for issue in broken.problems())
+
+
+CONTEXT = "Eliot Cutler: Eliot Cutler is an American lawyer.\n\nFarid Khavari: He ran for governor."
+
+
+def test_context_record_uses_its_own_prompt_style_and_round_trips(tmp_path):
+    record = build_record(pool_row(), split="test", provenance=PROVENANCE, context=CONTEXT)
+    payload = record.to_dict()
+
+    assert payload["context"] == CONTEXT
+    assert payload["prompt_template_version"] == TRE_PROMPT_VERSION_CONTEXT
+    assert payload["prompt"] == context_prompt(CONTEXT, payload["question"])
+    assert payload["prompt"] != payload["question"]
+    assert payload["prompt_fingerprint"] == prompt_fingerprint(payload["prompt"], style=TRE_PROMPT_VERSION_CONTEXT)
+    assert validate_questions([record])["problems"] == []
+    assert load_questions(write_questions(tmp_path, [record]))[0].to_dict() == payload
+
+
+def test_context_record_does_not_reject_a_gold_answer_that_lives_in_the_context():
+    # HotpotQA answers are *supposed* to be in the distractor paragraphs; only a
+    # gold answer visible in the question itself means the item is copyable.
+    record = build_record(pool_row(question="Which city hosts the Eiffel Tower?"), split="test",
+                          provenance=PROVENANCE, context="Paris: Paris is the capital of France.")
+    assert validate_questions([record])["problems"] == []
+
+
+def test_loader_rejects_a_prompt_that_does_not_round_trip(tmp_path):
+    record = build_record(pool_row(), split="test", provenance=PROVENANCE, context=CONTEXT)
+    payload = record.to_dict()
+    payload["prompt"] = payload["prompt"].replace("only", "ONLY")
+    path = tmp_path / "questions.jsonl"
+    path.write_text(json.dumps(payload, ensure_ascii=False) + "\n", encoding="utf-8")
+    with pytest.raises(ValueError, match="prompt does not round-trip"):
+        load_questions(path)
+
+
+def test_loader_rejects_a_stale_prompt_fingerprint(tmp_path):
+    record = build_record(pool_row(), split="test", provenance=PROVENANCE, context=CONTEXT)
+    payload = record.to_dict()
+    payload["prompt_fingerprint"] = "sha256:" + "0" * 64
+    path = tmp_path / "questions.jsonl"
+    path.write_text(json.dumps(payload, ensure_ascii=False) + "\n", encoding="utf-8")
+    with pytest.raises(ValueError, match="prompt_fingerprint mismatch"):
+        load_questions(path)
+
+
+def test_render_context_is_stable_and_rejects_empty_input():
+    rendered = render_context(["A", "B"], [["one.", "two."], ["three."]])
+    assert rendered == "A: one. two.\n\nB: three."
+    with pytest.raises(ValueError):
+        render_context([], [])
+    with pytest.raises(ValueError):
+        render_context(["A"], [["x"], ["y"]])
 
 
 def test_question_file_rejects_duplicates(tmp_path):

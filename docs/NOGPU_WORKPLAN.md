@@ -65,7 +65,7 @@ screen -dmS guard bash scripts/overnight_guard.sh     # 独立守护，每 5 分
 
 - **环境资格通过**（`reports/gpu_env_probe_{llada,dream}.json`）：torch 2.8.0+cu128 的 wheel 架构表含 sm_120；BF16 原生支持，BF16 matmul 与 FP32 参考一致；SDPA flash/mem-efficient 可用；31.36 GiB。
 - **真实加载与 smoke20 通过**：LLaDA 5.0 s / 15.0 GiB，Dream 4.8 s / 14.3 GiB；两模型各 20/20，`--verify-observer` 全过；单题 1.34 s / 1.36 s（4080S 为 2.27 / 2.09 s）。
-- **BF16 跨架构不逐位可复现**（`reports/device_consistency_pilot200.json`）：pilot200 LLaDA 上 token 全同 87.5%、答案文本变化 10.5%、规则标签翻转 2.0%；同机重跑 10/10 全同、熵差 0.0，说明差异来自架构内核而非不确定性。
+- **BF16 跨架构不逐位可复现**（`reports/device_consistency_pilot200.json`）：pilot200 LLaDA 上 token 全同 87.5%、答案文本变化 10.5%、规则标签翻转 **3/200 = 1.5%**；同机重跑 10/10 全同、熵差 0.0，说明差异来自架构内核而非不确定性。
 - **采集设备规则（新增，必须遵守）**：扩池的新增轨迹，**两个模型必须在同一设备上采集**。禁止把 5090 的新 LLaDA 轨迹与 4080S 的旧 Dream 轨迹拼进同一张迁移矩阵——跨设备差异会与"跨模型缺口"混淆。pilot200 既有轨迹原样保留（其内部同设备、自洽），不重采、不替换。
 - **pool2000 题单预检通过**：1800 道新题，LLaDA 最长 108 token / Dream 最长 106 token（上下文 4096、生成预算 64），与 pilot 无重复题干、无空 gold、无跨 split 簇；同 `--name` 复算 sha256 一致，题单不动。
 
@@ -98,6 +98,21 @@ tail -f /root/autodl-tmp/pool2000_logs/driver.log             # 看每步 rc
 | 8 | 更新 `reports/paper_draft.md` §3 表格与 `reports/stage7_initial_observations.md` | 按预注册判据（§6.7）下结论 |
 
 **预注册判据（先写死，不得事后调整）**：`rel+LR Dream→LLaDA` 的 95% CI 上界 <0.6 且 `ent+LR` 同方向 CI 下界 >0.7 → "Dream 源域方向性缺口"成立；否则按"未复现"报告。
+
+## 2e. TRE R2（HotpotQA）协议冻结（2026-10-22 22:36，在任何 R2 轨迹出现之前）
+
+R1 只覆盖 LLaDA × TriviaQA × 一个预算；原文表 1 有 2 模型 × 3 数据集 × 2 预算。R2 补 HotpotQA。
+
+- **题单**：`data/tre_repro/questions/hotpotqa_eval800.jsonl`（800 题）+ `hotpotqa_smoke20.jsonl`（20 题工程验收），sha256 `37776b951f264ed0…` / `afc50dc495d02f31…`，manifest `data/tre_repro/questions_manifest_r2.json`。构建脚本 `scripts/build_tre_r2_questions.py`，`--check` 可复算。
+- **抽样**：沿用 R1 的决策 B（从冻结池的 test 分区抽，不重下 raw）。`random.Random(20261021)`，按 question_id 排序取 820，前 800 评测、后 20 smoke → 两者构造上不相交。与池内 train/validation **簇级零重叠**（已断言）。
+- **prompt 版本 v4**：HotpotQA 无上下文不可答，因此 prompt 是上下文接地式（`src.tre_repro.context_prompt`）：`Answer the question using only the context below.` + `Context:` + 段落 + `Question: … Answer:`。上下文按 `raw_id` 从 revision-pinned parquet 还原，渲染为 `Title: sentences`、段间空行，**整段文本连同 sha256 写进每条记录**。这是**新的 prompt 版本，不是对 v3 的修改**——R1 的两个题单文件仍逐字节不变（`--check` 已验证）。
+- **契约扩展**：`TreQuestion` 新增 `context` 字段与 `prompt`/`prompt_style` 属性；加载器强制 `prompt` 可往返、`prompt_template_version` 与 `prompt_fingerprint` 一致。`score_tre_repro.py` 的 prompt 校验从「等于 question」改为「等于 question.prompt」。
+- **可抄答案守卫改为只查 question**：HotpotQA 的答案本来就该出现在上下文里；只有答案出现在**问题**中才算坏题。实测 1654 题中 0 条命中。
+- **长度预检**：LLaDA 含上下文均值 1475 token / 最大 3715；Dream 均值 1438 / 最大 3086；上下文 4096、生成 128 → 均无截断。
+- **与 pool2000 的 115 题重叠**：两者都从同一个 HotpotQA test 池（1654 题）抽，`hotpotqa_eval800 ∩ pool2000_v1_new` = 115。已写入 manifest，不隐藏；两项研究协议不同（TRE 无检测器训练、主项目训练 LR/MLP），重叠只影响"同一批生成"的复用，不影响各自的指标口径。
+- **配置**：LLaDA FP16，`L128/S64/B128`，seed 20261021，与 R1 完全一致（只换题单与 prompt 版本）。**Dream 走 BF16**：FP16/NF4 的原生 entropy 采样有 NaN 风险，`validate_precision` 会硬拒，这是既有保护，不为 R2 关闭。
+- **judge 仍是 J2（moma deepseek-v4.1-flash）**。⚠️ 本机当前**没有可用凭据**（`MOMA_API_KEY` 未设；LongCat 的 key 调该端点返回 401）。轨迹可以先采，标签出不来。R1 的 800 条标签是此前判好并落盘的，不受影响。可选方案：用户提供 MOMA key，或改 J1（本地 Qwen3-8B）——后者属协议变更，须新开口径，禁止与 R1 的 J2 标签混用。
+- **队列**：`scripts/run_gpu_queue.sh`（screen `gpuqueue`）等 pool2000 结束自动依次跑：R2 smoke20 → R2 800 → TriviaQA L64 → HotpotQA L64 → Dream HotpotQA BF16。
 
 ## 3. 需要 GPU 时才开卡的清单（备查）
 

@@ -1,8 +1,19 @@
 {
-  "fetched_at_utc": "20261021T132128Z",
+  "fetched_at_utc": "20261022T144130Z",
   "endpoint": "https://hf-mirror.com",
   "note": "host-rewritten fetch; every file verified against configs/datasets/sources.lock.json",
   "files": [
+    {
+      "key": "hotpotqa_distractor_validation",
+      "target": "data/raw_download/hotpotqa/distractor_validation.parquet",
+      "lock_url": "https://huggingface.co/datasets/hotpotqa/hotpot_qa/resolve/1908d6afbbead072334abe2965f91bd2709910ab/distractor/validation-00000-of-00001.parquet",
+      "url_used": "https://hf-mirror.com/datasets/hotpotqa/hotpot_qa/resolve/1908d6afbbead072334abe2965f91bd2709910ab/distractor/validation-00000-of-00001.parquet",
+      "expected_bytes": 27452575,
+      "expected_sha256": "c20b638ca82b21d04fe12e14ff417ad05153d4d215a65de54497fca4e972f7c6",
+      "status": "already_present_verified",
+      "bytes": 27452575,
+      "sha256": "c20b638ca82b21d04fe12e14ff417ad05153d4d215a65de54497fca4e972f7c6"
+    },
     {
       "key": "triviaqa_rc_nocontext_validation",
       "target": "data/raw_download/triviaqa/rc.nocontext_validation.parquet",

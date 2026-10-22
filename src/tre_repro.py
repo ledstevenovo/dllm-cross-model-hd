@@ -35,13 +35,17 @@ __all__ = [
     "GENERATION_SEED",
     "QUESTION_FIELD_ORDER",
     "TRE_PROMPT_STYLE",
+    "TRE_PROMPT_STYLE_CONTEXT",
     "TRE_PROMPT_VERSION",
+    "TRE_PROMPT_VERSION_CONTEXT",
     "TRE_REPRO_SCHEMA_VERSION",
     "TreQuestion",
     "bare_prompt",
     "build_record",
+    "context_prompt",
     "load_questions",
     "prompt_fingerprint",
+    "render_context",
     "sample_id_for",
     "validate_questions",
 ]
@@ -55,6 +59,18 @@ TRE_PROMPT_VERSION = "v3-bare-question"
 TRE_PROMPT_STYLE = (
     "bare question only; the model's own chat template is applied exactly once "
     "at collection time; no instruction prefix, no answer tags, no context"
+)
+
+#: HotpotQA prompt style for R2.  HotpotQA questions are unanswerable without the
+#: distractor paragraphs, so the context has to be in the prompt; the instruction
+#: says to use only that context, which is the standard HotpotQA protocol.  A new
+#: version string, never an edit of v3 -- the R1 files must keep serialising
+#: byte-identically.
+TRE_PROMPT_VERSION_CONTEXT = "v4-hotpotqa-context"
+TRE_PROMPT_STYLE_CONTEXT = (
+    "context-grounded question: the distractor paragraphs are rendered as "
+    "'Title: sentences' blocks, followed by the question; the model's own chat "
+    "template is applied exactly once at collection time"
 )
 
 #: Generation seed for the TRE reproduction.  It fixes ``sample_id`` and is passed
@@ -100,19 +116,63 @@ def bare_prompt(question: str) -> str:
     return question.strip()
 
 
-def prompt_fingerprint(prompt: str) -> str:
+def render_context(titles: Iterable[str], sentences: Iterable[Iterable[str]]) -> str:
+    """Render HotpotQA paragraphs as ``Title: s1 s2`` blocks separated by blank lines.
+
+    The distractor paragraphs arrive as parallel lists of titles and per-title
+    sentence lists.  A stable rendering matters more than a pretty one: the exact
+    text is fingerprinted into every question record, so any change is a new
+    prompt version rather than a silent drift.
+    """
+    titles = list(titles)
+    sentences = list(sentences)
+    if len(titles) != len(sentences):
+        raise ValueError("context titles and sentences must have the same length")
+    blocks = []
+    for title, group in zip(titles, sentences):
+        if not str(title).strip():
+            raise ValueError("context paragraph has an empty title")
+        blocks.append(f"{str(title).strip()}: {' '.join(str(s).strip() for s in group if str(s).strip())}")
+    if not blocks:
+        raise ValueError("context must have at least one paragraph")
+    return "\n\n".join(blocks)
+
+
+def context_prompt(context: str, question: str) -> str:
+    """Return the R2 prompt text: context-grounded question, context first."""
+    if not isinstance(context, str) or not context.strip():
+        raise ValueError("context_prompt requires a non-empty context")
+    if not isinstance(question, str) or not question.strip():
+        raise ValueError("context_prompt requires a non-empty question")
+    return (
+        "Answer the question using only the context below.\n\n"
+        f"Context:\n{context.strip()}\n\n"
+        f"Question: {question.strip()}\nAnswer:"
+    )
+
+
+def prompt_fingerprint(prompt: str, *, style: str = TRE_PROMPT_VERSION) -> str:
     """Return ``sha256:<hex>`` over the prompt style version and the prompt text.
 
     Hashing the version too means a style change is visible even when a single
     prompt string happens to repeat.
     """
-    payload = f"{TRE_PROMPT_VERSION}\x1f{prompt}".encode("utf-8")
+    payload = f"{style}\x1f{prompt}".encode("utf-8")
     return "sha256:" + hashlib.sha256(payload).hexdigest()
 
 
 @dataclass(frozen=True, slots=True)
 class TreQuestion:
-    """One TRE-reproduction question with its bare prompt and provenance."""
+    """One TRE-reproduction question with its prompt and provenance.
+
+    ``context`` is empty for R1 (TriviaQA, bare-question prompt ③).  R2 adds
+    HotpotQA, whose protocol needs the distractor paragraphs in the prompt, so the
+    record carries them explicitly: the prompt is then *composed* and its style
+    version differs.  Keeping ``context`` on the record rather than baking the
+    text into ``question`` means the question stays comparable across protocols,
+    and the frozen R1 files serialise exactly as before (no new keys, because the
+    field order only gains an entry when a context is present).
+    """
 
     sample_id: str
     question_id: str
@@ -127,6 +187,18 @@ class TreQuestion:
     answer_source_field: str = ""
     source: Mapping[str, Any] = field(default_factory=dict)
     provenance: Mapping[str, Any] = field(default_factory=dict)
+    context: str = ""
+
+    @property
+    def prompt(self) -> str:
+        """The exact text handed to the model (before its chat template)."""
+        if self.context:
+            return context_prompt(self.context, self.question)
+        return bare_prompt(self.question)
+
+    @property
+    def prompt_style(self) -> str:
+        return TRE_PROMPT_VERSION_CONTEXT if self.context else TRE_PROMPT_VERSION
 
     def to_dict(self) -> dict[str, Any]:
         payload: dict[str, Any] = {
@@ -143,13 +215,18 @@ class TreQuestion:
             "gold_normalized_aliases": list(self.gold_normalized_aliases),
             "answer_type": self.answer_type,
             "answer_source_field": self.answer_source_field,
-            "prompt": bare_prompt(self.question),
-            "prompt_template_version": TRE_PROMPT_VERSION,
-            "prompt_fingerprint": prompt_fingerprint(bare_prompt(self.question)),
+            "prompt": self.prompt,
+            "prompt_template_version": self.prompt_style,
+            "prompt_fingerprint": prompt_fingerprint(self.prompt, style=self.prompt_style),
             "source": dict(self.source or {}),
             "provenance": dict(self.provenance or {}),
         }
-        return {key: payload[key] for key in QUESTION_FIELD_ORDER}
+        if self.context:
+            payload["context"] = self.context
+            order = QUESTION_FIELD_ORDER + ("context",)
+        else:
+            order = QUESTION_FIELD_ORDER
+        return {key: payload[key] for key in order}
 
     def problems(self) -> list[str]:
         """Return schema problems for this record (empty list means valid)."""
@@ -162,12 +239,18 @@ class TreQuestion:
             issues.append(f"split {self.split!r} is not one of {ALLOWED_SPLITS}")
         if self.sample_id != sample_id_for(self.question_id):
             issues.append("sample_id does not follow the collector contract question_id__seed<GENERATION_SEED>")
-        if bare_prompt(self.question) != self.question.strip():
+        if self.context:
+            if context_prompt(self.context, self.question) != self.prompt:
+                issues.append("context prompt is not reproducible from context + question")
+        elif bare_prompt(self.question) != self.question.strip():
             issues.append("prompt must be the bare question")
-        if answer_in_prompt(bare_prompt(self.question), self.gold_answer):
+        if answer_in_prompt(self.question, self.gold_answer):
             # The pool was already filtered for copyable answers; this is a guard
-            # against importing records from somewhere else.
-            issues.append("gold answer appears in the bare prompt (copyable item)")
+            # against importing records from somewhere else.  Checked against the
+            # *question* even when a context is present: a gold answer that is
+            # copyable from the question is a broken item either way, while an
+            # answer present in the context is exactly what HotpotQA is.
+            issues.append("gold answer appears in the question (copyable item)")
         if not self.source:
             issues.append("source provenance must not be empty")
         for key in ("pool_file", "pool_sha256", "selection_seed", "selection_rank", "source_split", "source_config"):
@@ -176,7 +259,8 @@ class TreQuestion:
         return issues
 
 
-def build_record(pool_row: Mapping[str, Any], *, split: str, provenance: Mapping[str, Any]) -> TreQuestion:
+def build_record(pool_row: Mapping[str, Any], *, split: str, provenance: Mapping[str, Any],
+                 context: str = "") -> TreQuestion:
     """Build one :class:`TreQuestion` from a pool row (``data/raw_qa/...`` JSONL)."""
     if split not in ALLOWED_SPLITS:
         raise ValueError(f"split must be one of {ALLOWED_SPLITS}")
@@ -195,6 +279,7 @@ def build_record(pool_row: Mapping[str, Any], *, split: str, provenance: Mapping
         answer_source_field=str(pool_row.get("answer_source_field") or ""),
         source=dict(pool_row.get("source") or {}),
         provenance=dict(provenance),
+        context=context,
     )
 
 
@@ -240,6 +325,7 @@ def load_questions(path: str | Path) -> list[TreQuestion]:
             answer_source_field=str(row.get("answer_source_field") or ""),
             source=dict(row.get("source") or {}),
             provenance=dict(row.get("provenance") or {}),
+            context=str(row.get("context") or ""),
         )
         for row in rows
     ]
@@ -248,4 +334,14 @@ def load_questions(path: str | Path) -> list[TreQuestion]:
         raise ValueError("invalid question file: " + "; ".join((report["problems"] + report["duplicate_sample_ids"])[:5]))
     if [r.to_dict()["schema_version"] for r in records] != [TRE_REPRO_SCHEMA_VERSION] * len(records):
         raise ValueError("schema_version mismatch")
+    # The prompt must round-trip: a file whose stored prompt disagrees with the
+    # text rebuilt from question+context would collect something other than what
+    # its fingerprint claims.
+    for row, record in zip(rows, records):
+        if row.get("prompt") != record.prompt:
+            raise ValueError(f"prompt does not round-trip for {record.sample_id}")
+        if row.get("prompt_template_version") != record.prompt_style:
+            raise ValueError(f"prompt_template_version mismatch for {record.sample_id}")
+        if row.get("prompt_fingerprint") != prompt_fingerprint(record.prompt, style=record.prompt_style):
+            raise ValueError(f"prompt_fingerprint mismatch for {record.sample_id}")
     return records

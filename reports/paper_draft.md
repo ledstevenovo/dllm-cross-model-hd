@@ -35,7 +35,7 @@
 | 模型 | LLaDA-8B-Instruct（rev `08b83a6…`）、Dream-v0-Instruct-7B（rev `05334cb…`） |
 | 采集 | BF16，`gen_length=64`、`requested_steps=64`、`block_size=64`、`temperature=0`，单题原子落盘 + 指纹 |
 | 标签 | 规则签核 reviewed（`human:ledstevenovo:rule-signoff`）；format_failure 不计入指标。可用样本 LLaDA 195 / Dream 178（test 每方向 45–48） |
-| 特征 | `entropy_raw`（6 维）与 `relative_normalized`（13 维：归一化熵 + uncertainty + 揭示进度/比例） |
+| 特征 | `entropy_raw`（6 维）与 `relative_normalized`（10 维：6 个归一化熵 + uncertainty + 揭示进度/比例） |
 | 检测器 | LR 与 MLP（小网格）；**阈值/归一化/超参只在源域 train/validation 拟合**，test 绝不参与 |
 | 统计 | bootstrap 1000（按 question_id 分组）；跨数据集分层报告；多种子 5 个；簇级重采样稳定性 300 次/格（第二种子并行复核）；簇级置换 10000 次 |
 | 标签质量 | 第二 judge 全覆盖 373 题（冻结提示词 v3，LongCat-2.5-Preview，温度 0）：一致率 0.957、κ=0.896 |

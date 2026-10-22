@@ -85,6 +85,20 @@ def fetch(spec: dict, endpoint: str, *, force: bool, timeout: int = 180) -> dict
     return result
 
 
+def merge_report(previous: list[dict], results: list[dict]) -> list[dict]:
+    """Merge new fetch results into the existing report, keyed by lock key.
+
+    ``--key X`` used to rewrite the whole report with only X's entry, silently
+    dropping the record that the other raw files had been fetched and verified.
+    The report is the evidence that raw inputs match the lock, so entries are
+    merged and sorted rather than replaced.
+    """
+    merged = {entry["key"]: entry for entry in previous}
+    for entry in results:
+        merged[entry["key"]] = entry
+    return [merged[key] for key in sorted(merged)]
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--endpoint", default=DEFAULT_ENDPOINT)
@@ -103,13 +117,23 @@ def main(argv: list[str] | None = None) -> int:
         results.append(fetch(spec, args.endpoint, force=args.force))
         print(f"      {results[-1]['status']} ({results[-1]['bytes']} bytes, sha256 {results[-1]['sha256'][:16]}…)", flush=True)
     REPORT.parent.mkdir(parents=True, exist_ok=True)
+    # Merge into the existing report instead of replacing it: fetching one --key
+    # used to erase the provenance of every other file, so the audit trail lost
+    # the record of which raw files had actually been verified.
+    previous: list[dict] = []
+    if REPORT.exists():
+        try:
+            previous = json.loads(REPORT.read_text(encoding="utf-8"))["files"]
+        except (KeyError, ValueError):
+            previous = []
+    merged = merge_report(previous, results)
     REPORT.write_text(json.dumps({
         "fetched_at_utc": datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ"),
         "endpoint": args.endpoint,
         "note": "host-rewritten fetch; every file verified against configs/datasets/sources.lock.json",
-        "files": results,
+        "files": merged,
     }, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    print(f"[write] {REPORT.relative_to(ROOT)}")
+    print(f"[write] {REPORT.relative_to(ROOT)} ({len(merged)} file(s) recorded)")
     return 0
 
 
