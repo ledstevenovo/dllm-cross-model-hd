@@ -1,0 +1,211 @@
+{
+  "predictions": "/root/autodl-tmp/dllm-cross-model-hd/results/stage7/main/predictions.csv",
+  "seed": 42,
+  "bootstrap_repeats": 1000,
+  "common_questions": 44,
+  "direction_sizes": {
+    "Dream-v0-Instruct-7B->Dream-v0-Instruct-7B": 45,
+    "Dream-v0-Instruct-7B->LLaDA-8B-Instruct": 48,
+    "LLaDA-8B-Instruct->Dream-v0-Instruct-7B": 45,
+    "LLaDA-8B-Instruct->LLaDA-8B-Instruct": 48
+  },
+  "notes": [
+    "all four directions restricted to the questions they all have in common",
+    "detectors are the fitted ones from the main run; nothing is refitted",
+    "reported n is per direction, so each direction sees the same questions but may label them differently (each model answers for itself)"
+  ],
+  "cells": [
+    {
+      "source": "Dream-v0-Instruct-7B",
+      "target": "Dream-v0-Instruct-7B",
+      "feature_set": "entropy_raw",
+      "kind": "lr",
+      "n": 44,
+      "positive": 31,
+      "negative": 13,
+      "auroc": 0.8089330024813896,
+      "auroc_low": 0.6215107685810812,
+      "auroc_high": 0.9705882352941176
+    },
+    {
+      "source": "Dream-v0-Instruct-7B",
+      "target": "Dream-v0-Instruct-7B",
+      "feature_set": "entropy_raw",
+      "kind": "mlp",
+      "n": 44,
+      "positive": 31,
+      "negative": 13,
+      "auroc": 0.8064516129032259,
+      "auroc_low": 0.6457552083333333,
+      "auroc_high": 0.949811776061776
+    },
+    {
+      "source": "Dream-v0-Instruct-7B",
+      "target": "Dream-v0-Instruct-7B",
+      "feature_set": "relative_normalized",
+      "kind": "lr",
+      "n": 44,
+      "positive": 31,
+      "negative": 13,
+      "auroc": 0.8064516129032256,
+      "auroc_low": 0.6137276785714285,
+      "auroc_high": 0.9729868839427662
+    },
+    {
+      "source": "Dream-v0-Instruct-7B",
+      "target": "Dream-v0-Instruct-7B",
+      "feature_set": "relative_normalized",
+      "kind": "mlp",
+      "n": 44,
+      "positive": 31,
+      "negative": 13,
+      "auroc": 0.7878411910669975,
+      "auroc_low": 0.6285596221959858,
+      "auroc_high": 0.9387536108193276
+    },
+    {
+      "source": "Dream-v0-Instruct-7B",
+      "target": "LLaDA-8B-Instruct",
+      "feature_set": "entropy_raw",
+      "kind": "lr",
+      "n": 44,
+      "positive": 28,
+      "negative": 16,
+      "auroc": 0.8125,
+      "auroc_low": 0.64820144414972,
+      "auroc_high": 0.9356937602627258
+    },
+    {
+      "source": "Dream-v0-Instruct-7B",
+      "target": "LLaDA-8B-Instruct",
+      "feature_set": "entropy_raw",
+      "kind": "mlp",
+      "n": 44,
+      "positive": 28,
+      "negative": 16,
+      "auroc": 0.5558035714285715,
+      "auroc_low": 0.37642606918697996,
+      "auroc_high": 0.7245675549322114
+    },
+    {
+      "source": "Dream-v0-Instruct-7B",
+      "target": "LLaDA-8B-Instruct",
+      "feature_set": "relative_normalized",
+      "kind": "lr",
+      "n": 44,
+      "positive": 28,
+      "negative": 16,
+      "auroc": 0.4821428571428571,
+      "auroc_low": 0.27618226600985224,
+      "auroc_high": 0.6822401315789473
+    },
+    {
+      "source": "Dream-v0-Instruct-7B",
+      "target": "LLaDA-8B-Instruct",
+      "feature_set": "relative_normalized",
+      "kind": "mlp",
+      "n": 44,
+      "positive": 28,
+      "negative": 16,
+      "auroc": 0.5022321428571428,
+      "auroc_low": 0.3514338235294117,
+      "auroc_high": 0.6384201036736533
+    },
+    {
+      "source": "LLaDA-8B-Instruct",
+      "target": "Dream-v0-Instruct-7B",
+      "feature_set": "entropy_raw",
+      "kind": "lr",
+      "n": 44,
+      "positive": 31,
+      "negative": 13,
+      "auroc": 0.8263027295285361,
+      "auroc_low": 0.6588541666666667,
+      "auroc_high": 0.9738293650793651
+    },
+    {
+      "source": "LLaDA-8B-Instruct",
+      "target": "Dream-v0-Instruct-7B",
+      "feature_set": "entropy_raw",
+      "kind": "mlp",
+      "n": 44,
+      "positive": 31,
+      "negative": 13,
+      "auroc": 0.760545905707196,
+      "auroc_low": 0.6160144704433497,
+      "auroc_high": 0.9088600852272727
+    },
+    {
+      "source": "LLaDA-8B-Instruct",
+      "target": "Dream-v0-Instruct-7B",
+      "feature_set": "relative_normalized",
+      "kind": "lr",
+      "n": 44,
+      "positive": 31,
+      "negative": 13,
+      "auroc": 0.7890818858560795,
+      "auroc_low": 0.6170519301470588,
+      "auroc_high": 0.9492354956871085
+    },
+    {
+      "source": "LLaDA-8B-Instruct",
+      "target": "Dream-v0-Instruct-7B",
+      "feature_set": "relative_normalized",
+      "kind": "mlp",
+      "n": 44,
+      "positive": 31,
+      "negative": 13,
+      "auroc": 0.729528535980149,
+      "auroc_low": 0.5598872712468982,
+      "auroc_high": 0.8908499743983616
+    },
+    {
+      "source": "LLaDA-8B-Instruct",
+      "target": "LLaDA-8B-Instruct",
+      "feature_set": "entropy_raw",
+      "kind": "lr",
+      "n": 44,
+      "positive": 28,
+      "negative": 16,
+      "auroc": 0.8303571428571428,
+      "auroc_low": 0.6901041666666667,
+      "auroc_high": 0.9508680555555556
+    },
+    {
+      "source": "LLaDA-8B-Instruct",
+      "target": "LLaDA-8B-Instruct",
+      "feature_set": "entropy_raw",
+      "kind": "mlp",
+      "n": 44,
+      "positive": 28,
+      "negative": 16,
+      "auroc": 0.6741071428571428,
+      "auroc_low": 0.4925213472485769,
+      "auroc_high": 0.8395925093052109
+    },
+    {
+      "source": "LLaDA-8B-Instruct",
+      "target": "LLaDA-8B-Instruct",
+      "feature_set": "relative_normalized",
+      "kind": "lr",
+      "n": 44,
+      "positive": 28,
+      "negative": 16,
+      "auroc": 0.8772321428571429,
+      "auroc_low": 0.7493838516009852,
+      "auroc_high": 0.9684292763157895
+    },
+    {
+      "source": "LLaDA-8B-Instruct",
+      "target": "LLaDA-8B-Instruct",
+      "feature_set": "relative_normalized",
+      "kind": "mlp",
+      "n": 44,
+      "positive": 28,
+      "negative": 16,
+      "auroc": 0.71875,
+      "auroc_low": 0.5572241392679901,
+      "auroc_high": 0.8620737152085114
+    }
+  ]
+}
