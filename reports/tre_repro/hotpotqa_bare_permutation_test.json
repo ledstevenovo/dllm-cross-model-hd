@@ -1,41 +1,41 @@
 {
-  "scores": "results/tre_repro/dream_hotpotqa_bare_v1/scores.csv",
-  "n": 790,
-  "positive": 651,
+  "scores": "results/tre_repro/llada_hotpotqa_bare_v1_L64/scores.csv",
+  "n": 796,
+  "positive": 679,
   "seed": 20261021,
   "results": {
     "tre": {
-      "observed_auroc": 0.8223651493551702,
+      "observed_auroc": 0.803632793323515,
       "permutations_requested": 10000,
       "permutations_valid": 10000,
       "permutation_mode": "row",
       "p_value_one_sided": 9.999000099990002e-05,
-      "null_mean": 0.499850916686006,
-      "null_p95": 0.5438616848456718,
-      "null_p99": 0.5619599067289948,
-      "null_max": 0.60303462299285
+      "null_mean": 0.5000411590700251,
+      "null_p95": 0.548468713417167,
+      "null_p99": 0.5689121760255781,
+      "null_max": 0.618053195372783
     },
     "tre_effective": {
-      "observed_auroc": 0.8398700394523091,
+      "observed_auroc": 0.7703133063957806,
       "permutations_requested": 10000,
       "permutations_valid": 10000,
       "permutation_mode": "row",
       "p_value_one_sided": 9.999000099990002e-05,
-      "null_mean": 0.5001325685994983,
-      "null_p95": 0.5449032479085855,
-      "null_p99": 0.562065278652654,
-      "null_max": 0.599420924090221
+      "null_mean": 0.4998648880329292,
+      "null_p95": 0.5476284883501378,
+      "null_p99": 0.5670607857205795,
+      "null_max": 0.6047732336392131
     },
     "tre_length_normalized": {
-      "observed_auroc": 0.7780393196963167,
+      "observed_auroc": 0.7654796520775903,
       "permutations_requested": 10000,
       "permutations_valid": 10000,
       "permutation_mode": "row",
       "p_value_one_sided": 9.999000099990002e-05,
-      "null_mean": 0.5000611593674369,
-      "null_p95": 0.544271679430649,
-      "null_p99": 0.5636988473737139,
-      "null_max": 0.6003215860491331
+      "null_mean": 0.5004129338015936,
+      "null_p95": 0.5472867338846721,
+      "null_p99": 0.5672376420830029,
+      "null_max": 0.5967674936747102
     }
   },
   "notes": [
