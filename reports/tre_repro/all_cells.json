@@ -1,6 +1,24 @@
 {
   "cells": [
     {
+      "run": "dream_hotpotqa_bare_v1",
+      "model": "Dream",
+      "dataset": "HotpotQA",
+      "gen_length": 128,
+      "prompt": "bare",
+      "judge": "LongCat",
+      "precision": "bf16",
+      "auroc": 0.8223651493551702,
+      "auroc_low": 0.784655981597152,
+      "auroc_high": 0.8584256135223217,
+      "n": 790,
+      "positive": 651,
+      "positive_rate": 0.8240506329113924,
+      "paper_128": 80.6,
+      "delta_vs_paper": 1.6365149355170274,
+      "comparable_to_paper": true
+    },
+    {
       "run": "dream_hotpotqa_bf16_L128_S64_B128_v1",
       "model": "Dream",
       "dataset": "HotpotQA",
