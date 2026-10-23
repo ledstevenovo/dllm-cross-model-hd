@@ -58,7 +58,7 @@
 | 模型 | LLaDA-8B-Instruct（rev `08b83a6…`）、Dream-v0-Instruct-7B（rev `05334cb…`） |
 | 采集 | BF16，`gen_length=64`、`requested_steps=64`、`block_size=64`、`temperature=0`，单题原子落盘 + 指纹，`--verify-observer` 全通过；**两模型在同一台 4080 SUPER (sm_89) 上采集**（跨设备规则见 `reports/device_migration_5090.md` §4） |
 | 标签 | 规则签核 reviewed（`human:ledstevenovo:rule-signoff`）；format_failure 不计入指标。可用 test 样本：LLaDA 491 / Dream 449 |
-| 特征 | `entropy_raw`（6 维）与 `relative_normalized`（10 维：6 个归一化熵 + uncertainty + 揭示进度/比例）；消融覆盖全部 10 个特征集 |
+| 特征 | `entropy_raw`（6 维）与 `relative_normalized`（**10 维，其中 `revealed_fraction` 实测恒为 1，有效 9 维**：6 个归一化熵 + uncertainty + 揭示进度）；消融覆盖全部 10 个特征集 |
 | 检测器 | LR 与 MLP（小网格）；**阈值/归一化/超参只在源域 train/validation 拟合**，test 绝不参与 |
 | 统计 | bootstrap 1000（按 question_id 分组）；跨数据集分层报告；多种子 5 个；簇级重采样稳定性 300 次/格 ×2 种子；簇级置换 10000 次 |
 | 预注册判据 | 冻结于任何 2000 题结果出现之前（`docs/NOGPU_WORKPLAN.md` §2d）：`rel+LR Dream→LLaDA` CI 上界 <0.6 且 `ent+LR` CI 下界 >0.7 |
