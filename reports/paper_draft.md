@@ -225,14 +225,14 @@ TRE 对全部生成位置求和，故两列原始分数不可直接比大小。
 
 | 模型 | 数据集 | 生成 | prompt | judge | 本次 | 原文 | 差值 |
 |---|---|---|---|---:|---|---:|---:|---:|
-| LLaDA | TriviaQA | 128 | 裸 | deepseek | 78.34 | 82.2 | **−3.9** |
-| Dream | TriviaQA | 128 | 裸 | vankit | 79.48 | 83.9 | **−4.4** |
+| LLaDA | TriviaQA | 128 | 裸 | LongCat | 79.27 | 82.2 | **−2.9** |
+| Dream | TriviaQA | 128 | 裸 | LongCat | 79.72 | 83.9 | **−4.2** |
 | LLaDA | HotpotQA | 128 | **裸** | LongCat | **83.79** | 85.6 | **−1.8** |
 | Dream | HotpotQA | 128 | **裸** | LongCat | **82.24** | 80.6 | **+1.6** |
 | LLaDA | HotpotQA | 128 | 含上下文（**47% 截断**） | LongCat | 74.48 | 85.6 | −11.1 |
 | LLaDA | HotpotQA | 64 | 裸 | LongCat | 80.36 | 85.6 | —（不可比） |
-| LLaDA | TriviaQA | 64 | 裸 | deepseek | 70.16 | 86.5 | —（不可比） |
-| Dream | TriviaQA | 64 | 裸 | LongCat | **89.95** | 86.5 | —（不可比） |
+| LLaDA | TriviaQA | 64 | 裸 | LongCat | 73.54 | 86.5 | —（不可比） |
+| Dream | TriviaQA | 64 | 裸 | LongCat | **89.91** | 86.5 | —（不可比） |
 
 全部 p = 1e-4。**四个协议匹配的格子偏差落在 −4.4 到 +1.6 pp**（三个偏负、一个偏正），
 其中闭卷 HotpotQA 两格（−1.8 / **+1.6**，后者略高于原文）是本项目最接近原文的结果。
