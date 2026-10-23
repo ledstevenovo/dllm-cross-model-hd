@@ -1,0 +1,46 @@
+{
+  "scores": "results/tre_repro/llada_triviaqa_fp16_L64_S64_B64_v1/scores.csv",
+  "n": 797,
+  "positive": 481,
+  "seed": 20261021,
+  "results": {
+    "tre": {
+      "observed_auroc": 0.7016368851811892,
+      "permutations_requested": 10000,
+      "permutations_valid": 10000,
+      "permutation_mode": "cluster",
+      "p_value_one_sided": 9.999000099990002e-05,
+      "null_mean": 0.5001428406733281,
+      "null_p95": 0.534819269190326,
+      "null_p99": 0.5489301692149794,
+      "null_max": 0.5959893681412669
+    },
+    "tre_effective": {
+      "observed_auroc": 0.693564304323798,
+      "permutations_requested": 10000,
+      "permutations_valid": 10000,
+      "permutation_mode": "cluster",
+      "p_value_one_sided": 9.999000099990002e-05,
+      "null_mean": 0.49983741437629214,
+      "null_p95": 0.5345497068413777,
+      "null_p99": 0.549271691360299,
+      "null_max": 0.5827455985683834
+    },
+    "tre_length_normalized": {
+      "observed_auroc": 0.7635990420800547,
+      "permutations_requested": 10000,
+      "permutations_valid": 10000,
+      "permutation_mode": "cluster",
+      "p_value_one_sided": 9.999000099990002e-05,
+      "null_mean": 0.5000804907816526,
+      "null_p95": 0.5338507082267565,
+      "null_p99": 0.5489560251585568,
+      "null_max": 0.5733241324921136
+    }
+  },
+  "notes": [
+    "labels are permuted, scores are held fixed",
+    "cluster permutation is used when every cluster is label-pure",
+    "empirical p is one-sided (observed >= null)"
+  ]
+}
