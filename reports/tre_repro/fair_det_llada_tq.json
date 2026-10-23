@@ -1,0 +1,51 @@
+{
+  "run": "data/trajectories/tre_repro/llada_triviaqa_fp16_L128_S64_B128_v3",
+  "dropped_for_length": {
+    "late_entropy_vocab_normalized": 0.454,
+    "revealing_entropy_vocab_normalized": 0.391,
+    "entropy_change_vocab_normalized": 0.468,
+    "mean_reveal_progress": 0.479,
+    "revealed_fraction": "constant"
+  },
+  "kept": [
+    "mean_entropy_vocab_normalized",
+    "early_entropy_vocab_normalized",
+    "middle_entropy_vocab_normalized",
+    "mean_uncertainty",
+    "reveal_progress_entropy_vocab_normalized"
+  ],
+  "tre_length_normalized": {
+    "n": 795,
+    "positive": 501,
+    "negative": 294,
+    "positive_rate": 0.630188679245283,
+    "auroc": 0.8429128138281261,
+    "auprc": 0.8920450909774255,
+    "auroc_low": 0.813797278275058,
+    "auroc_high": 0.8693765205393744
+  },
+  "detector_full": {
+    "n": 795,
+    "positive": 501,
+    "negative": 294,
+    "positive_rate": 0.630188679245283,
+    "auroc": 0.8520713674691434,
+    "auprc": 0.9059331176842016,
+    "auroc_low": 0.8247122482452842,
+    "auroc_high": 0.8765896448557309
+  },
+  "detector_length_free": {
+    "n": 795,
+    "positive": 501,
+    "negative": 294,
+    "positive_rate": 0.630188679245283,
+    "auroc": 0.8432115361114507,
+    "auprc": 0.8956129801206788,
+    "auroc_low": 0.8138187016079297,
+    "auroc_high": 0.8692751358306473
+  },
+  "gaps": {
+    "full_vs_tre": 0.009158553641017253,
+    "lean_vs_tre": 0.00029872228332461503
+  }
+}
