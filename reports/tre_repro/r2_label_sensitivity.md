@@ -1,3 +1,7 @@
+> ✅ **已被裁决解决（2026-10-23）**：第三方 judge 在 142 条分歧中 126 条支持 deepseek judge、
+> 仅 16 条支持规则。仲裁后 AUROC = **0.7059 [0.657, 0.758]**。本页保留作为诊断记录，
+> 见 `reports/tre_repro/r2_adjudication_report.md`。
+
 # R2 结果对标签口径极敏感：规则标签给出 0.542，judge 给出 0.682
 
 日期：2026-10-23。这是对 R2 报告的重要限定，必须与 `reports/tre_repro/r2_report.md` 一起读。

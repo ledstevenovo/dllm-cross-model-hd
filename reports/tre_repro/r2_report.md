@@ -2,11 +2,12 @@
 
 日期：2026-10-23。轨迹：`data/trajectories/tre_repro/llada_hotpotqa_fp16_L128_S64_B128_v1`（800/800，0 错误）。标签：`data/tre_repro/labels/llada_hotpotqa_fp16_L128_S64_B128_v1/`（800/800 判完）。评分：`results/tre_repro/llada_hotpotqa_fp16_L128_S64_B128_v1/`。
 
-> ⚠️ **重要限定（2026-10-23 追加）**：本报告的主数字用 judge 标签。用**规则签核**标签重算，
-> 同一批 786 条轨迹的 AUROC 只有 **0.542**（接近随机），两口径逐条一致率 0.831。
-> 原因是 HotpotQA 的长回答形态使规则签核系统性失效（子串命中≠答对、精确匹配≠等价）。
-> **R2 的效应量对标签口径敏感**，见 `reports/tre_repro/r2_label_sensitivity.md`。
-> 下述 0.682 应读作"judge 口径下的结果"，不是稳健结论。
+> ✅ **已解决（2026-10-23）**：规则签核标签曾给出 0.542（与 judge 仅 0.831 一致）。
+> 用**第三个 judge**（LongCat-2.5-Preview，不同模型家族）裁决 142 条分歧：
+> **126/142（88.7%）支持 deepseek judge，仅 16 条支持规则**。采用仲裁标签后
+> **AUROC = 0.7059 [0.657, 0.758]**。因此 0.542 来自一个不适用于长回答的标注器，
+> 不是方法失效。详见 `reports/tre_repro/r2_adjudication_report.md`。
+> 下文 0.6818 为原始 judge 口径，**最终数字请用仲裁后的 0.7059**。
 
 ## 1. 结果
 
