@@ -1,0 +1,119 @@
+{
+  "tre_training_free": {
+    "all": {
+      "n": 793,
+      "positive": 649,
+      "negative": 144,
+      "positive_rate": 0.8184110970996217,
+      "auroc": 0.8507960965588084,
+      "auprc": 0.9602623596164588,
+      "auroc_low": 0.8161298514369267,
+      "auroc_high": 0.8825053015845242
+    },
+    "test": {
+      "n": 793,
+      "positive": 649,
+      "negative": 144,
+      "positive_rate": 0.8184110970996217,
+      "auroc": 0.8507960965588084,
+      "auprc": 0.9602623596164588,
+      "auroc_low": 0.8161298514369267,
+      "auroc_high": 0.8825053015845242
+    }
+  },
+  "trained": [
+    {
+      "feature_set": "entropy_raw",
+      "kind": "lr",
+      "cv": "question-clustered 5-fold",
+      "test": {
+        "n": 793,
+        "positive": 649,
+        "negative": 144,
+        "positive_rate": 0.8184110970996217,
+        "auroc": 0.7974982879643897,
+        "auprc": 0.9408250080555529,
+        "auroc_low": 0.7587866736864135,
+        "auroc_high": 0.8337418652514176
+      }
+    },
+    {
+      "feature_set": "entropy_raw",
+      "kind": "mlp",
+      "cv": "question-clustered 5-fold",
+      "test": {
+        "n": 793,
+        "positive": 649,
+        "negative": 144,
+        "positive_rate": 0.8184110970996217,
+        "auroc": 0.7462335216572504,
+        "auprc": 0.9078245444975575,
+        "auroc_low": 0.699207199945651,
+        "auroc_high": 0.7893791325176045
+      }
+    },
+    {
+      "feature_set": "relative_normalized",
+      "kind": "lr",
+      "cv": "question-clustered 5-fold",
+      "test": {
+        "n": 793,
+        "positive": 649,
+        "negative": 144,
+        "positive_rate": 0.8184110970996217,
+        "auroc": 0.8420005136106832,
+        "auprc": 0.9422525562429607,
+        "auroc_low": 0.8026072893099547,
+        "auroc_high": 0.8812148840027344
+      }
+    },
+    {
+      "feature_set": "relative_normalized",
+      "kind": "mlp",
+      "cv": "question-clustered 5-fold",
+      "test": {
+        "n": 793,
+        "positive": 649,
+        "negative": 144,
+        "positive_rate": 0.8184110970996217,
+        "auroc": 0.744628488272556,
+        "auprc": 0.9078611713764186,
+        "auroc_low": 0.696770252818942,
+        "auroc_high": 0.7895756182481276
+      }
+    },
+    {
+      "feature_set": "late_only",
+      "kind": "lr",
+      "cv": "question-clustered 5-fold",
+      "test": {
+        "n": 793,
+        "positive": 649,
+        "negative": 144,
+        "positive_rate": 0.8184110970996217,
+        "auroc": 0.7447033898305085,
+        "auprc": 0.9207946099280797,
+        "auroc_low": 0.7038703833171646,
+        "auroc_high": 0.7837072154895838
+      }
+    },
+    {
+      "feature_set": "late_only",
+      "kind": "mlp",
+      "cv": "question-clustered 5-fold",
+      "test": {
+        "n": 793,
+        "positive": 649,
+        "negative": 144,
+        "positive_rate": 0.8184110970996217,
+        "auroc": 0.7418892312960109,
+        "auprc": 0.9181187407473195,
+        "auroc_low": 0.7003211052108986,
+        "auroc_high": 0.7818000719446
+      }
+    }
+  ],
+  "note": "run has no train/validation split; trained detectors are scored by question-clustered 5-fold cross-validation instead",
+  "run": "/root/autodl-tmp/dllm-cross-model-hd/data/trajectories/tre_repro/dream_hotpotqa_bare_bf16_L64_S64_B64_v1",
+  "n_traces": 793
+}
