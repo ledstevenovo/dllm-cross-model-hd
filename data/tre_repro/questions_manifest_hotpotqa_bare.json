@@ -1,0 +1,12 @@
+{
+  "manifest_version": "tre-hotpotqa-bare-v1",
+  "purpose": "control for R2: identical 800 HotpotQA questions with the distractor context removed, to isolate the prompt as the source of R2's shortfall",
+  "derived_from": "data/tre_repro/questions/hotpotqa_eval800.jsonl",
+  "derived_from_sha256": "37776b951f264ed08457b844cc2a5724b5af8e5f80ff0956e1dcb0b10df692b1",
+  "questions": 800,
+  "prompt_style": "v3-bare-question",
+  "file": "data/tre_repro/questions/hotpotqa_bare800.jsonl",
+  "file_sha256": "d7948d089a1713fec78655869ee284c939e38b3d64e3000e3c318d00d154b418",
+  "context_removed": 800,
+  "note": "judge will see the same gold answers; expected positive rate is ~81% because multi-hop questions are often unanswerable without context, so AUROC is not directly comparable to the context-grounded run"
+}
