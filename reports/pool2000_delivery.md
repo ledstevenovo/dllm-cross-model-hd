@@ -71,7 +71,8 @@ pilot200 从一个 48 点测试集里同时抽到极端低和极端高，其反�
 > `relative_time`/`relative_normalized` 0.752 > `middle_only` 0.718 > `early_only` 0.702
 > `absolute_time` 0.700 > `entropy_confidence` 0.682 > `entropy_raw` **0.671**。
 
-**一个特征胜过所有多维组合。** 且 pilot200 的"进度类特征导致崩盘"整体反转
+**在 `Dream→LLaDA` 这一格上最高**（但仅比 `relative_normalized` 高 0.014，CI 重叠；
+其余三个方向多维组合更好——见 `reports/late_entropy_correction.md`）。pilot200 的"进度类特征导致崩盘"整体反转
 （进度类 +0.21～+0.29，纯熵类 −0.05～−0.16）。
 
 ## 7. 尺度对齐：前提消失
@@ -104,7 +105,7 @@ pilot200 从一个 48 点测试集里同时抽到极端低和极端高，其反�
 | "进度/长度特征不可跨模型" | ❌ 撤回（方向相反，它们是最好的） |
 | "`ent+MLP` 的失败另有机制（开放问题）" | ❌ 撤回（不失败） |
 | "hotpotqa 小层驱动异常" | ⚠️ 当时成立，但那是 4 个负例的层；扩池后该层有 210–238 个可用样本 |
-| **单特征 `late_entropy` 优于组合** | ✅ **保留**（0.869 → 0.766，两批数据都是最优单特征） |
+| **单特征 `late_entropy` 优于组合** | ⚠️ **部分撤回**：`late_only`(0.766) 确实明显优于 `entropy_raw`(0.671)，但**不优于** `relative_normalized`(0.752，差 0.014，CI 重叠)；其余三方向多维更好。见 `reports/late_entropy_correction.md` |
 
 ## 10. 方法学教训（本报告最有价值的部分）
 
