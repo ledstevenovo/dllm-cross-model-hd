@@ -48,6 +48,9 @@ from src.tre_repro import GENERATION_SEED, load_questions  # noqa: E402
 
 VALID_VERDICTS = ("correct", "incorrect")
 
+#: Real precisions this scorer accepts. FP16 is the R1 default; BF16 is required for Dream.
+ALLOWED_PRECISIONS = ("float16", "bf16", "bfloat16")
+
 
 def sha256_file(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
@@ -75,8 +78,13 @@ def load_run_traces(run: Path, *, allow_synthetic: bool) -> tuple[dict[str, tupl
             raise ValueError(f"duplicate trajectory for {sample_id}")
         if not allow_synthetic and meta.get("synthetic", False):
             raise ValueError(f"synthetic trajectory in a real run: {sample_id}")
-        if not allow_synthetic and meta.get("precision") != "float16":
-            raise ValueError(f"expected float16, found {meta.get('precision')!r}: {sample_id}")
+        # Precision must be a real, non-quantised precision, but it does not have to be
+        # float16: Dream is scored in BF16 because its native entropy ranking can produce NaN
+        # in FP16 (src.collection_cli.validate_precision enforces that). The per-run
+        # consistency check below still rejects a run that mixes precisions, and the resolved
+        # precision is recorded in the metrics payload.
+        if not allow_synthetic and meta.get("precision") not in ALLOWED_PRECISIONS:
+            raise ValueError(f"expected one of {ALLOWED_PRECISIONS}, found {meta.get('precision')!r}: {sample_id}")
         configs.add((meta.get("model_id"), meta.get("precision"), meta.get("gen_length"),
                      meta.get("steps"), meta.get("block_size"), meta.get("seed")))
         loaded[sample_id] = (meta, arrays)
