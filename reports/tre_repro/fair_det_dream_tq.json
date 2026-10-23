@@ -1,0 +1,17 @@
+{
+  "run": "data/trajectories/tre_repro/dream_triviaqa_bf16_L128_S64_B128_v1",
+  "dropped_for_length": {
+    "mean_entropy_vocab_normalized": 0.466,
+    "early_entropy_vocab_normalized": 0.357,
+    "middle_entropy_vocab_normalized": 0.4,
+    "late_entropy_vocab_normalized": 0.593,
+    "revealing_entropy_vocab_normalized": 0.564,
+    "entropy_change_vocab_normalized": 0.602,
+    "mean_uncertainty": 0.398,
+    "mean_reveal_progress": 0.523,
+    "revealed_fraction": "constant",
+    "reveal_progress_entropy_vocab_normalized": 0.396
+  },
+  "kept": [],
+  "note": "no feature survives the length filter; on this run length explains all feature variance, so a length-controlled detector comparison is impossible"
+}

@@ -83,6 +83,22 @@ def main() -> int:
         print(f"  {column:44s} {why}")
     print(f"kept {len(full)}: {full}")
 
+    if not full:
+        # Happens on runs whose answers are so short that every feature tracks length (Dream /
+        # TriviaQA, median 3 tokens). Report the fact instead of crashing in the fitter.
+        payload = {
+            "run": str(args.run),
+            "dropped_for_length": dropped,
+            "kept": [],
+            "note": ("no feature survives the length filter; on this run length explains all feature "
+                     "variance, so a length-controlled detector comparison is impossible"),
+        }
+        out = Path(args.out)
+        out.parent.mkdir(parents=True, exist_ok=True)
+        out.write_text(json.dumps(payload, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+        print("\nno length-free feature subset exists; recorded as such")
+        return 0
+
     tre_norm = score(frame.y.to_numpy(), frame.tre_length_normalized.to_numpy(),
                      frame.question_id, args.seed)
     full_cv = cv_score(frame, FEATURE_SETS["relative_normalized"], args.seed)
