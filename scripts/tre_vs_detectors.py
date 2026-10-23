@@ -45,6 +45,24 @@ def read_jsonl(path: Path) -> list[dict]:
     return [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines() if line.strip()]
 
 
+def protocol_label(judgment: dict) -> str | None:
+    """Frozen two-pass label for one judgment, or None when the sample is excluded.
+
+    correct on the first pass -> kept as correct (no second call was made);
+    incorrect then incorrect -> kept as incorrect;
+    incorrect then correct -> a flip, and the frozen protocol *drops* it. Collapsing the
+    flip to "the first verdict wins" would silently keep 14 samples on the LLaDA HotpotQA
+    run and change the metric.
+    """
+    first = judgment.get("judge_first")
+    second = judgment.get("judge_second")
+    if first == "correct":
+        return "correct"
+    if first == "incorrect" and second == "incorrect":
+        return "incorrect"
+    return None
+
+
 def build_frame(run: Path, questions: Path, judgments: Path) -> pd.DataFrame:
     """Attach main-project features to every judged-and-kept TRE trace."""
     qmeta = {row["question_id"]: row for row in read_jsonl(questions)}
@@ -56,14 +74,8 @@ def build_frame(run: Path, questions: Path, judgments: Path) -> pd.DataFrame:
         judgment = judged.get(sample_id)
         if judgment is None:
             continue
-        first = judgment.get("judge_first")
-        second = judgment.get("judge_second")
-        # Frozen two-pass protocol: correct -> keep as correct; incorrect then correct -> drop.
-        if first == "correct":
-            label = "correct"
-        elif first == "incorrect" and second == "incorrect":
-            label = "incorrect"
-        else:
+        label = protocol_label(judgment)
+        if label is None:
             continue
         meta, arrays = load_trace(run / record["path"])
         question = qmeta[meta["question_id"]]
