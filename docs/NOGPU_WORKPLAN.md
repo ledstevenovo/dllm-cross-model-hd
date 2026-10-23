@@ -114,6 +114,47 @@ R1 只覆盖 LLaDA × TriviaQA × 一个预算；原文表 1 有 2 模型 × 3 �
 - **judge 仍是 J2（moma deepseek-v4.1-flash）**。⚠️ 本机当前**没有可用凭据**（`MOMA_API_KEY` 未设；LongCat 的 key 调该端点返回 401）。轨迹可以先采，标签出不来。R1 的 800 条标签是此前判好并落盘的，不受影响。可选方案：用户提供 MOMA key，或改 J1（本地 Qwen3-8B）——后者属协议变更，须新开口径，禁止与 R1 的 J2 标签混用。
 - **队列**：`scripts/run_gpu_queue.sh`（screen `gpuqueue`）等 pool2000 结束自动依次跑：R2 smoke20 → R2 800 → TriviaQA L64 → HotpotQA L64 → Dream HotpotQA BF16。
 
+## 2f. 扩池结果：预注册判据未通过（2026-10-23）
+
+**判决：`not reproduced`。** 详见 `reports/pool2000_verdict.md`、`reports/pool2000_delivery.md`。
+
+| 检查 | 观测 | 阈值 | 通过 |
+|---|---:|---:|---|
+| `rel+LR Dream→LLaDA` CI 上界 < 0.6 | 0.798 | 0.6 | ❌ |
+| `ent+LR Dream→LLaDA` CI 下界 > 0.7 | 0.620 | 0.7 | ❌ |
+
+而且方向相反：旧"异常格" 0.494 → **0.752**，旧"唯一稳定格" 0.830 → **0.671**。
+
+**已完成的后续分析（全部通过）**：置换 16/16 格 p ≤ 4e-4；稳定性 16/16 格 P(>0.5) ≥ 0.88；
+多种子 ±0.06；标签一致性 1000/1000、κ 0.840；跨数据集轴 0.663–0.886（无 < 0.5 的格）。
+
+**结论改写**：不再说"Dream 源域方向性缺口"。准确表述是
+**"跨模型迁移普遍成立但中度衰减（代价 0.06–0.17），方向性不对称但无断裂"**
+（`reports/transfer_asymmetry.md`）。
+
+**已撤回的具体声明**（见 `reports/overnight_plan_20261023.md` §9 与各更正页）：
+- "Dream 源域方向性缺口" —— 撤回；
+- "尺度对齐是异常格的机制" —— 撤回（无物可修，且部分格变差）；
+- "进度/长度特征不可跨模型" —— 撤回（方向相反）；
+- "单特征 `late_entropy` 优于所有组合" —— **部分撤回**（仅在不重叠的 `entropy_raw` 上成立，
+  对 `relative_normalized` 只差 0.014 且 CI 重叠；见 `reports/late_entropy_correction.md`）。
+
+**方法学结论**：pilot200 的结论通过了 bootstrap CI、双种子重采样、置换、5 种子与一次机制诊断，
+**全部未能发现问题**，因为测试集只有 48 条。`换一批样本重测` 应与 CI 并列为必做项。
+
+## 2g. TRE 三个新格子（2026-10-23）
+
+| 格子 | AUROC [95% CI] | 备注 |
+|---|---|---|
+| TriviaQA × LLaDA，L128 | 0.7834 [0.749,0.817] | R1 主口径，置换 p=1e-4 |
+| TriviaQA × LLaDA，L64 | 0.7016 [0.663,0.740] | 短预算更弱 8.2 pp；**不与原文 86.5 对照**（"64"定义不同） |
+| HotpotQA × LLaDA，L128 | 0.6818 [0.627,0.734] | **对标签口径敏感**：规则标签只有 0.542 |
+
+HotpotQA 两条已实测的降因：正类率仅 12.1%；46.6% 的生成撞 126 token 上限（复述上下文）。
+标签敏感性源于规则签核在长回答上失效（子串命中≠答对）。见 `reports/tre_repro/{r2_report,r2_label_sensitivity,budget_columns}.md`。
+
+**未完成（脚本就绪）**：HotpotQA L64、Dream × HotpotQA BF16，各约 4.5 h。
+
 ## 3. 需要 GPU 时才开卡的清单（备查）
 
 - 主项目扩池 2000：`scripts/collect_llada.py` / `collect_dream.py`，题单 `data/raw_qa/subsets/pool2000_v1_new.jsonl`，输出 `data/trajectories/bf16_pool2000/`；**两模型同设备**（见 §2c），一键脚本 `scripts/run_pool2000_collect.sh`；
