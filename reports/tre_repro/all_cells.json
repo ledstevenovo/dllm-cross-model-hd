@@ -37,6 +37,24 @@
       "comparable_to_paper": true
     },
     {
+      "run": "dream_hotpotqa_ctx_l64",
+      "model": "Dream",
+      "dataset": "HotpotQA",
+      "gen_length": 64,
+      "prompt": "context",
+      "judge": "LongCat",
+      "precision": "bf16",
+      "auroc": 0.7664720600500416,
+      "auroc_low": 0.7129027983933139,
+      "auroc_high": 0.8154795214833259,
+      "n": 791,
+      "positive": 109,
+      "positive_rate": 0.13780025284450062,
+      "paper_128": null,
+      "delta_vs_paper": null,
+      "comparable_to_paper": false
+    },
+    {
       "run": "dream_hotpotqa_bf16_L128_S64_B128_v1",
       "model": "Dream",
       "dataset": "HotpotQA",
