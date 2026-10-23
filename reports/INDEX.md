@@ -22,6 +22,8 @@
 | 13 | **TRE 的跨模型"迁移"：AUROC 迁移，阈值不迁移** | 两方向 AUROC 等于域内值；阈值准确率 0.38 / 0.63 | `tre_repro/tre_cross_model_transfer.md` |
 | 14 | **复述不是 HotpotQA 差距的原因**（已证伪） | 复述率差 400 倍，同 judge 下 AUROC 只差 0.026 | `tre_repro/recitation_hypothesis_verdict.md` |
 | 15 | **HotpotQA 标签跨 judge 不稳定** | 同一批轨迹 0.682（deepseek）vs 0.745（LongCat） | `tre_repro/r2_same_judge_result.md` |
+| 16 | **HotpotQA 的差距来自 prompt 是否含上下文** | 裸问题 **0.8379**（−1.8）vs 含上下文 0.7448（−11.1） | `tre_repro/hotpotqa_bare_control.md` |
+| 17 | **TRE 闭卷强、开卷弱约 0.09** | 同一批题、同一模型，只改 prompt | 同上 |
 
 ## 二、已撤回的结论（保留记录，勿再引用）
 
@@ -108,4 +110,5 @@ pilot200 的"方向性缺口"通过了：
 | HotpotQA L64 | 脚本就绪，未跑 | ~4.5 h GPU |
 | TRE 与检测器在 2000 题上的受控对比 | 需 128 token 重采 | ~2.5 h GPU |
 | HotpotQA 标签人工抽查 | 未做 | 人工 |
-| **裸问题 HotpotQA 对照** | **判分中**（500/800，18:03） | ~18:20 |
+| ~~裸问题 HotpotQA 对照（LLaDA）~~ | ✅ **完成**：0.8379，−1.8 pp | — |
+| **裸问题对照（Dream）** | **采集中**（643/800，18:58） | 19:15 采集 → ~20:00 判分 |
