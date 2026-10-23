@@ -2,6 +2,12 @@
 
 日期：2026-10-23。轨迹：`data/trajectories/tre_repro/llada_hotpotqa_fp16_L128_S64_B128_v1`（800/800，0 错误）。标签：`data/tre_repro/labels/llada_hotpotqa_fp16_L128_S64_B128_v1/`（800/800 判完）。评分：`results/tre_repro/llada_hotpotqa_fp16_L128_S64_B128_v1/`。
 
+> ⚠️ **重要限定（2026-10-23 追加）**：本报告的主数字用 judge 标签。用**规则签核**标签重算，
+> 同一批 786 条轨迹的 AUROC 只有 **0.542**（接近随机），两口径逐条一致率 0.831。
+> 原因是 HotpotQA 的长回答形态使规则签核系统性失效（子串命中≠答对、精确匹配≠等价）。
+> **R2 的效应量对标签口径敏感**，见 `reports/tre_repro/r2_label_sensitivity.md`。
+> 下述 0.682 应读作"judge 口径下的结果"，不是稳健结论。
+
 ## 1. 结果
 
 | 指标 | AUROC [95% CI] | AUPRC |
