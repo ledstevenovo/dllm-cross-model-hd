@@ -1,41 +1,41 @@
 {
-  "scores": "results/tre_repro/llada_hotpotqa_bare_v1/scores.csv",
-  "n": 797,
-  "positive": 674,
+  "scores": "results/tre_repro/dream_hotpotqa_bare_v1/scores.csv",
+  "n": 790,
+  "positive": 651,
   "seed": 20261021,
   "results": {
     "tre": {
-      "observed_auroc": 0.8379411835661383,
+      "observed_auroc": 0.8223651493551702,
       "permutations_requested": 10000,
       "permutations_valid": 10000,
       "permutation_mode": "row",
       "p_value_one_sided": 9.999000099990002e-05,
-      "null_mean": 0.5000353200164048,
-      "null_p95": 0.5460567899447539,
-      "null_p99": 0.5641849412559409,
-      "null_max": 0.6045089382644568
+      "null_mean": 0.499850916686006,
+      "null_p95": 0.5438616848456718,
+      "null_p99": 0.5619599067289948,
+      "null_max": 0.60303462299285
     },
     "tre_effective": {
-      "observed_auroc": 0.8378929338254807,
+      "observed_auroc": 0.8398700394523091,
       "permutations_requested": 10000,
       "permutations_valid": 10000,
       "permutation_mode": "row",
       "p_value_one_sided": 9.999000099990002e-05,
-      "null_mean": 0.49962934669851145,
-      "null_p95": 0.5460365853658538,
-      "null_p99": 0.5652229138018384,
-      "null_max": 0.6108175918554438
+      "null_mean": 0.5001325685994983,
+      "null_p95": 0.5449032479085855,
+      "null_p99": 0.562065278652654,
+      "null_max": 0.599420924090221
     },
     "tre_length_normalized": {
-      "observed_auroc": 0.8054691081035441,
+      "observed_auroc": 0.7780393196963167,
       "permutations_requested": 10000,
       "permutations_valid": 10000,
       "permutation_mode": "row",
       "p_value_one_sided": 9.999000099990002e-05,
-      "null_mean": 0.5000075245470555,
-      "null_p95": 0.546513353115727,
-      "null_p99": 0.5662607054112084,
-      "null_max": 0.6051301536754239
+      "null_mean": 0.5000611593674369,
+      "null_p95": 0.544271679430649,
+      "null_p99": 0.5636988473737139,
+      "null_max": 0.6003215860491331
     }
   },
   "notes": [
