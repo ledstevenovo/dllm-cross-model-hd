@@ -146,9 +146,16 @@ def main() -> int:
     results = {"tre_training_free": {}, "trained": []}
 
     # --- TRE, scoring-free, on everything -----------------------------------
-    results["tre_training_free"]["all"] = score(
-        frame.y.to_numpy(), frame.tre.to_numpy(), frame.question_id, args.seed)
-    print(f"TRE (all n={len(frame)}): AUROC {results['tre_training_free']['all']['auroc']:.4f}")
+    # Both variants are reported: `tre` is the paper's definition (a sum over positions) and
+    # `tre_length_normalized` removes the position-count scale, which matters whenever the two
+    # runs being compared differ in answer length. See scale_artefact_analysis.md.
+    for column in ("tre", "tre_length_normalized"):
+        if column not in frame:
+            continue
+        results["tre_training_free"][column] = score(
+            frame.y.to_numpy(), frame[column].to_numpy(), frame.question_id, args.seed)
+        entry = results["tre_training_free"][column]
+        print(f"TRE {column:24s} (all n={len(frame)}): AUROC {entry['auroc']:.4f}")
 
     test = frame[frame.split == "test"]
     if len(test) and test.y.nunique() > 1:
