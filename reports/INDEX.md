@@ -19,6 +19,9 @@
 | 10 | HotpotQA 反转的原因是**小样本+高维** | 短答层仅 32 正类，检测器 0.40–0.41 | 同上（分层检验） |
 | 11 | R2 的标签分歧已三方裁决 | 126/142 站 judge，仲裁后 0.706 | `tre_repro/r2_adjudication_report.md` |
 | 12 | DynHD 方法级复现 | 22/22 断言，test 0.88/0.81 | `dynhd_reproduction_summary.md` |
+| 13 | **TRE 的跨模型"迁移"：AUROC 迁移，阈值不迁移** | 两方向 AUROC 等于域内值；阈值准确率 0.38 / 0.63 | `tre_repro/tre_cross_model_transfer.md` |
+| 14 | **复述不是 HotpotQA 差距的原因**（已证伪） | 复述率差 400 倍，同 judge 下 AUROC 只差 0.026 | `tre_repro/recitation_hypothesis_verdict.md` |
+| 15 | **HotpotQA 标签跨 judge 不稳定** | 同一批轨迹 0.682（deepseek）vs 0.745（LongCat） | `tre_repro/r2_same_judge_result.md` |
 
 ## 二、已撤回的结论（保留记录，勿再引用）
 
@@ -30,6 +33,8 @@
 | **"单特征 `late_entropy` 优于所有组合"** | 只在 1/4 方向领先 0.014（CI 重叠），其余三方向落后 0.04–0.05 | `late_entropy_correction.md` |
 | "R2 对标签口径敏感、0.542 接近随机" | 0.542 来自不适用的规则标注器；三方裁决 126/142 站 judge | `tre_repro/r2_adjudication_report.md` |
 | "`ent+MLP` 的失败另有机制（开放问题）" | 扩池后不失败（0.680，p ≤ 1e-4） | `pool2000_verdict.md` |
+| "R2 比原文低 17.4 pp" | 那是 deepseek 标签；同 judge（LongCat）下是 **−11.1**，差额主要是 judge 效应 | `tre_repro/r2_same_judge_result.md` |
+| "LLaDA 有复述倾向（模型缺陷）" | 只在被给了上下文时复述；主项目裸问题 prompt 下 0/500 撞预算 | `tre_repro/recitation_hypothesis.md` |
 
 ## 三、方法学教训（本项目最有借鉴价值的部分）
 
@@ -103,3 +108,4 @@ pilot200 的"方向性缺口"通过了：
 | HotpotQA L64 | 脚本就绪，未跑 | ~4.5 h GPU |
 | TRE 与检测器在 2000 题上的受控对比 | 需 128 token 重采 | ~2.5 h GPU |
 | HotpotQA 标签人工抽查 | 未做 | 人工 |
+| **裸问题 HotpotQA 对照** | **判分中**（500/800，18:03） | ~18:20 |
