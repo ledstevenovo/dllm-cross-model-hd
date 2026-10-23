@@ -47,5 +47,7 @@ if [ -f results/tre_repro/dream_hotpotqa_bf16_L128_S64_B128_v1/scores.csv ]; the
     --out reports/tre_repro/tre_vs_detectors_dream_hotpotqa.json \
     >> "$LOG/detectors.log" 2>&1
   log "tre_vs_detectors rc=$?"
+  .venv/bin/python scripts/dream_hotpot_post.py >> "$LOG/post.log" 2>&1
+  log "five-cell summary rc=$?"
 fi
 log "dream hotpotqa pipeline done"

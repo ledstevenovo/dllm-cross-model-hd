@@ -1,0 +1,62 @@
+{
+  "cells": [
+    {
+      "run": "llada_triviaqa",
+      "auroc": 0.7833673283922693,
+      "auroc_low": 0.7491604374589015,
+      "auroc_high": 0.817240420926541,
+      "n": 800,
+      "positive": 507,
+      "positive_rate": 0.63375,
+      "precision": "float16",
+      "gen_length": 128,
+      "paper_128": 82.2,
+      "diff_vs_paper": -3.863267160773077
+    },
+    {
+      "run": "llada_triviaqa_l64",
+      "auroc": 0.7016368851811892,
+      "auroc_low": 0.6630031144303702,
+      "auroc_high": 0.7397905441014447,
+      "n": 797,
+      "positive": 481,
+      "positive_rate": 0.6035131744040151,
+      "precision": "float16",
+      "gen_length": 64,
+      "paper_128": 86.5,
+      "diff_vs_paper": -16.336311481881083
+    },
+    {
+      "run": "llada_hotpotqa",
+      "auroc": 0.6817579404372001,
+      "auroc_low": 0.6266335547318984,
+      "auroc_high": 0.7334771969924774,
+      "n": 786,
+      "positive": 95,
+      "positive_rate": 0.12086513994910941,
+      "precision": "float16",
+      "gen_length": 128,
+      "paper_128": 85.6,
+      "diff_vs_paper": -17.42420595627999
+    },
+    {
+      "run": "dream_triviaqa",
+      "auroc": 0.7948482354217312,
+      "auroc_low": 0.7637535427771436,
+      "auroc_high": 0.8258836722456948,
+      "n": 796,
+      "positive": 439,
+      "positive_rate": 0.5515075376884422,
+      "precision": "bf16",
+      "gen_length": 128,
+      "paper_128": 83.9,
+      "diff_vs_paper": -4.415176457826888
+    }
+  ],
+  "missing_runs": [
+    "dream_hotpotqa"
+  ],
+  "recitation_hypothesis_verdict": null,
+  "rule_frozen_at": "reports/tre_repro/recitation_hypothesis.md (before this run's scores existed)",
+  "note": "paper_128 is the paper's 128-step column; the L64 comparison is only meaningful against the paper's 64 column, which is not listed here because our '64' differs (see budget_columns.md)"
+}
