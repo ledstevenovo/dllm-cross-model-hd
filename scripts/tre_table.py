@@ -25,12 +25,14 @@ CELLS = {
     "llada_triviaqa_fp16_L128_S64_B128_v3": ("LLaDA", "TriviaQA", 128, "bare", "deepseek", 82.2),
     "llada_triviaqa_fp16_L64_S64_B64_v1": ("LLaDA", "TriviaQA", 64, "bare", "deepseek", None),
     "dream_triviaqa_bf16_L128_S64_B128_v1": ("Dream", "TriviaQA", 128, "bare", "vankit", 83.9),
+    "dream_triviaqa_bf16_L64_S64_B64_v1": ("Dream", "TriviaQA", 64, "bare", "LongCat", None),
     "llada_hotpotqa_bare_v1": ("LLaDA", "HotpotQA", 128, "bare", "LongCat", 85.6),
     "llada_hotpotqa_bare_v1_L64": ("LLaDA", "HotpotQA", 64, "bare", "LongCat", None),
     "dream_hotpotqa_bare_v1": ("Dream", "HotpotQA", 128, "bare", "LongCat", 80.6),
     "llada_hotpotqa_longcat": ("LLaDA", "HotpotQA", 128, "context", "LongCat", 85.6),
     "llada_hotpotqa_fp16_L128_S64_B128_v1": ("LLaDA", "HotpotQA", 128, "context", "deepseek", 85.6),
     "dream_hotpotqa_bf16_L128_S64_B128_v1": ("Dream", "HotpotQA", 128, "context", "LongCat", 80.6),
+    "dream_hotpotqa_bare_l64": ("Dream", "HotpotQA", 64, "bare", "LongCat", None),
 }
 
 # The paper's two columns are "total diffusion steps" 128 and 64; our runs are both single-block

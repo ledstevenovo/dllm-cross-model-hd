@@ -37,6 +37,24 @@
       "comparable_to_paper": true
     },
     {
+      "run": "dream_triviaqa_bf16_L64_S64_B64_v1",
+      "model": "Dream",
+      "dataset": "TriviaQA",
+      "gen_length": 64,
+      "prompt": "bare",
+      "judge": "LongCat",
+      "precision": "bf16",
+      "auroc": 0.8994502258001177,
+      "auroc_low": 0.8773488595666442,
+      "auroc_high": 0.9191937628923275,
+      "n": 793,
+      "positive": 463,
+      "positive_rate": 0.5838587641866331,
+      "paper_128": null,
+      "delta_vs_paper": null,
+      "comparable_to_paper": false
+    },
+    {
       "run": "dream_triviaqa_bf16_L128_S64_B128_v1",
       "model": "Dream",
       "dataset": "TriviaQA",
