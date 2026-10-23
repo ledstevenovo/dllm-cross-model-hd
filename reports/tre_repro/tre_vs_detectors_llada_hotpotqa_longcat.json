@@ -1,0 +1,119 @@
+{
+  "tre_training_free": {
+    "all": {
+      "n": 786,
+      "positive": 141,
+      "negative": 645,
+      "positive_rate": 0.17938931297709923,
+      "auroc": 0.7448237946011326,
+      "auprc": 0.42071875754432825,
+      "auroc_low": 0.700861762466095,
+      "auroc_high": 0.7882086758912155
+    },
+    "test": {
+      "n": 786,
+      "positive": 141,
+      "negative": 645,
+      "positive_rate": 0.17938931297709923,
+      "auroc": 0.7448237946011326,
+      "auprc": 0.42071875754432825,
+      "auroc_low": 0.700861762466095,
+      "auroc_high": 0.7882086758912155
+    }
+  },
+  "trained": [
+    {
+      "feature_set": "entropy_raw",
+      "kind": "lr",
+      "cv": "question-clustered 5-fold",
+      "test": {
+        "n": 786,
+        "positive": 141,
+        "negative": 645,
+        "positive_rate": 0.17938931297709923,
+        "auroc": 0.7078014184397163,
+        "auprc": 0.4001255438448902,
+        "auroc_low": 0.6540474549055941,
+        "auroc_high": 0.7582919809828645
+      }
+    },
+    {
+      "feature_set": "entropy_raw",
+      "kind": "mlp",
+      "cv": "question-clustered 5-fold",
+      "test": {
+        "n": 786,
+        "positive": 141,
+        "negative": 645,
+        "positive_rate": 0.17938931297709923,
+        "auroc": 0.6736818956512177,
+        "auprc": 0.3043828272893839,
+        "auroc_low": 0.6253942107025753,
+        "auroc_high": 0.7230584995054092
+      }
+    },
+    {
+      "feature_set": "relative_normalized",
+      "kind": "lr",
+      "cv": "question-clustered 5-fold",
+      "test": {
+        "n": 786,
+        "positive": 141,
+        "negative": 645,
+        "positive_rate": 0.17938931297709923,
+        "auroc": 0.7112430589916984,
+        "auprc": 0.4039846488038821,
+        "auroc_low": 0.65941513795685,
+        "auroc_high": 0.7605464732093588
+      }
+    },
+    {
+      "feature_set": "relative_normalized",
+      "kind": "mlp",
+      "cv": "question-clustered 5-fold",
+      "test": {
+        "n": 786,
+        "positive": 141,
+        "negative": 645,
+        "positive_rate": 0.17938931297709923,
+        "auroc": 0.6947935565451646,
+        "auprc": 0.3044535854479834,
+        "auroc_low": 0.6520233203422859,
+        "auroc_high": 0.7404642788359074
+      }
+    },
+    {
+      "feature_set": "late_only",
+      "kind": "lr",
+      "cv": "question-clustered 5-fold",
+      "test": {
+        "n": 786,
+        "positive": 141,
+        "negative": 645,
+        "positive_rate": 0.17938931297709923,
+        "auroc": 0.493364121172137,
+        "auprc": 0.166192356248874,
+        "auroc_low": 0.44207171628487935,
+        "auroc_high": 0.5404426303143796
+      }
+    },
+    {
+      "feature_set": "late_only",
+      "kind": "mlp",
+      "cv": "question-clustered 5-fold",
+      "test": {
+        "n": 786,
+        "positive": 141,
+        "negative": 645,
+        "positive_rate": 0.17938931297709923,
+        "auroc": 0.5314750673483973,
+        "auprc": 0.18877376900791917,
+        "auroc_low": 0.47902348610214435,
+        "auroc_high": 0.5850445184802302
+      }
+    }
+  ],
+  "note": "run has no train/validation split; trained detectors are scored by question-clustered 5-fold cross-validation instead",
+  "run": "/root/autodl-tmp/dllm-cross-model-hd/data/trajectories/tre_repro/llada_hotpotqa_fp16_L128_S64_B128_v1",
+  "n_traces": 786
+}
