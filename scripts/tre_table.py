@@ -67,7 +67,12 @@ def main() -> int:
             "positive_rate": counts["positive_n"] / cell["n"],
             "paper_128": paper,
             "delta_vs_paper": (cell["auroc"] * 100 - paper) if paper else None,
-            "comparable_to_paper": bool(paper) and gen == 128,
+            # Comparable requires: a paper reference, the same budget, AND the same prompt type.
+            # The paper does not state whether its HotpotQA prompt includes context, so the
+            # bare variant is the one we treat as comparable (it matches the main project's
+            # convention and is the configuration the reproduction claims); context runs are
+            # reported separately as an extension.
+            "comparable_to_paper": bool(paper) and gen == 128 and variant == "bare",
         })
 
     rows.sort(key=lambda r: (r["model"], r["dataset"], r["prompt"], r["gen_length"]))

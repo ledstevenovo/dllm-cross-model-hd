@@ -52,7 +52,7 @@
       "positive_rate": 0.14631043256997456,
       "paper_128": 80.6,
       "delta_vs_paper": -8.733221019892426,
-      "comparable_to_paper": true
+      "comparable_to_paper": false
     },
     {
       "run": "dream_triviaqa_bf16_L64_S64_B64_v1",
@@ -142,7 +142,7 @@
       "positive_rate": 0.17938931297709923,
       "paper_128": 85.6,
       "delta_vs_paper": -11.117620539886744,
-      "comparable_to_paper": true
+      "comparable_to_paper": false
     },
     {
       "run": "llada_hotpotqa_fp16_L128_S64_B128_v1",
@@ -160,7 +160,7 @@
       "positive_rate": 0.12086513994910941,
       "paper_128": 85.6,
       "delta_vs_paper": -17.42420595627999,
-      "comparable_to_paper": true
+      "comparable_to_paper": false
     },
     {
       "run": "llada_triviaqa_l64_longcat",
