@@ -1,0 +1,593 @@
+{
+  "sample": "/tmp/opencode/dh_crosscheck.json",
+  "n": 57,
+  "resolved": 57,
+  "deepseek_labels": {
+    "incorrect": 17,
+    "correct": 40
+  },
+  "longcat_labels": {
+    "incorrect": 17,
+    "correct": 40
+  },
+  "agreement": 0.9649122807017544,
+  "cohens_kappa": 0.9161764705882353,
+  "confusion": {
+    "incorrect|incorrect": 16,
+    "incorrect|correct": 1,
+    "correct|correct": 39,
+    "correct|incorrect": 1
+  },
+  "rows": [
+    {
+      "sample_id": "hotpotqa__5a7be294554299294a54ab44__seed20261021",
+      "question_id": "hotpotqa__5a7be294554299294a54ab44",
+      "question": "Bill McCollum took a leadership role in the Senate trial that began on which date?",
+      "gold": "December 19, 1998",
+      "answer": "February 12, 1999",
+      "judge_label": "incorrect",
+      "other_verdict": "incorrect",
+      "ok": true
+    },
+    {
+      "sample_id": "hotpotqa__5a79b525554299029c4b5f67__seed20261021",
+      "question_id": "hotpotqa__5a79b525554299029c4b5f67",
+      "question": "What performing traditionally from the longest continental mountain range in the world, are Grupo Aymara famous for?",
+      "gold": "traditional music",
+      "answer": "Andes",
+      "judge_label": "incorrect",
+      "other_verdict": "incorrect",
+      "ok": true
+    },
+    {
+      "sample_id": "hotpotqa__5a7fb90655429969796c1b34__seed20261021",
+      "question_id": "hotpotqa__5a7fb90655429969796c1b34",
+      "question": "What is the real name of the free jazz drummer on the album \"Center of the World\"?",
+      "gold": "Raymond Patterson",
+      "answer": "The real name of the free jazz drummer on the album \"Center of the World\" is Muhammad Patterson.",
+      "judge_label": "incorrect",
+      "other_verdict": "incorrect",
+      "ok": true
+    },
+    {
+      "sample_id": "hotpotqa__5a7e19e655429965cec5ea58__seed20261021",
+      "question_id": "hotpotqa__5a7e19e655429965cec5ea58",
+      "question": "Blackamoor, Lancashire lies near the banks of what river?",
+      "gold": "Ribble",
+      "answer": "River Darwen",
+      "judge_label": "incorrect",
+      "other_verdict": "incorrect",
+      "ok": true
+    },
+    {
+      "sample_id": "hotpotqa__5a733b835542991f9a20c6b2__seed20261021",
+      "question_id": "hotpotqa__5a733b835542991f9a20c6b2",
+      "question": "Which movie is loosley based off the Brother Grimm's \"Iron Henry\"?",
+      "gold": "The Frog Prince",
+      "answer": "The Princess and the Frog",
+      "judge_label": "incorrect",
+      "other_verdict": "incorrect",
+      "ok": true
+    },
+    {
+      "sample_id": "hotpotqa__5a7770f855429966f1a36d4e__seed20261021",
+      "question_id": "hotpotqa__5a7770f855429966f1a36d4e",
+      "question": "Which Indian cricketer was the penultimate holder of the title Nawab of Pataudi?",
+      "gold": "Iftikhar Ali Khan",
+      "answer": "Mansoor Ali Khan Pataudi",
+      "judge_label": "incorrect",
+      "other_verdict": "incorrect",
+      "ok": true
+    },
+    {
+      "sample_id": "hotpotqa__5a7db62d5542997cc2c4747c__seed20261021",
+      "question_id": "hotpotqa__5a7db62d5542997cc2c4747c",
+      "question": "What German state was Karl Julius Perleb born in?",
+      "gold": "Baden-Württemberg",
+      "answer": "Konstanz",
+      "judge_label": "incorrect",
+      "other_verdict": "incorrect",
+      "ok": true
+    },
+    {
+      "sample_id": "hotpotqa__5a7a112a5542990783324e2b__seed20261021",
+      "question_id": "hotpotqa__5a7a112a5542990783324e2b",
+      "question": "What kind of musicians are Mark Gaudet and Jan Axel Blomberg?",
+      "gold": "drummer",
+      "answer": "Mark Gaudet and Jan Axel Blomberg are Canadian heavy metal musicians.",
+      "judge_label": "incorrect",
+      "other_verdict": "incorrect",
+      "ok": true
+    },
+    {
+      "sample_id": "hotpotqa__5a7129685542994082a3e5fa__seed20261021",
+      "question_id": "hotpotqa__5a7129685542994082a3e5fa",
+      "question": "Which \"Blackzilians\" fighter is currently competing in the Middleweight division of Ultimate Fighting Championship?",
+      "gold": "Vitor Belfort",
+      "answer": "Rashad Evans",
+      "judge_label": "incorrect",
+      "other_verdict": "incorrect",
+      "ok": true
+    },
+    {
+      "sample_id": "hotpotqa__5a7b01645542992d025e6734__seed20261021",
+      "question_id": "hotpotqa__5a7b01645542992d025e6734",
+      "question": "What property do the films Sweet Crude and Tunisian Victory share?",
+      "gold": "documentary",
+      "answer": "The films Sweet Crude and Tunisian Victory share the property of being films.",
+      "judge_label": "incorrect",
+      "other_verdict": "incorrect",
+      "ok": true
+    },
+    {
+      "sample_id": "hotpotqa__5a79ad485542994bb9457036__seed20261021",
+      "question_id": "hotpotqa__5a79ad485542994bb9457036",
+      "question": "What competitions does Lai Shiu Wing team compete participate in?",
+      "gold": "FIFA World Cup",
+      "answer": "FIFA World Cup, AFC Asian Cup",
+      "judge_label": "incorrect",
+      "other_verdict": "incorrect",
+      "ok": true
+    },
+    {
+      "sample_id": "hotpotqa__5a77d4eb55429949eeb29f74__seed20261021",
+      "question_id": "hotpotqa__5a77d4eb55429949eeb29f74",
+      "question": "Who was born first, Yanka Dyagileva or Alexander Bashlachev?",
+      "gold": "Alexander Nickolaevich Bashlachev",
+      "answer": "Yanka Dyagileva was born first than Alexander Bashlachev.",
+      "judge_label": "incorrect",
+      "other_verdict": "incorrect",
+      "ok": true
+    },
+    {
+      "sample_id": "hotpotqa__5a75321555429916b0164290__seed20261021",
+      "question_id": "hotpotqa__5a75321555429916b0164290",
+      "question": "What is the title of the person who is Head of the Department of Biological Sciences at the University of Lincoln",
+      "gold": "Doctor",
+      "answer": "Professor of Veterinary Behavioural Medicine",
+      "judge_label": "incorrect",
+      "other_verdict": "incorrect",
+      "ok": true
+    },
+    {
+      "sample_id": "hotpotqa__5a7b59115542995eb53be923__seed20261021",
+      "question_id": "hotpotqa__5a7b59115542995eb53be923",
+      "question": "What team does the oldest son play for, from the family whose middle son plays for the Chicago Bulls and the mother and father and third son all played basketball.",
+      "gold": "Finland national football team",
+      "answer": "Eero Markkanen plays for Dynamo Dresden.",
+      "judge_label": "incorrect",
+      "other_verdict": "incorrect",
+      "ok": true
+    },
+    {
+      "sample_id": "hotpotqa__5a728f015542991f9a20c4e4__seed20261021",
+      "question_id": "hotpotqa__5a728f015542991f9a20c4e4",
+      "question": "Which star of Zork was also the voice of Pac-Man?",
+      "gold": "Martin Ingerman",
+      "answer": "Marty Ingels",
+      "judge_label": "incorrect",
+      "other_verdict": "correct",
+      "ok": true
+    },
+    {
+      "sample_id": "hotpotqa__5a7df5635542990b8f503b0a__seed20261021",
+      "question_id": "hotpotqa__5a7df5635542990b8f503b0a",
+      "question": "What year did the sequel to a story that is told through a combination of narrative and vernacular photographs from the personal archives of collectors by Ransom Riggs come out?",
+      "gold": "2014",
+      "answer": "2015",
+      "judge_label": "incorrect",
+      "other_verdict": "incorrect",
+      "ok": true
+    },
+    {
+      "sample_id": "hotpotqa__5a7faed65542994857a767b6__seed20261021",
+      "question_id": "hotpotqa__5a7faed65542994857a767b6",
+      "question": "What city did the name come from for the Polish truck manufacturer who sold to various countries, including more than the socialist states of Central and Eastern Europe?",
+      "gold": "City of Starachowice",
+      "answer": "Starachowice",
+      "judge_label": "correct",
+      "other_verdict": "correct",
+      "ok": true
+    },
+    {
+      "sample_id": "hotpotqa__5a729cc25542991f9a20c532__seed20261021",
+      "question_id": "hotpotqa__5a729cc25542991f9a20c532",
+      "question": "Which author wrote about a woman captured by the Symbionese Liberation Army?",
+      "gold": "Paul Avery",
+      "answer": "Susan Choi",
+      "judge_label": "incorrect",
+      "other_verdict": "incorrect",
+      "ok": true
+    },
+    {
+      "sample_id": "hotpotqa__5a778ce55542995d831811c0__seed20261021",
+      "question_id": "hotpotqa__5a778ce55542995d831811c0",
+      "question": "Where is Greensky Bluegrass band's home and location of where they created their first album?",
+      "gold": "Bell's Brewery, Inc.",
+      "answer": "Greensky Bluegrass band's home is in Kalamazoo, Michigan. They created their first album at Bell's Brewery.",
+      "judge_label": "correct",
+      "other_verdict": "correct",
+      "ok": true
+    },
+    {
+      "sample_id": "hotpotqa__5a797bd95542994bb9457016__seed20261021",
+      "question_id": "hotpotqa__5a797bd95542994bb9457016",
+      "question": "What age was Georgia Middleman when she started singing in the seventh-most populated city in the United States?",
+      "gold": "ten",
+      "answer": "ten",
+      "judge_label": "correct",
+      "other_verdict": "correct",
+      "ok": true
+    },
+    {
+      "sample_id": "hotpotqa__5a72160e55429971e9dc9253__seed20261021",
+      "question_id": "hotpotqa__5a72160e55429971e9dc9253",
+      "question": "Who is the son of the author of the short story \"The Enormous Radio.\"",
+      "gold": "Benjamin Hale Cheever",
+      "answer": "Benjamin Cheever is the son of the author of the short story \"The Enormous Radio.\"",
+      "judge_label": "correct",
+      "other_verdict": "correct",
+      "ok": true
+    },
+    {
+      "sample_id": "hotpotqa__5a7f725355429969796c1a55__seed20261021",
+      "question_id": "hotpotqa__5a7f725355429969796c1a55",
+      "question": "The actress who played Clementine Churchill in \"The Crown\" joined the board of advisors for a theatre company began by who?",
+      "gold": "Paula D'Alessandris",
+      "answer": "Paula D'Alessandris",
+      "judge_label": "correct",
+      "other_verdict": "correct",
+      "ok": true
+    },
+    {
+      "sample_id": "hotpotqa__5a7f5ab65542995d8a8dde43__seed20261021",
+      "question_id": "hotpotqa__5a7f5ab65542995d8a8dde43",
+      "question": "Cheek to cheek tour played shows at what place that is located on the Las Vegas strip that began their tour?",
+      "gold": "Cosmopolitan of Las Vegas",
+      "answer": "The Cosmopolitan of Las Vegas",
+      "judge_label": "correct",
+      "other_verdict": "correct",
+      "ok": true
+    },
+    {
+      "sample_id": "hotpotqa__5a7af2a455429931da12c998__seed20261021",
+      "question_id": "hotpotqa__5a7af2a455429931da12c998",
+      "question": "Palm Springs lies in Palm Beach County, the third most populated county in its state. Which major U.S. city is it near?",
+      "gold": "Miami",
+      "answer": "Miami",
+      "judge_label": "correct",
+      "other_verdict": "correct",
+      "ok": true
+    },
+    {
+      "sample_id": "hotpotqa__5a713f395542994082a3e6ea__seed20261021",
+      "question_id": "hotpotqa__5a713f395542994082a3e6ea",
+      "question": "Where does the state legislature in which John Coffin Talbot served convene?",
+      "gold": "the State House in Augusta",
+      "answer": "Augusta",
+      "judge_label": "correct",
+      "other_verdict": "correct",
+      "ok": true
+    },
+    {
+      "sample_id": "hotpotqa__5a74994a55429974ef308c2e__seed20261021",
+      "question_id": "hotpotqa__5a74994a55429974ef308c2e",
+      "question": "Who was the American congressman whose actions led to a CIA program to arm Jihadi warriors in Afghanistan in the 1980's?",
+      "gold": "Charlie Wilson",
+      "answer": "Charlie Wilson",
+      "judge_label": "correct",
+      "other_verdict": "correct",
+      "ok": true
+    },
+    {
+      "sample_id": "hotpotqa__5a7a36e65542990198eaf0ea__seed20261021",
+      "question_id": "hotpotqa__5a7a36e65542990198eaf0ea",
+      "question": "When was the creator of Bully Boy born?",
+      "gold": "3 May 1958",
+      "answer": "3 May 1958",
+      "judge_label": "correct",
+      "other_verdict": "correct",
+      "ok": true
+    },
+    {
+      "sample_id": "hotpotqa__5a74a8fa55429929fddd8497__seed20261021",
+      "question_id": "hotpotqa__5a74a8fa55429929fddd8497",
+      "question": "After his curacy at the village that is a suburb of Scunthorpe, who was Industrial Chaplain to the Bishop of Lincoln?",
+      "gold": "Dudman",
+      "answer": "Bill Dudman",
+      "judge_label": "correct",
+      "other_verdict": "correct",
+      "ok": true
+    },
+    {
+      "sample_id": "hotpotqa__5a7bacf35542997c3ec9724b__seed20261021",
+      "question_id": "hotpotqa__5a7bacf35542997c3ec9724b",
+      "question": "Who was born first, Jorge Amado or James Leo Herlihy?",
+      "gold": "Jorge Leal Amado de Faria",
+      "answer": "Jorge Amado was born before James Leo Herlihy.",
+      "judge_label": "correct",
+      "other_verdict": "correct",
+      "ok": true
+    },
+    {
+      "sample_id": "hotpotqa__5a7228f655429971e9dc9312__seed20261021",
+      "question_id": "hotpotqa__5a7228f655429971e9dc9312",
+      "question": "Which \"novel with a key\" was written by John Ehrlichman about the CIA, base on events leading up to the Watergate coverup?",
+      "gold": "The Company",
+      "answer": "The Company (Ehrlichman novel)",
+      "judge_label": "correct",
+      "other_verdict": "correct",
+      "ok": true
+    },
+    {
+      "sample_id": "hotpotqa__5a77d2d25542992a6e59dfe2__seed20261021",
+      "question_id": "hotpotqa__5a77d2d25542992a6e59dfe2",
+      "question": "What song was on an American radio network that is owned by Disney Channels Worldwide, Inc. is a song by Senegalese-American R&B and rapper Akon?",
+      "gold": "\"Lonely\"",
+      "answer": "Lonely (Akon song)",
+      "judge_label": "correct",
+      "other_verdict": "correct",
+      "ok": true
+    },
+    {
+      "sample_id": "hotpotqa__5a77c4fe55429967ab10527b__seed20261021",
+      "question_id": "hotpotqa__5a77c4fe55429967ab10527b",
+      "question": "What is it called when a piece of media is altered from its original state like when Bubba Sparxxx was featured in the song Oops?",
+      "gold": "Remix",
+      "answer": "Remix",
+      "judge_label": "correct",
+      "other_verdict": "correct",
+      "ok": true
+    },
+    {
+      "sample_id": "hotpotqa__5a7af4cd55429931da12c9a6__seed20261021",
+      "question_id": "hotpotqa__5a7af4cd55429931da12c9a6",
+      "question": "Beena Sarwar is the editor of a peace initiative sponsored by a newpaper based in what city?",
+      "gold": "Karachi, Pakistan",
+      "answer": "Beena Sarwar is the editor of a peace initiative sponsored by a newspaper based in Karachi, Pakistan.",
+      "judge_label": "correct",
+      "other_verdict": "correct",
+      "ok": true
+    },
+    {
+      "sample_id": "hotpotqa__5a771e0b55429966f1a36c75__seed20261021",
+      "question_id": "hotpotqa__5a771e0b55429966f1a36c75",
+      "question": "Jessica Lee, former MP for Erewash, served as Parliamentary Private Secretary to the experienced representative for Beaconsfield, when he held which office?",
+      "gold": "Attorney General",
+      "answer": "Attorney General for England and Wales and Advocate General for Northern Ireland",
+      "judge_label": "correct",
+      "other_verdict": "correct",
+      "ok": true
+    },
+    {
+      "sample_id": "hotpotqa__5a7a33205542996a35c1712f__seed20261021",
+      "question_id": "hotpotqa__5a7a33205542996a35c1712f",
+      "question": "Out of two American colonies that had a series of skirmishes and raids between 1701 and 1765 at the disputed border, which British proprietary colony became a royal colony on the northeast coast of North America?",
+      "gold": "Province of New York",
+      "answer": "Province of New York",
+      "judge_label": "correct",
+      "other_verdict": "correct",
+      "ok": true
+    },
+    {
+      "sample_id": "hotpotqa__5a790d9855429974737f7954__seed20261021",
+      "question_id": "hotpotqa__5a790d9855429974737f7954",
+      "question": "What contest did Drew Barry's younger brother win in 1996?",
+      "gold": "the 1996 NBA Slam Dunk Contest",
+      "answer": "Brent Barry won the 1996 NBA Slam Dunk Contest.",
+      "judge_label": "correct",
+      "other_verdict": "correct",
+      "ok": true
+    },
+    {
+      "sample_id": "hotpotqa__5a7180205542994082a3e856__seed20261021",
+      "question_id": "hotpotqa__5a7180205542994082a3e856",
+      "question": "The creator of \"Wallace and Gromit\" also created what animation comedy that matched animated zoo animals with a soundtrack of people talking about their homes?",
+      "gold": "Creature Comforts",
+      "answer": "Creature Comforts",
+      "judge_label": "correct",
+      "other_verdict": "correct",
+      "ok": true
+    },
+    {
+      "sample_id": "hotpotqa__5a7f7e3a5542992097ad2f89__seed20261021",
+      "question_id": "hotpotqa__5a7f7e3a5542992097ad2f89",
+      "question": "What actor appeared in \"Evening in Byzantium\" and was nominated for the Academy Award for Best Supporting Actor in 1973 for \"The Heartbreak Kid\"?",
+      "gold": "Edward Albert Heimberger",
+      "answer": "Eddie Albert",
+      "judge_label": "correct",
+      "other_verdict": "correct",
+      "ok": true
+    },
+    {
+      "sample_id": "hotpotqa__5a77a14655429949eeb29f13__seed20261021",
+      "question_id": "hotpotqa__5a77a14655429949eeb29f13",
+      "question": "Widewuto, a legendary king of the pagan Prussians, was believed to have existed before which army launched crusade against the Prussian peoples?",
+      "gold": "the Teutonic Knights",
+      "answer": "Widewuto, a legendary king of the pagan Prussians, was believed to have existed before the Teutonic Knights launched crusade against the Prussian peoples peoples.",
+      "judge_label": "correct",
+      "other_verdict": "correct",
+      "ok": true
+    },
+    {
+      "sample_id": "hotpotqa__5a7148685542994082a3e761__seed20261021",
+      "question_id": "hotpotqa__5a7148685542994082a3e761",
+      "question": "Paul Ziert recruited what two time gold medalist in gymnastics?",
+      "gold": "Bart Conner",
+      "answer": "Bart Conner",
+      "judge_label": "correct",
+      "other_verdict": "correct",
+      "ok": true
+    },
+    {
+      "sample_id": "hotpotqa__5a77769e5542997042120a65__seed20261021",
+      "question_id": "hotpotqa__5a77769e5542997042120a65",
+      "question": "When Budweiser created a dog mascot to promote Bud Light in the 1980s, which rival brewer (with its own character Alex the Dog) were they competing with?",
+      "gold": "Stroh's",
+      "answer": "Budweiser was competing with Stroh's beer and its mascot, Alex the Dog.",
+      "judge_label": "correct",
+      "other_verdict": "correct",
+      "ok": true
+    },
+    {
+      "sample_id": "hotpotqa__5a7b8749554299294a54a9db__seed20261021",
+      "question_id": "hotpotqa__5a7b8749554299294a54a9db",
+      "question": "Which author has won more Pulitzer Prizes, Thomas Friedman or Henri Bergson?",
+      "gold": "Thomas Loren Friedman",
+      "answer": "Thomas Friedman has won more Pulitzer Prizes than Henri Bergson.",
+      "judge_label": "correct",
+      "other_verdict": "correct",
+      "ok": true
+    },
+    {
+      "sample_id": "hotpotqa__5a7b78c35542997c3ec971a9__seed20261021",
+      "question_id": "hotpotqa__5a7b78c35542997c3ec971a9",
+      "question": "What year was the voice actress of an animated television series premiered on Cartoon Network born?",
+      "gold": "1967",
+      "answer": "1967",
+      "judge_label": "correct",
+      "other_verdict": "correct",
+      "ok": true
+    },
+    {
+      "sample_id": "hotpotqa__5a7a59d15542996c55b2dd67__seed20261021",
+      "question_id": "hotpotqa__5a7a59d15542996c55b2dd67",
+      "question": "What other female rappers appeared Brittany Nicole Carpentero in the official remix to My Chick Bad?",
+      "gold": "Eve, and Trina",
+      "answer": "Eve and Trina",
+      "judge_label": "correct",
+      "other_verdict": "correct",
+      "ok": true
+    },
+    {
+      "sample_id": "hotpotqa__5a7b116a554299042af8f6c4__seed20261021",
+      "question_id": "hotpotqa__5a7b116a554299042af8f6c4",
+      "question": "What year did the prison where William Penn wrote No Cross, No Crown stop being used as a prison?",
+      "gold": "1952",
+      "answer": "1952",
+      "judge_label": "correct",
+      "other_verdict": "correct",
+      "ok": true
+    },
+    {
+      "sample_id": "hotpotqa__5a7bbee85542997c3ec97270__seed20261021",
+      "question_id": "hotpotqa__5a7bbee85542997c3ec97270",
+      "question": "Rafe Hernandez is a fictional character who played with Chrishell Stause's charachter on Days of our live?",
+      "gold": "Jordan Ridgeway",
+      "answer": "Jordan Ridgeway",
+      "judge_label": "correct",
+      "other_verdict": "correct",
+      "ok": true
+    },
+    {
+      "sample_id": "hotpotqa__5a728fbd5542992359bc30f8__seed20261021",
+      "question_id": "hotpotqa__5a728fbd5542992359bc30f8",
+      "question": "Who was convicted of murdering the director of Schoolboy Crush?",
+      "gold": "Harlow Cuadra and Joseph Kerekes",
+      "answer": "Harlow Cuadra and Joseph Kerekes",
+      "judge_label": "correct",
+      "other_verdict": "correct",
+      "ok": true
+    },
+    {
+      "sample_id": "hotpotqa__5a79ea435542996c55b2dc9e__seed20261021",
+      "question_id": "hotpotqa__5a79ea435542996c55b2dc9e",
+      "question": "Who was the captain of the only battleship to provide gunfire support during the Vietnam War?",
+      "gold": "Rear Adm. J. Edward Snyder",
+      "answer": "Rear Adm. J. Edward Snyder",
+      "judge_label": "correct",
+      "other_verdict": "correct",
+      "ok": true
+    },
+    {
+      "sample_id": "hotpotqa__5a79186f55429907847277af__seed20261021",
+      "question_id": "hotpotqa__5a79186f55429907847277af",
+      "question": "Where is stadium that was named after Rodney Cline Carew?",
+      "gold": "Panama City",
+      "answer": "Panama City, Panama",
+      "judge_label": "correct",
+      "other_verdict": "correct",
+      "ok": true
+    },
+    {
+      "sample_id": "hotpotqa__5a7d3f895542995f4f402248__seed20261021",
+      "question_id": "hotpotqa__5a7d3f895542995f4f402248",
+      "question": "Pandora- The World of Avatar includes a ride that allows guest to take flight on what animal?",
+      "gold": "mountain Banshee",
+      "answer": "Pandora- The World of Avatar includes a ride that allows guests to take flight on a mountain Banshee.",
+      "judge_label": "correct",
+      "other_verdict": "correct",
+      "ok": true
+    },
+    {
+      "sample_id": "hotpotqa__5a7ccc1e55429909bec7680e__seed20261021",
+      "question_id": "hotpotqa__5a7ccc1e55429909bec7680e",
+      "question": "On what UHF channel is the station that Cindy Williams is on broadcast?",
+      "gold": "44",
+      "answer": "UHF channel 44",
+      "judge_label": "correct",
+      "other_verdict": "correct",
+      "ok": true
+    },
+    {
+      "sample_id": "hotpotqa__5a796c805542990784727805__seed20261021",
+      "question_id": "hotpotqa__5a796c805542990784727805",
+      "question": "The brother of Ferdinand Alfred Friedrich Jodl served as what position in World War II?",
+      "gold": "Chief of the Operations Staff of the Armed Forces High Command",
+      "answer": "Chief of the Operations Staff of the Armed Forces High Command",
+      "judge_label": "correct",
+      "other_verdict": "correct",
+      "ok": true
+    },
+    {
+      "sample_id": "hotpotqa__5a78e86f55429974737f78fb__seed20261021",
+      "question_id": "hotpotqa__5a78e86f55429974737f78fb",
+      "question": "What does the unique calendar system in Japan, who the first Emperor of Japan created, emphasize?",
+      "gold": "the long history of Japan",
+      "answer": "The long history of Japan and the Imperial dynasty.",
+      "judge_label": "correct",
+      "other_verdict": "incorrect",
+      "ok": true
+    },
+    {
+      "sample_id": "hotpotqa__5a78c66e55429974737f787b__seed20261021",
+      "question_id": "hotpotqa__5a78c66e55429974737f787b",
+      "question": "Which group did Masta Kill released Selling My Soul under?",
+      "gold": "Wu-Tang Clan",
+      "answer": "Wu-Tang Clan",
+      "judge_label": "correct",
+      "other_verdict": "correct",
+      "ok": true
+    },
+    {
+      "sample_id": "hotpotqa__5a79c3785542994bb9457074__seed20261021",
+      "question_id": "hotpotqa__5a79c3785542994bb9457074",
+      "question": "Nell Williams Plays a younger version of this Character in HBO's Game of thrones that is also in Which fantasy novel Series written by George R.R. Martin?",
+      "gold": "A Song of Ice and Fire",
+      "answer": "A Song of Ice and Fire\"",
+      "judge_label": "correct",
+      "other_verdict": "correct",
+      "ok": true
+    },
+    {
+      "sample_id": "hotpotqa__5a7e1f5655429965cec5ea81__seed20261021",
+      "question_id": "hotpotqa__5a7e1f5655429965cec5ea81",
+      "question": "Which footballer who is an attacking midfielder for Premier League club Stoke City, has Jim Cassell developed?",
+      "gold": "Stephen James Ireland",
+      "answer": "Stephen Ireland",
+      "judge_label": "correct",
+      "other_verdict": "correct",
+      "ok": true
+    },
+    {
+      "sample_id": "hotpotqa__5a7912f655429974737f796c__seed20261021",
+      "question_id": "hotpotqa__5a7912f655429974737f796c",
+      "question": "What is the birthday of the man who played Lex Luthor in Superman IV: The Quest for Peace?",
+      "gold": "January 30, 1930",
+      "answer": "Gene Hackman's birthday is January 30, 1930.",
+      "judge_label": "correct",
+      "other_verdict": "correct",
+      "ok": true
+    }
+  ]
+}
