@@ -51,12 +51,27 @@
       "gen_length": 128,
       "paper_128": 83.9,
       "diff_vs_paper": -4.415176457826888
+    },
+    {
+      "run": "dream_hotpotqa",
+      "auroc": 0.7186677898010757,
+      "auroc_low": 0.666624847876085,
+      "auroc_high": 0.7691605832891961,
+      "n": 786,
+      "positive": 115,
+      "positive_rate": 0.14631043256997456,
+      "precision": "bf16",
+      "gen_length": 128,
+      "paper_128": 80.6,
+      "diff_vs_paper": -8.733221019892426
     }
   ],
-  "missing_runs": [
-    "dream_hotpotqa"
-  ],
-  "recitation_hypothesis_verdict": null,
-  "rule_frozen_at": "reports/tre_repro/recitation_hypothesis.md (before this run's scores existed)",
+  "missing_runs": [],
+  "recitation_hypothesis_verdict": {
+    "holds": "undecided",
+    "label": "indistinguishable from LLaDA's 0.706; this run cannot separate the two mechanisms",
+    "auroc": 0.7186677898010757
+  },
+  "rule_frozen_at": "reports/tre_repro/recitation_hypothesis.md (original cutoffs 0.70/0.75, revised to 0.65/0.78 on positive-rate grounds before any AUROC existed)",
   "note": "paper_128 is the paper's 128-step column; the L64 comparison is only meaningful against the paper's 64 column, which is not listed here because our '64' differs (see budget_columns.md)"
 }

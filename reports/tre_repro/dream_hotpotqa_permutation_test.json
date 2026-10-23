@@ -1,0 +1,46 @@
+{
+  "scores": "results/tre_repro/dream_hotpotqa_bf16_L128_S64_B128_v1/scores.csv",
+  "n": 786,
+  "positive": 115,
+  "seed": 20261021,
+  "results": {
+    "tre": {
+      "observed_auroc": 0.7186677898010757,
+      "permutations_requested": 10000,
+      "permutations_valid": 10000,
+      "permutation_mode": "row",
+      "p_value_one_sided": 9.999000099990002e-05,
+      "null_mean": 0.5001785991058122,
+      "null_p95": 0.5475539428497376,
+      "null_p99": 0.5686276161472171,
+      "null_max": 0.6138145532300914
+    },
+    "tre_effective": {
+      "observed_auroc": 0.7659171904360785,
+      "permutations_requested": 10000,
+      "permutations_valid": 10000,
+      "permutation_mode": "row",
+      "p_value_one_sided": 9.999000099990002e-05,
+      "null_mean": 0.4999362897686775,
+      "null_p95": 0.5481889457655673,
+      "null_p99": 0.568224583684313,
+      "null_max": 0.6046653275448713
+    },
+    "tre_length_normalized": {
+      "observed_auroc": 0.7406337069915118,
+      "permutations_requested": 10000,
+      "permutations_valid": 10000,
+      "permutation_mode": "row",
+      "p_value_one_sided": 9.999000099990002e-05,
+      "null_mean": 0.4998663526210069,
+      "null_p95": 0.5472228341864834,
+      "null_p99": 0.5675376142033305,
+      "null_max": 0.6070498282900278
+    }
+  },
+  "notes": [
+    "labels are permuted, scores are held fixed",
+    "cluster permutation is used when every cluster is label-pure",
+    "empirical p is one-sided (observed >= null)"
+  ]
+}
