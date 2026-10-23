@@ -58,10 +58,16 @@ def main() -> int:
     if "dream_hotpotqa" in [r["run"] for r in rows]:
         target = next(r for r in rows if r["run"] == "dream_hotpotqa")
         auroc = target["auroc"]
-        if auroc >= 0.75:
+        # Thresholds revised at 15:58 after seeing the positive rate (9.2%, ~73 positives)
+        # but before any AUROC existed: the original 0.70/0.75 cutoffs were 0.05 apart while
+        # the 95% CI is ~0.13 wide, so they could not be distinguished. The revised cutoffs
+        # are one CI half-width apart, and the middle band is reported as "cannot tell".
+        if auroc >= 0.78:
             verdict = {"holds": True, "label": "recitation is the main cause", "auroc": auroc}
-        elif auroc >= 0.70:
-            verdict = {"holds": "partial", "label": "recitation is a partial cause", "auroc": auroc}
+        elif auroc >= 0.65:
+            verdict = {"holds": "undecided",
+                       "label": "indistinguishable from LLaDA's 0.706; this run cannot separate the two mechanisms",
+                       "auroc": auroc}
         else:
             verdict = {"holds": False, "label": "recitation is secondary; look elsewhere", "auroc": auroc}
 
@@ -69,7 +75,8 @@ def main() -> int:
         "cells": rows,
         "missing_runs": missing,
         "recitation_hypothesis_verdict": verdict,
-        "rule_frozen_at": "reports/tre_repro/recitation_hypothesis.md (before this run's scores existed)",
+        "rule_frozen_at": "reports/tre_repro/recitation_hypothesis.md (original cutoffs 0.70/0.75, "
+                          "revised to 0.65/0.78 on positive-rate grounds before any AUROC existed)",
         "note": ("paper_128 is the paper's 128-step column; the L64 comparison is only meaningful against "
                  "the paper's 64 column, which is not listed here because our '64' differs (see budget_columns.md)"),
     }
