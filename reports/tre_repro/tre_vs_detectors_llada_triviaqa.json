@@ -1,0 +1,119 @@
+{
+  "tre_training_free": {
+    "all": {
+      "n": 800,
+      "positive": 507,
+      "negative": 293,
+      "positive_rate": 0.63375,
+      "auroc": 0.7833673283922693,
+      "auprc": 0.827520518358802,
+      "auroc_low": 0.7498537861705518,
+      "auroc_high": 0.815755200688476
+    },
+    "test": {
+      "n": 800,
+      "positive": 507,
+      "negative": 293,
+      "positive_rate": 0.63375,
+      "auroc": 0.7833673283922693,
+      "auprc": 0.827520518358802,
+      "auroc_low": 0.7498537861705518,
+      "auroc_high": 0.815755200688476
+    }
+  },
+  "trained": [
+    {
+      "feature_set": "entropy_raw",
+      "kind": "lr",
+      "cv": "question-clustered 5-fold",
+      "test": {
+        "n": 800,
+        "positive": 507,
+        "negative": 293,
+        "positive_rate": 0.63375,
+        "auroc": 0.8130608343262583,
+        "auprc": 0.8730083315637307,
+        "auroc_low": 0.782202941265313,
+        "auroc_high": 0.8438505068037762
+      }
+    },
+    {
+      "feature_set": "entropy_raw",
+      "kind": "mlp",
+      "cv": "question-clustered 5-fold",
+      "test": {
+        "n": 800,
+        "positive": 507,
+        "negative": 293,
+        "positive_rate": 0.63375,
+        "auroc": 0.7747372956089156,
+        "auprc": 0.8486309356966109,
+        "auroc_low": 0.7418263906405602,
+        "auroc_high": 0.8088499509135321
+      }
+    },
+    {
+      "feature_set": "relative_normalized",
+      "kind": "lr",
+      "cv": "question-clustered 5-fold",
+      "test": {
+        "n": 800,
+        "positive": 507,
+        "negative": 293,
+        "positive_rate": 0.63375,
+        "auroc": 0.8479983305396799,
+        "auprc": 0.9026039402046032,
+        "auroc_low": 0.8182691311453878,
+        "auroc_high": 0.8749947042046768
+      }
+    },
+    {
+      "feature_set": "relative_normalized",
+      "kind": "mlp",
+      "cv": "question-clustered 5-fold",
+      "test": {
+        "n": 800,
+        "positive": 507,
+        "negative": 293,
+        "positive_rate": 0.63375,
+        "auroc": 0.8085337695471588,
+        "auprc": 0.8809172844290409,
+        "auroc_low": 0.7778958434153044,
+        "auroc_high": 0.8371102399992183
+      }
+    },
+    {
+      "feature_set": "late_only",
+      "kind": "lr",
+      "cv": "question-clustered 5-fold",
+      "test": {
+        "n": 800,
+        "positive": 507,
+        "negative": 293,
+        "positive_rate": 0.63375,
+        "auroc": 0.7785878250567146,
+        "auprc": 0.8505314093165381,
+        "auroc_low": 0.7450668459171472,
+        "auroc_high": 0.811247988906167
+      }
+    },
+    {
+      "feature_set": "late_only",
+      "kind": "mlp",
+      "cv": "question-clustered 5-fold",
+      "test": {
+        "n": 800,
+        "positive": 507,
+        "negative": 293,
+        "positive_rate": 0.63375,
+        "auroc": 0.7756730011915101,
+        "auprc": 0.8437407723284156,
+        "auroc_low": 0.741627132228815,
+        "auroc_high": 0.8094669037179165
+      }
+    }
+  ],
+  "note": "run has no train/validation split; trained detectors are scored by question-clustered 5-fold cross-validation instead",
+  "run": "data/trajectories/tre_repro/llada_triviaqa_fp16_L128_S64_B128_v3",
+  "n_traces": 800
+}
