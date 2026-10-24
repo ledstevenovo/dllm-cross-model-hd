@@ -207,6 +207,13 @@ TRE 是求和，块从 128 增到 256 只是让求和项更多更大（中位 TR
 Dream 的 L64 截断率为 0，所以它的 +5.3 是纯块长收益。
 详见 `reports/tre_repro/{scale_artefact_analysis,which_effects_survive_normalisation}.md`。
 
+**一格退化需单列**：`LLaDA / HotpotQA / 含上下文 / L64` 的 64 预算远低于该设置的答案长度需求，
+**97.6% 的回答在 62 token 处被截断**（中位 = p95 = max = 62）。其原始与归一化 AUROC 为
+0.6219 与 0.6220，**相差 0.0001**——正是退化的直接证据：分母恒为常数，归一化只是线性缩放，
+排序不变。该格数值可靠但**不可解释**：长度无变异，块长效应与截断效应无法分离。
+标注为配置不当的参考格，矩阵结论由其余 11 格支撑。
+详见 `reports/tre_repro/last_cell_degenerate.md` 与 `last_cell_result.md`。
+
 **HotpotQA 的两个版本（同一 800 题，只改 prompt）**：
 
 | 设定 | judge | AUROC [95% CI] | AUPRC | 正类率 | 与原文 85.6 | p |
