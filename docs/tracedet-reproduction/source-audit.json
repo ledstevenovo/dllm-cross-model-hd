@@ -1,0 +1,344 @@
+{
+  "revision": "356337ac5b95ef6064d0b124f1ef4854440f75b4",
+  "pages": 20,
+  "paper_sha256": "81b5132d507a61451ac1bebd8fe44f86e4ee587cb60b2040b7698eaca68611cf",
+  "paper_match": true,
+  "files": [
+    {
+      "path": "DLLM_generate/__pycache__/data_loader.cpython-310.pyc",
+      "expected": "5c8e681040a5a71618ed41ae32263e5b873f353215bb211e1ede68ac655d08f3",
+      "actual": "5c8e681040a5a71618ed41ae32263e5b873f353215bb211e1ede68ac655d08f3",
+      "match": true
+    },
+    {
+      "path": "DLLM_generate/data_generator.py",
+      "expected": "cca8886a15f179ab2074adcb08e87577dce2c6bc9255bb110eb5832130a2bd8d",
+      "actual": "cca8886a15f179ab2074adcb08e87577dce2c6bc9255bb110eb5832130a2bd8d",
+      "match": true
+    },
+    {
+      "path": "DLLM_generate/data_loader.py",
+      "expected": "3b4f5643fb163dc4157ea9427f4bc0593492b2f2e8621b8e3c0b464247b52df9",
+      "actual": "3b4f5643fb163dc4157ea9427f4bc0593492b2f2e8621b8e3c0b464247b52df9",
+      "match": true
+    },
+    {
+      "path": "DLLM_generate/dream_entropy.py",
+      "expected": "c3521a9b58f5d2977722957b65cb9dd41e7c128075d83c4862bcff5226282cbd",
+      "actual": "c3521a9b58f5d2977722957b65cb9dd41e7c128075d83c4862bcff5226282cbd",
+      "match": true
+    },
+    {
+      "path": "DLLM_generate/generate.py",
+      "expected": "dc708c2473750ffac1289021ee1706ca5f58cb34296696ca1dea95371beda983",
+      "actual": "dc708c2473750ffac1289021ee1706ca5f58cb34296696ca1dea95371beda983",
+      "match": true
+    },
+    {
+      "path": "DLLM_generate/generate_interoutput.py",
+      "expected": "26f970399440e55588c22d7647157c4a109239ea6a2d8ecbc85bf37c1195caac",
+      "actual": "26f970399440e55588c22d7647157c4a109239ea6a2d8ecbc85bf37c1195caac",
+      "match": true
+    },
+    {
+      "path": "DLLM_generate/metric_qwen.py",
+      "expected": "f8b23d1bd5ce0340f478f5269c967967f71e474eae68235cec1edc89d5e30c0d",
+      "actual": "f8b23d1bd5ce0340f478f5269c967967f71e474eae68235cec1edc89d5e30c0d",
+      "match": true
+    },
+    {
+      "path": "DLLM_generate/pt_data_generator_bertscore.py",
+      "expected": "3767ce9e4f89d2034fab1c14d88c90ced13f2de3a86403bfa386281cf40d00d4",
+      "actual": "3767ce9e4f89d2034fab1c14d88c90ced13f2de3a86403bfa386281cf40d00d4",
+      "match": true
+    },
+    {
+      "path": "DLLM_generate/pt_data_generator_with_answer.py",
+      "expected": "63667d0dcb2599545b3dde0d267b6dec4e5c323b199c5e85687581e5684183b9",
+      "actual": "63667d0dcb2599545b3dde0d267b6dec4e5c323b199c5e85687581e5684183b9",
+      "match": true
+    },
+    {
+      "path": "LICENSE",
+      "expected": "6d8b3db69c2a033568ec96432e64b00bbc3be7e37d472475d137418364675bcf",
+      "actual": "6d8b3db69c2a033568ec96432e64b00bbc3be7e37d472475d137418364675bcf",
+      "match": true
+    },
+    {
+      "path": "README.md",
+      "expected": "314e1cf79a3c7c8ae7b0c155184c44da0eab02bfe63ee06e12a070c8133aa404",
+      "actual": "314e1cf79a3c7c8ae7b0c155184c44da0eab02bfe63ee06e12a070c8133aa404",
+      "match": true
+    },
+    {
+      "path": "environment.yml",
+      "expected": "d78f51166fece32ca05020d125c6a6345129da6c07a1dc5bd4d50d0fa6aa93e6",
+      "actual": "d78f51166fece32ca05020d125c6a6345129da6c07a1dc5bd4d50d0fa6aa93e6",
+      "match": true
+    },
+    {
+      "path": "figures/TraceDet.png",
+      "expected": "cd2b43b2613e79ab527e484d3736302d59fb8e0f63c4763a68ba1463fd66c260",
+      "actual": "cd2b43b2613e79ab527e484d3736302d59fb8e0f63c4763a68ba1463fd66c260",
+      "match": true
+    },
+    {
+      "path": "models/Scomb_transformer_split=1.pt",
+      "expected": "6b187c7458972e22563a9405d39d2c47f09bb2e244dfc4b6fe9495a18a85deb3",
+      "actual": "6b187c7458972e22563a9405d39d2c47f09bb2e244dfc4b6fe9495a18a85deb3",
+      "match": true
+    },
+    {
+      "path": "models/TimeHalu.py",
+      "expected": "f0940b92f2b101eeb8b4f5b3ac6e42f2d13a08cff949f0ed7b3f30f54666f6b0",
+      "actual": "f0940b92f2b101eeb8b4f5b3ac6e42f2d13a08cff949f0ed7b3f30f54666f6b0",
+      "match": true
+    },
+    {
+      "path": "models/__init__.py",
+      "expected": "dd4bd7da212e56c58d2f93be57ae2234d53308492e99f4418afc38ebd69dc075",
+      "actual": "dd4bd7da212e56c58d2f93be57ae2234d53308492e99f4418afc38ebd69dc075",
+      "match": true
+    },
+    {
+      "path": "models/bc_model4.py",
+      "expected": "b55e8529828d14c712ec2e6c1e771dd37999ac387ea0028a3fbef1e9fd022c7f",
+      "actual": "b55e8529828d14c712ec2e6c1e771dd37999ac387ea0028a3fbef1e9fd022c7f",
+      "match": true
+    },
+    {
+      "path": "models/encoders/positional_enc.py",
+      "expected": "e19ac6160fa26b78136ba1c380c755561562c6e35b89fd2c4b45e28cbd25485f",
+      "actual": "e19ac6160fa26b78136ba1c380c755561562c6e35b89fd2c4b45e28cbd25485f",
+      "match": true
+    },
+    {
+      "path": "models/encoders/simple.py",
+      "expected": "98da6c4025b169f3903b8738f0c335b5c6acbbc27fbcabe0bc6cd998cb37a2e7",
+      "actual": "98da6c4025b169f3903b8738f0c335b5c6acbbc27fbcabe0bc6cd998cb37a2e7",
+      "match": true
+    },
+    {
+      "path": "models/encoders/transformer_simple.py",
+      "expected": "b4fef11b2d315d965e231c58c2e7ce62a9deea008d628cb38a3247e3225d1b00",
+      "actual": "b4fef11b2d315d965e231c58c2e7ce62a9deea008d628cb38a3247e3225d1b00",
+      "match": true
+    },
+    {
+      "path": "models/layers.py",
+      "expected": "a63b1e2257e61cf533bb23e8c3cbfa877a9070cee5bfa220ffbc36ad633c01c8",
+      "actual": "a63b1e2257e61cf533bb23e8c3cbfa877a9070cee5bfa220ffbc36ad633c01c8",
+      "match": true
+    },
+    {
+      "path": "models/mlp.py",
+      "expected": "62f9089fd83c433dc8aee09bba19db7d9a37e3cf3c3e7f129d31cc26ade9ffb5",
+      "actual": "62f9089fd83c433dc8aee09bba19db7d9a37e3cf3c3e7f129d31cc26ade9ffb5",
+      "match": true
+    },
+    {
+      "path": "models/run_model_utils.py",
+      "expected": "8eca5c68c0dfcd08018b0f3e2b5319f224aafa3de6aeee748e758cd969a08a5a",
+      "actual": "8eca5c68c0dfcd08018b0f3e2b5319f224aafa3de6aeee748e758cd969a08a5a",
+      "match": true
+    },
+    {
+      "path": "qwen_eval.sh",
+      "expected": "cf0f3dcbc087be1c27c2f608801668226aa68d822f5093df17113482087333fa",
+      "actual": "cf0f3dcbc087be1c27c2f608801668226aa68d822f5093df17113482087333fa",
+      "match": true
+    },
+    {
+      "path": "run_data.sh",
+      "expected": "5f4ba6defc11cf7470ca0e1f35b0d23c1bd989602b3b8e98b5f7eaa19786e3de",
+      "actual": "5f4ba6defc11cf7470ca0e1f35b0d23c1bd989602b3b8e98b5f7eaa19786e3de",
+      "match": true
+    },
+    {
+      "path": "step_entropy_ave.py",
+      "expected": "14a76e63fa39f3a25d060be30cd85d47b0d0a71f2c265af25eb21e0f46577fe5",
+      "actual": "14a76e63fa39f3a25d060be30cd85d47b0d0a71f2c265af25eb21e0f46577fe5",
+      "match": true
+    },
+    {
+      "path": "train_lstm_baseline.py",
+      "expected": "69c31f708d79d735a586dfd4aa86d714bf25e89238ad5c88ff03371a531992bc",
+      "actual": "69c31f708d79d735a586dfd4aa86d714bf25e89238ad5c88ff03371a531992bc",
+      "match": true
+    },
+    {
+      "path": "train_main.py",
+      "expected": "0977bb31ee9f3090d7e595b6ecd26d7f1d9b7723655fd19b3cd11a1a07ac2d6f",
+      "actual": "0977bb31ee9f3090d7e595b6ecd26d7f1d9b7723655fd19b3cd11a1a07ac2d6f",
+      "match": true
+    },
+    {
+      "path": "train_main_interprete.py",
+      "expected": "2a2a224806124a017ed4a9bc911c86dae09f25ed96eda125c2f1c2f1eba46170",
+      "actual": "2a2a224806124a017ed4a9bc911c86dae09f25ed96eda125c2f1c2f1eba46170",
+      "match": true
+    },
+    {
+      "path": "train_transformer_baseline.py",
+      "expected": "3caaa874a9a55a1f3d6125d49901b8b634f3a9e961b4144168d5200cad1df613",
+      "actual": "3caaa874a9a55a1f3d6125d49901b8b634f3a9e961b4144168d5200cad1df613",
+      "match": true
+    },
+    {
+      "path": "train_tuning.py",
+      "expected": "8e26d3f4db06168aff3ac73714154d2077b8c61dfcf644ba9cfb47c625da5a20",
+      "actual": "8e26d3f4db06168aff3ac73714154d2077b8c61dfcf644ba9cfb47c625da5a20",
+      "match": true
+    },
+    {
+      "path": "trainers/__init__.py",
+      "expected": "ace82a2b2672e588d244ef9a7e2369071e616418c6a9d10c6d763e5c76a6583d",
+      "actual": "ace82a2b2672e588d244ef9a7e2369071e616418c6a9d10c6d763e5c76a6583d",
+      "match": true
+    },
+    {
+      "path": "trainers/train_TimeHalu.py",
+      "expected": "478a092fd13cf59505a208dd946b70a71aa9907c6d8fd90e6cdb917aa98c1c0c",
+      "actual": "478a092fd13cf59505a208dd946b70a71aa9907c6d8fd90e6cdb917aa98c1c0c",
+      "match": true
+    },
+    {
+      "path": "trainers/train_transformer.py",
+      "expected": "0996d890294ed9408d4889889cd392e67a4d8807f592f6ed2546e66540dc61a8",
+      "actual": "0996d890294ed9408d4889889cd392e67a4d8807f592f6ed2546e66540dc61a8",
+      "match": true
+    },
+    {
+      "path": "triviaqa_test_resultlist_mask.json",
+      "expected": "432ab8089b97793bd4e58a8bb58db0c5ae178afac09ac4e200627e4d65a15621",
+      "actual": "432ab8089b97793bd4e58a8bb58db0c5ae178afac09ac4e200627e4d65a15621",
+      "match": true
+    },
+    {
+      "path": "tuning.sh",
+      "expected": "5f091cb514328b8300b699c42c02589a86a05db610e4917ab7df479883323ae6",
+      "actual": "5f091cb514328b8300b699c42c02589a86a05db610e4917ab7df479883323ae6",
+      "match": true
+    },
+    {
+      "path": "utils/__init__.py",
+      "expected": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "actual": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "match": true
+    },
+    {
+      "path": "utils/__pycache__/__init__.cpython-310.pyc",
+      "expected": "daeef4be93cca3290b52fe5626cf49f01e789aa5b436b7f3145ad63d030345d7",
+      "actual": "daeef4be93cca3290b52fe5626cf49f01e789aa5b436b7f3145ad63d030345d7",
+      "match": true
+    },
+    {
+      "path": "utils/attention.py",
+      "expected": "0f91e04c319cd5785a3203e370693263c516eac6e153bbfc7296d9ff4a929daf",
+      "actual": "0f91e04c319cd5785a3203e370693263c516eac6e153bbfc7296d9ff4a929daf",
+      "match": true
+    },
+    {
+      "path": "utils/cl.py",
+      "expected": "01b50f613b4164aa7d2b0a35d5bc3ef57d2300584b36990469ca16855d079f9c",
+      "actual": "01b50f613b4164aa7d2b0a35d5bc3ef57d2300584b36990469ca16855d079f9c",
+      "match": true
+    },
+    {
+      "path": "utils/concepts.py",
+      "expected": "9bf1781bc31ba88461ef59816cf7617d5eb040fb78ec382001e333e490d0f319",
+      "actual": "9bf1781bc31ba88461ef59816cf7617d5eb040fb78ec382001e333e490d0f319",
+      "match": true
+    },
+    {
+      "path": "utils/constants.py",
+      "expected": "8e3de0adcec6c87f1a0396727d1e9550ae37f0be4ecfc3d92e75cfcd845ac0d7",
+      "actual": "8e3de0adcec6c87f1a0396727d1e9550ae37f0be4ecfc3d92e75cfcd845ac0d7",
+      "match": true
+    },
+    {
+      "path": "utils/data/__init__.py",
+      "expected": "4d7cec1f391e2ece66e3ccf57017887252fdeec7d93ac9ca6d08c332c410c54e",
+      "actual": "4d7cec1f391e2ece66e3ccf57017887252fdeec7d93ac9ca6d08c332c410c54e",
+      "match": true
+    },
+    {
+      "path": "utils/data/__pycache__/__init__.cpython-310.pyc",
+      "expected": "b934914021dff6f457f5f3ce20dca46aa3e7c398710f3449282e9eb8778eca14",
+      "actual": "b934914021dff6f457f5f3ce20dca46aa3e7c398710f3449282e9eb8778eca14",
+      "match": true
+    },
+    {
+      "path": "utils/data/__pycache__/preprocess.cpython-310.pyc",
+      "expected": "75fa628c29a4c2bbe5c69481db083a5ab1e7bfd8eaa79a25d6c8a04399edfabe",
+      "actual": "75fa628c29a4c2bbe5c69481db083a5ab1e7bfd8eaa79a25d6c8a04399edfabe",
+      "match": true
+    },
+    {
+      "path": "utils/data/__pycache__/synth.cpython-310.pyc",
+      "expected": "9e70a34a661234d966a511e82e0d74f29bb18e217cfe335b4c5d8ebf65d5be65",
+      "actual": "9e70a34a661234d966a511e82e0d74f29bb18e217cfe335b4c5d8ebf65d5be65",
+      "match": true
+    },
+    {
+      "path": "utils/data/__pycache__/utils_phy12.cpython-310.pyc",
+      "expected": "bf81e4bdcffe53fde8e7d9f0d9e41eb92a1d228906785bbcdd87b9f58f669fae",
+      "actual": "bf81e4bdcffe53fde8e7d9f0d9e41eb92a1d228906785bbcdd87b9f58f669fae",
+      "match": true
+    },
+    {
+      "path": "utils/data/datasets.py",
+      "expected": "aedb10321c147f01f314ea2b2ec4fbbc2cc4e5485e50c9821d4a65c0deb525bd",
+      "actual": "aedb10321c147f01f314ea2b2ec4fbbc2cc4e5485e50c9821d4a65c0deb525bd",
+      "match": true
+    },
+    {
+      "path": "utils/data/preprocess.py",
+      "expected": "ca3a4b32845a02d6e36ed3c74de53071b7400c350f23611fbf0cd6074dceda53",
+      "actual": "ca3a4b32845a02d6e36ed3c74de53071b7400c350f23611fbf0cd6074dceda53",
+      "match": true
+    },
+    {
+      "path": "utils/data/synth.py",
+      "expected": "6cd7c7553ed28b49b3ae5cea69c82ec2150c2df0366b25565c7c7754267a586b",
+      "actual": "6cd7c7553ed28b49b3ae5cea69c82ec2150c2df0366b25565c7c7754267a586b",
+      "match": true
+    },
+    {
+      "path": "utils/data/utils_phy12.py",
+      "expected": "02c0188f99ebff788e42af544bbf195d586be25eb8b3541e8f9a4d6645673721",
+      "actual": "02c0188f99ebff788e42af544bbf195d586be25eb8b3541e8f9a4d6645673721",
+      "match": true
+    },
+    {
+      "path": "utils/evaluation.py",
+      "expected": "cc69e44c7046b88792b9c91e358904bb7a821caa75aeac453f648b585b2b4505",
+      "actual": "cc69e44c7046b88792b9c91e358904bb7a821caa75aeac453f648b585b2b4505",
+      "match": true
+    },
+    {
+      "path": "utils/predictors/__init__.py",
+      "expected": "ccac42a0bce505702f74036e7bd741afb3de96c159f628657f11888ecb0e7cf3",
+      "actual": "ccac42a0bce505702f74036e7bd741afb3de96c159f628657f11888ecb0e7cf3",
+      "match": true
+    },
+    {
+      "path": "utils/predictors/eval.py",
+      "expected": "e1afa5ebdf701f805937e36b999165f422a2e491f3d7efc41bdb116a871602c2",
+      "actual": "e1afa5ebdf701f805937e36b999165f422a2e491f3d7efc41bdb116a871602c2",
+      "match": true
+    },
+    {
+      "path": "utils/predictors/loss.py",
+      "expected": "dea7ddc781deea7c56cdd1c6b2b70b494460c852ea152194bf30291e6c351b1d",
+      "actual": "dea7ddc781deea7c56cdd1c6b2b70b494460c852ea152194bf30291e6c351b1d",
+      "match": true
+    },
+    {
+      "path": "utils/predictors/select_models.py",
+      "expected": "60d144af8cfa80a4397cd36881893502100412648866c26aa829bcd5a2771005",
+      "actual": "60d144af8cfa80a4397cd36881893502100412648866c26aa829bcd5a2771005",
+      "match": true
+    }
+  ]
+}

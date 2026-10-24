@@ -199,6 +199,24 @@
       "comparable_to_paper": false
     },
     {
+      "run": "llada_hotpotqa_ctx_l256",
+      "model": "LLaDA",
+      "dataset": "HotpotQA",
+      "gen_length": 256,
+      "prompt": "context",
+      "judge": "LongCat",
+      "precision": "float16",
+      "auroc": 0.7798708102568825,
+      "auroc_low": 0.7381876336947268,
+      "auroc_high": 0.8205464766369528,
+      "n": 786,
+      "positive": 133,
+      "positive_rate": 0.1692111959287532,
+      "paper_128": null,
+      "delta_vs_paper": null,
+      "comparable_to_paper": false
+    },
+    {
       "run": "llada_triviaqa_l64_longcat",
       "model": "LLaDA",
       "dataset": "TriviaQA",

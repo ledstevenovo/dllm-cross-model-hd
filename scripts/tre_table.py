@@ -35,6 +35,7 @@ CELLS = {
     "dream_hotpotqa_bare_l64": ("Dream", "HotpotQA", 64, "bare", "LongCat", None),
     "dream_hotpotqa_ctx_l64": ("Dream", "HotpotQA", 64, "context", "LongCat", None),
     "llada_hotpotqa_ctx_l64": ("LLaDA", "HotpotQA", 64, "context", "LongCat", None),
+    "llada_hotpotqa_ctx_l256": ("LLaDA", "HotpotQA", 256, "context", "LongCat", None),
 }
 
 # The paper's two columns are "total diffusion steps" 128 and 64; our runs are both single-block
