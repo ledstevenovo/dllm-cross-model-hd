@@ -1,0 +1,46 @@
+{
+  "scores": "results/tre_repro/llada_hotpotqa_ctx_l64/scores.csv",
+  "n": 779,
+  "positive": 112,
+  "seed": 20261021,
+  "results": {
+    "tre": {
+      "observed_auroc": 0.6218810237738274,
+      "permutations_requested": 10000,
+      "permutations_valid": 10000,
+      "permutation_mode": "row",
+      "p_value_one_sided": 9.999000099990002e-05,
+      "null_mean": 0.5002082003641037,
+      "null_p95": 0.5481781430713215,
+      "null_p99": 0.5686443831655601,
+      "null_max": 0.6115067466266867
+    },
+    "tre_effective": {
+      "observed_auroc": 0.6227109659455985,
+      "permutations_requested": 10000,
+      "permutations_valid": 10000,
+      "permutation_mode": "row",
+      "p_value_one_sided": 9.999000099990002e-05,
+      "null_mean": 0.4997708154851146,
+      "null_p95": 0.5482705076033412,
+      "null_p99": 0.566303009209681,
+      "null_max": 0.5989906832298136
+    },
+    "tre_length_normalized": {
+      "observed_auroc": 0.6219747269222532,
+      "permutations_requested": 10000,
+      "permutations_valid": 10000,
+      "permutation_mode": "row",
+      "p_value_one_sided": 9.999000099990002e-05,
+      "null_mean": 0.49956029931462836,
+      "null_p95": 0.5484880327693297,
+      "null_p99": 0.5667573356179053,
+      "null_max": 0.6006237952452346
+    }
+  },
+  "notes": [
+    "labels are permuted, scores are held fixed",
+    "cluster permutation is used when every cluster is label-pure",
+    "empirical p is one-sided (observed >= null)"
+  ]
+}

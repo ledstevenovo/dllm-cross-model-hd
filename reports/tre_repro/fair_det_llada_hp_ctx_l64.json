@@ -1,0 +1,51 @@
+{
+  "run": "data/trajectories/tre_repro/llada_hotpotqa_fp16_L64_S64_B64_v1",
+  "dropped_for_length": {
+    "mean_entropy_vocab_normalized": 0.279,
+    "early_entropy_vocab_normalized": 0.318,
+    "mean_uncertainty": 0.259,
+    "mean_reveal_progress": 0.304,
+    "revealed_fraction": "constant"
+  },
+  "kept": [
+    "middle_entropy_vocab_normalized",
+    "late_entropy_vocab_normalized",
+    "revealing_entropy_vocab_normalized",
+    "entropy_change_vocab_normalized",
+    "reveal_progress_entropy_vocab_normalized"
+  ],
+  "tre_length_normalized": {
+    "n": 779,
+    "positive": 112,
+    "negative": 667,
+    "positive_rate": 0.14377406931964057,
+    "auroc": 0.6219747269222532,
+    "auprc": 0.23430802891059457,
+    "auroc_low": 0.5633270459873733,
+    "auroc_high": 0.6814769170190074
+  },
+  "detector_full": {
+    "n": 779,
+    "positive": 112,
+    "negative": 667,
+    "positive_rate": 0.14377406931964057,
+    "auroc": 0.6148666738059541,
+    "auprc": 0.2130135526024081,
+    "auroc_low": 0.5628627774636596,
+    "auroc_high": 0.6723471779964801
+  },
+  "detector_length_free": {
+    "n": 779,
+    "positive": 112,
+    "negative": 667,
+    "positive_rate": 0.14377406931964057,
+    "auroc": 0.614880059970015,
+    "auprc": 0.2146206422003567,
+    "auroc_low": 0.558112554087142,
+    "auroc_high": 0.6726160610835787
+  },
+  "gaps": {
+    "full_vs_tre": -0.00710805311629914,
+    "lean_vs_tre": -0.007094666952238149
+  }
+}

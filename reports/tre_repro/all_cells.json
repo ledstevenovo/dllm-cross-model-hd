@@ -145,6 +145,24 @@
       "comparable_to_paper": true
     },
     {
+      "run": "llada_hotpotqa_ctx_l64",
+      "model": "LLaDA",
+      "dataset": "HotpotQA",
+      "gen_length": 64,
+      "prompt": "context",
+      "judge": "LongCat",
+      "precision": "float16",
+      "auroc": 0.6218810237738274,
+      "auroc_low": 0.5554895702790155,
+      "auroc_high": 0.6768837083275103,
+      "n": 779,
+      "positive": 112,
+      "positive_rate": 0.14377406931964057,
+      "paper_128": null,
+      "delta_vs_paper": null,
+      "comparable_to_paper": false
+    },
+    {
       "run": "llada_hotpotqa_longcat",
       "model": "LLaDA",
       "dataset": "HotpotQA",
