@@ -1,0 +1,46 @@
+{
+  "scores": "results/tre_repro/dream_triviaqa_l128_longcat/scores.csv",
+  "n": 789,
+  "positive": 464,
+  "seed": 20261021,
+  "results": {
+    "tre": {
+      "observed_auroc": 0.7968302387267905,
+      "permutations_requested": 10000,
+      "permutations_valid": 10000,
+      "permutation_mode": "row",
+      "p_value_one_sided": 9.999000099990002e-05,
+      "null_mean": 0.4998644363395226,
+      "null_p95": 0.5348822944297081,
+      "null_p99": 0.5493609416445624,
+      "null_max": 0.5777718832891248
+    },
+    "tre_effective": {
+      "observed_auroc": 0.8786737400530504,
+      "permutations_requested": 10000,
+      "permutations_valid": 10000,
+      "permutation_mode": "row",
+      "p_value_one_sided": 9.999000099990002e-05,
+      "null_mean": 0.49998975729442974,
+      "null_p95": 0.5344502652519894,
+      "null_p99": 0.5485147214854112,
+      "null_max": 0.5804045092838196
+    },
+    "tre_length_normalized": {
+      "observed_auroc": 0.8476724137931035,
+      "permutations_requested": 10000,
+      "permutations_valid": 10000,
+      "permutation_mode": "row",
+      "p_value_one_sided": 9.999000099990002e-05,
+      "null_mean": 0.4998581664456233,
+      "null_p95": 0.5340994694960213,
+      "null_p99": 0.5476659814323608,
+      "null_max": 0.5773010610079576
+    }
+  },
+  "notes": [
+    "labels are permuted, scores are held fixed",
+    "cluster permutation is used when every cluster is label-pure",
+    "empirical p is one-sided (observed >= null)"
+  ]
+}
