@@ -59,3 +59,9 @@ data/tre_repro/labels/
 
 # stability study resume file (kept when a run stops early; not a deliverable)
 reports/*.checkpoint.json
+
+# --- agent tooling state (not project artifacts) ------------------------------
+# Session histories, hook state and harness config written by helper tools during a
+# run. They describe the tooling, not the research, and change on every invocation.
+.mimosa/
+.zcode/
