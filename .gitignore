@@ -65,3 +65,8 @@ reports/*.checkpoint.json
 # run. They describe the tooling, not the research, and change on every invocation.
 .mimosa/
 .zcode/
+
+# A TraceDet reproduction plan authored outside this line of work. Kept on disk for reference but
+# not tracked: it is untested (its own material passport says UNVERIFIED) and belongs to whoever
+# wrote it. Restore with `git add -f docs/tracedet-reproduction` once that is decided.
+docs/tracedet-reproduction/
